@@ -55,24 +55,29 @@ function GearShifter() {
             gsap.to(gearShifter.rotation, { duration: 0.5, x: rotationAngle });
         };
 
-        // Function to handle gear shift
-        const handleShift = () => {
-            const nextGear = (currentGear + 1) % 3; // Cycles through 0, 1, 2 (Neutral, 1st, 2nd)
-            setCurrentGear(nextGear);
-            shiftToGear(nextGear);
+        // Handle keyboard input
+        const handleKeyDown = (event) => {
+            if (event.key === '1') {
+                setCurrentGear(1);
+                shiftToGear(1); // Shift to 1st gear
+            } else if (event.key === '2') {
+                setCurrentGear(2);
+                shiftToGear(2); // Shift to 2nd gear
+            } else if (event.key === '0') {
+                setCurrentGear(0);
+                shiftToGear(0); // Shift to Neutral
+            }
         };
 
-        // Add event listeners for both click and touch
-        renderer.domElement.addEventListener('click', handleShift);
-        renderer.domElement.addEventListener('touchstart', handleShift);
+        // Add event listener for keyboard input
+        window.addEventListener('keydown', handleKeyDown);
 
         // Cleanup on unmount
         return () => {
-            renderer.domElement.removeEventListener('click', handleShift);
-            renderer.domElement.removeEventListener('touchstart', handleShift);
+            window.removeEventListener('keydown', handleKeyDown);
             mountRef.current.removeChild(renderer.domElement);
         };
-    }, [currentGear]);
+    }, []);
 
     return <div ref={mountRef} />;
 }
