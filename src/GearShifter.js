@@ -45,14 +45,13 @@ function GearShifter() {
             gsap.to(gearShifter.rotation, { duration: 1, x: rotationAngle });
         };
 
-        // Touch start event
-        const handleTouchStart = (event) => {
-            startYRef.current = event.touches[0].clientY;
+        // Unified event handler for both mouse and touch
+        const handleStart = (clientY) => {
+            startYRef.current = clientY;
         };
 
-        // Touch move event
-        const handleTouchMove = (event) => {
-            const deltaY = event.touches[0].clientY - startYRef.current;
+        const handleMove = (clientY) => {
+            const deltaY = clientY - startYRef.current;
 
             // Example thresholds for shifting gears
             if (deltaY > 50) {
@@ -64,12 +63,39 @@ function GearShifter() {
             }
         };
 
-        // Add event listeners for touch events
+        // Mouse events for desktop
+        const handleMouseDown = (event) => {
+            handleStart(event.clientY);
+            window.addEventListener('mousemove', handleMouseMove);
+            window.addEventListener('mouseup', handleMouseUp);
+        };
+
+        const handleMouseMove = (event) => {
+            handleMove(event.clientY);
+        };
+
+        const handleMouseUp = () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+        };
+
+        // Touch events for mobile
+        const handleTouchStart = (event) => {
+            handleStart(event.touches[0].clientY);
+        };
+
+        const handleTouchMove = (event) => {
+            handleMove(event.touches[0].clientY);
+        };
+
+        // Add event listeners
+        renderer.domElement.addEventListener('mousedown', handleMouseDown);
         renderer.domElement.addEventListener('touchstart', handleTouchStart);
         renderer.domElement.addEventListener('touchmove', handleTouchMove);
 
         // Cleanup on unmount
         return () => {
+            renderer.domElement.removeEventListener('mousedown', handleMouseDown);
             renderer.domElement.removeEventListener('touchstart', handleTouchStart);
             renderer.domElement.removeEventListener('touchmove', handleTouchMove);
             mountRef.current.removeChild(renderer.domElement);
