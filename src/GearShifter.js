@@ -1,12 +1,11 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 
 function GearShifter() {
     const mountRef = useRef(null);
     const gearShifterRef = useRef(null);
-    const startYRef = useRef(0);
-    const currentRotationRef = useRef(0);
+    const [currentGear, setCurrentGear] = useState(0); // Neutral
 
     useEffect(() => {
         // Scene setup
@@ -40,67 +39,42 @@ function GearShifter() {
         animate();
 
         // GSAP animations for shifting gears
-        const shiftToGear = (rotationAngle) => {
-            currentRotationRef.current = rotationAngle;
-            gsap.to(gearShifter.rotation, { duration: 1, x: rotationAngle });
-        };
-
-        // Unified event handler for both mouse and touch
-        const handleStart = (clientY) => {
-            startYRef.current = clientY;
-        };
-
-        const handleMove = (clientY) => {
-            const deltaY = clientY - startYRef.current;
-
-            // Example thresholds for shifting gears
-            if (deltaY > 50) {
-                shiftToGear(-Math.PI / 4); // Shift to 2nd gear
-            } else if (deltaY < -50) {
-                shiftToGear(Math.PI / 4); // Shift to 1st gear
-            } else {
-                shiftToGear(0); // Neutral
+        const shiftToGear = (gear) => {
+            let rotationAngle;
+            switch (gear) {
+                case 0: // Neutral
+                    rotationAngle = 0;
+                    break;
+                case 1: // 1st gear
+                    rotationAngle = Math.PI / 4;
+                    break;
+                case 2: // 2nd gear
+                    rotationAngle = -Math.PI / 4;
+                    break;
+                default:
+                    rotationAngle = 0;
             }
+            gsap.to(gearShifter.rotation, { duration: 0.5, x: rotationAngle });
         };
 
-        // Mouse events for desktop
-        const handleMouseDown = (event) => {
-            handleStart(event.clientY);
-            window.addEventListener('mousemove', handleMouseMove);
-            window.addEventListener('mouseup', handleMouseUp);
-        };
-
-        const handleMouseMove = (event) => {
-            handleMove(event.clientY);
-        };
-
-        const handleMouseUp = () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', handleMouseUp);
-        };
-
-        // Touch events for mobile
-        const handleTouchStart = (event) => {
-            handleStart(event.touches[0].clientY);
-        };
-
-        const handleTouchMove = (event) => {
-            handleMove(event.touches[0].clientY);
+        // Function to handle gear shift on click/tap
+        const handleShift = () => {
+            const nextGear = (currentGear + 1) % 3; // Cycles through 0, 1, 2 (Neutral, 1st, 2nd)
+            setCurrentGear(nextGear);
+            shiftToGear(nextGear);
         };
 
         // Add event listeners
-        renderer.domElement.addEventListener('mousedown', handleMouseDown);
-        renderer.domElement.addEventListener('touchstart', handleTouchStart);
-        renderer.domElement.addEventListener('touchmove', handleTouchMove);
+        renderer.domElement.addEventListener('mousedown', handleShift);
+        renderer.domElement.addEventListener('touchstart', handleShift);
 
         // Cleanup on unmount
         return () => {
-            renderer.domElement.removeEventListener('mousedown', handleMouseDown);
-            renderer.domElement.removeEventListener('touchstart', handleTouchStart);
-            renderer.domElement.removeEventListener('touchmove', handleTouchMove);
+            renderer.domElement.removeEventListener('mousedown', handleShift);
+            renderer.domElement.removeEventListener('touchstart', handleShift);
             mountRef.current.removeChild(renderer.domElement);
         };
-    }, []);
+    }, [currentGear]);
 
     return <div ref={mountRef} />;
 }
