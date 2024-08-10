@@ -25,7 +25,7 @@
 // export default App;
 
 import React from 'react';
-import Home from './HomeHome';
+import Home from './Home';
 import About from './About';
 import Projects from './Projects';
 import Contact from './Contact';
