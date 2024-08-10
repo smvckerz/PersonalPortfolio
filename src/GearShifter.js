@@ -65,12 +65,12 @@ function GearShifter() {
         };
 
         // Add event listeners
-        renderer.domElement.addEventListener('mousedown', handleShift);
+        renderer.domElement.addEventListener('click', handleShift);
         renderer.domElement.addEventListener('touchstart', handleShift);
 
         // Cleanup on unmount
         return () => {
-            renderer.domElement.removeEventListener('mousedown', handleShift);
+            renderer.domElement.removeEventListener('click', handleShift);
             renderer.domElement.removeEventListener('touchstart', handleShift);
             mountRef.current.removeChild(renderer.domElement);
         };
