@@ -24,7 +24,7 @@ function CarPOV() {
         const steeringWheelGeometry = new THREE.TorusGeometry(1, 0.2, 16, 100);
         const steeringWheelMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 });
         const steeringWheel = new THREE.Mesh(steeringWheelGeometry, steeringWheelMaterial);
-        steeringWheel.position.set(0, 0, -5); // Adjust the position to simulate the car's interior
+        steeringWheel.position.set(0, 1, -5);
         scene.add(steeringWheel);
 
         // Create the gear shifter
@@ -38,6 +38,48 @@ function CarPOV() {
         knob.position.set(1, -0.5, -6);
         scene.add(shifter);
         scene.add(knob);
+
+        // Create the dashboard
+        const dashboardGeometry = new THREE.BoxGeometry(5, 1, 0.5);
+        const dashboardMaterial = new THREE.MeshStandardMaterial({ color: 0x222222 });
+        const dashboard = new THREE.Mesh(dashboardGeometry, dashboardMaterial);
+        dashboard.position.set(0, 0.5, -7);
+        scene.add(dashboard);
+
+        // Speedometer and Tachometer
+        const createDial = (x, y, z) => {
+            const dialGeometry = new THREE.CircleGeometry(0.5, 32);
+            const dialMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+            const dial = new THREE.Mesh(dialGeometry, dialMaterial);
+            dial.position.set(x, y, z);
+            scene.add(dial);
+        };
+        createDial(-1, 0.75, -6.75); // Speedometer
+        createDial(1, 0.75, -6.75);  // Tachometer
+
+        // Buttons on the dashboard
+        const createButton = (x, y, z) => {
+            const buttonGeometry = new THREE.CylinderGeometry(0.2, 0.2, 0.1, 32);
+            const buttonMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+            const button = new THREE.Mesh(buttonGeometry, buttonMaterial);
+            button.rotation.x = Math.PI / 2;
+            button.position.set(x, y, z);
+            scene.add(button);
+        };
+        createButton(-1.5, 0.25, -6.75);
+        createButton(-1.0, 0.25, -6.75);
+        createButton(-0.5, 0.25, -6.75);
+
+        // Basic Seats
+        const createSeat = (x, y, z) => {
+            const seatGeometry = new THREE.BoxGeometry(1.5, 2, 0.5);
+            const seatMaterial = new THREE.MeshStandardMaterial({ color: 0x444444 });
+            const seat = new THREE.Mesh(seatGeometry, seatMaterial);
+            seat.position.set(x, y, z);
+            scene.add(seat);
+        };
+        createSeat(-2, -1.5, -8); // Driver's seat
+        createSeat(2, -1.5, -8);  // Passenger's seat
 
         // Adjust camera position for POV
         camera.position.set(0, 1, 0); // Position the camera inside the car
