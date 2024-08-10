@@ -5,7 +5,6 @@ import Projects from './Projects';
 import Contact from './Contact';
 import './App.css';  // Add styles in this file
 import Tabs from './Tabs'; 
-import GearShifter from './GearShifter';
 
 function App() {
     return (
@@ -16,9 +15,6 @@ function App() {
             <Projects />
             <Contact />
           </Tabs>
-          <GearShifter>
-            
-          </GearShifter>
         </div>
     );
 }
