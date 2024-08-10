@@ -4,7 +4,6 @@ import { gsap } from 'gsap';
 
 function GearShifter() {
     const mountRef = useRef(null);
-    const gearShifterRef = useRef(null);
     const [currentGear, setCurrentGear] = useState(0); // Neutral
 
     useEffect(() => {
@@ -27,7 +26,6 @@ function GearShifter() {
         const material = new THREE.MeshStandardMaterial({ color: 0x555555 });
         const gearShifter = new THREE.Mesh(geometry, material);
         scene.add(gearShifter);
-        gearShifterRef.current = gearShifter;
 
         camera.position.z = 10;
 
@@ -57,14 +55,14 @@ function GearShifter() {
             gsap.to(gearShifter.rotation, { duration: 0.5, x: rotationAngle });
         };
 
-        // Function to handle gear shift on click/tap
+        // Function to handle gear shift
         const handleShift = () => {
             const nextGear = (currentGear + 1) % 3; // Cycles through 0, 1, 2 (Neutral, 1st, 2nd)
             setCurrentGear(nextGear);
             shiftToGear(nextGear);
         };
 
-        // Add event listeners
+        // Add event listeners for both click and touch
         renderer.domElement.addEventListener('click', handleShift);
         renderer.domElement.addEventListener('touchstart', handleShift);
 
