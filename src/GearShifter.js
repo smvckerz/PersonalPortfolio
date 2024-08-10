@@ -40,6 +40,9 @@ function GearShifter() {
 
         camera.position.z = 10;
 
+        // Set background color to white
+        renderer.setClearColor(0xffffff, 1);
+
         // Animate function
         const animate = () => {
             requestAnimationFrame(animate);
@@ -55,10 +58,10 @@ function GearShifter() {
                     rotationAngle = 0;
                     break;
                 case 1: // 1st gear
-                    rotationAngle = Math.PI / 4;
+                    rotationAngle = Math.PI / 6; // Adjust this value for the desired rotation
                     break;
                 case 2: // 2nd gear
-                    rotationAngle = -Math.PI / 4;
+                    rotationAngle = -Math.PI / 6; // Adjust this value for the desired rotation
                     break;
                 default:
                     rotationAngle = 0;
