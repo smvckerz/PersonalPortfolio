@@ -1,10 +1,12 @@
 import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
-import GearShifter from './GearShifter.css'
 
 function GearShifter() {
     const mountRef = useRef(null);
+    const gearShifterRef = useRef(null);
+    const startYRef = useRef(0);
+    const currentRotationRef = useRef(0);
 
     useEffect(() => {
         // Scene setup
@@ -26,6 +28,7 @@ function GearShifter() {
         const material = new THREE.MeshStandardMaterial({ color: 0x555555 });
         const gearShifter = new THREE.Mesh(geometry, material);
         scene.add(gearShifter);
+        gearShifterRef.current = gearShifter;
 
         camera.position.z = 10;
 
@@ -38,20 +41,37 @@ function GearShifter() {
 
         // GSAP animations for shifting gears
         const shiftToGear = (rotationAngle) => {
+            currentRotationRef.current = rotationAngle;
             gsap.to(gearShifter.rotation, { duration: 1, x: rotationAngle });
         };
 
-        // Event listeners for gear shifting
-        const handleKeyDown = (event) => {
-            if (event.key === '1') shiftToGear(Math.PI / 4);   // 1st gear
-            if (event.key === '2') shiftToGear(0);             // Neutral
-            if (event.key === '3') shiftToGear(-Math.PI / 4);  // 2nd gear
+        // Touch start event
+        const handleTouchStart = (event) => {
+            startYRef.current = event.touches[0].clientY;
         };
-        window.addEventListener('keydown', handleKeyDown);
+
+        // Touch move event
+        const handleTouchMove = (event) => {
+            const deltaY = event.touches[0].clientY - startYRef.current;
+
+            // Example thresholds for shifting gears
+            if (deltaY > 50) {
+                shiftToGear(-Math.PI / 4); // Shift to 2nd gear
+            } else if (deltaY < -50) {
+                shiftToGear(Math.PI / 4); // Shift to 1st gear
+            } else {
+                shiftToGear(0); // Neutral
+            }
+        };
+
+        // Add event listeners for touch events
+        renderer.domElement.addEventListener('touchstart', handleTouchStart);
+        renderer.domElement.addEventListener('touchmove', handleTouchMove);
 
         // Cleanup on unmount
         return () => {
-            window.removeEventListener('keydown', handleKeyDown);
+            renderer.domElement.removeEventListener('touchstart', handleTouchStart);
+            renderer.domElement.removeEventListener('touchmove', handleTouchMove);
             mountRef.current.removeChild(renderer.domElement);
         };
     }, []);
