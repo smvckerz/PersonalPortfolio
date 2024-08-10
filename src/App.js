@@ -30,6 +30,7 @@ import About from './About';
 import Projects from './Projects';
 import Contact from './Contact';
 import './App.css';  // Add styles in this file
+import Tabs from './Tabs'; 
 
 function App() {
     return (
@@ -38,6 +39,7 @@ function App() {
             <About />
             <Projects />
             <Contact />
+            <Tabs />
         </div>
     );
 }
