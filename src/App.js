@@ -25,10 +25,10 @@
 // export default App;
 
 import React from 'react';
-import Home from './components/Home';
-import About from './components/About';
-import Projects from './components/Projects';
-import Contact from './components/Contact';
+import Home from './HomeHome';
+import About from './About';
+import Projects from './Projects';
+import Contact from './Contact';
 import './App.css';  // Add styles in this file
 
 function App() {
