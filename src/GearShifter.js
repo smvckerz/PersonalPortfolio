@@ -2,81 +2,83 @@ import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 
-function GearShifter() {
+function CarPOV() {
     const mountRef = useRef(null);
 
     useEffect(() => {
         // Scene setup
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer();
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         mountRef.current.appendChild(renderer.domElement);
 
         // Lighting
-        const ambientLight = new THREE.AmbientLight(0x404040);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
         directionalLight.position.set(1, 1, 1).normalize();
         scene.add(directionalLight);
 
-        // Load the texture
-        const textureLoader = new THREE.TextureLoader();
-        const knobTexture = textureLoader.load('/path-to-your-image.jpg'); // Ensure the path is correct
+        // Create the steering wheel
+        const steeringWheelGeometry = new THREE.TorusGeometry(1, 0.2, 16, 100);
+        const steeringWheelMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 });
+        const steeringWheel = new THREE.Mesh(steeringWheelGeometry, steeringWheelMaterial);
+        steeringWheel.position.set(0, 0, -5); // Adjust the position to simulate the car's interior
+        scene.add(steeringWheel);
 
-        // Create a round gear knob (sphere) with the texture
-        const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
-        const sphereMaterial = new THREE.MeshStandardMaterial({ map: knobTexture });
-        const gearKnob = new THREE.Mesh(sphereGeometry, sphereMaterial);
-        gearKnob.position.y = 2;
-        scene.add(gearKnob);
+        // Create the gear shifter
+        const shifterGeometry = new THREE.CylinderGeometry(0.1, 0.1, 1, 32);
+        const knobGeometry = new THREE.SphereGeometry(0.2, 32, 32);
+        const shifterMaterial = new THREE.MeshStandardMaterial({ color: 0x555555 });
+        const knobMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+        const shifter = new THREE.Mesh(shifterGeometry, shifterMaterial);
+        const knob = new THREE.Mesh(knobGeometry, knobMaterial);
+        shifter.position.set(1, -1, -6);
+        knob.position.set(1, -0.5, -6);
+        scene.add(shifter);
+        scene.add(knob);
 
-        // Create the stick for the gear knob
-        const stickGeometry = new THREE.CylinderGeometry(0.2, 0.2, 4, 32);
-        const stickMaterial = new THREE.MeshStandardMaterial({ color: 0x555555 });
-        const gearStick = new THREE.Mesh(stickGeometry, stickMaterial);
-        gearStick.position.y = 0;
-        scene.add(gearStick);
+        // Adjust camera position for POV
+        camera.position.set(0, 1, 0); // Position the camera inside the car
 
-        camera.position.z = 10;
-
-        // Set background color to white
-        renderer.setClearColor(0xffffff, 1);
-
-        // Animate function
+        // Animation loop
         const animate = () => {
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
         };
         animate();
 
-        // GSAP animations for shifting gears
-        const shiftToGear = (gear) => {
-            let rotationAngle;
-            switch (gear) {
-                case 0: // Neutral
-                    rotationAngle = 0;
-                    break;
-                case 1: // 1st gear
-                    rotationAngle = Math.PI / 6; // Adjust this value for the desired rotation
-                    break;
-                case 2: // 2nd gear
-                    rotationAngle = -Math.PI / 6; // Adjust this value for the desired rotation
-                    break;
-                default:
-                    rotationAngle = 0;
-            }
-            gsap.to(gearKnob.rotation, { duration: 0.5, x: rotationAngle });
+        // GSAP animations for interactions
+        const rotateSteeringWheel = (direction) => {
+            gsap.to(steeringWheel.rotation, { duration: 1, z: direction === 'left' ? Math.PI / 4 : -Math.PI / 4 });
         };
 
-        // Handle keyboard input
+        const shiftGear = (gear) => {
+            let positionZ;
+            switch (gear) {
+                case 1:
+                    positionZ = -6.2; // Position for 1st gear
+                    break;
+                case 2:
+                    positionZ = -5.8; // Position for 2nd gear
+                    break;
+                default:
+                    positionZ = -6; // Neutral position
+            }
+            gsap.to(knob.position, { duration: 0.5, z: positionZ });
+        };
+
+        // Handle keyboard inputs
         const handleKeyDown = (event) => {
-            if (event.key === '1') {
-                shiftToGear(1); // Shift to 1st gear
+            if (event.key === 'ArrowLeft') {
+                rotateSteeringWheel('left');
+            } else if (event.key === 'ArrowRight') {
+                rotateSteeringWheel('right');
+            } else if (event.key === '1') {
+                shiftGear(1);
             } else if (event.key === '2') {
-                shiftToGear(2); // Shift to 2nd gear
-            } else if (event.key === '0') {
-                shiftToGear(0); // Shift to Neutral
+                shiftGear(2);
             }
         };
 
@@ -93,4 +95,4 @@ function GearShifter() {
     return <div ref={mountRef} />;
 }
 
-export default GearShifter;
+export default CarPOV;
