@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
+import GearShifter from './GearShifter.css'
 
 function GearShifter() {
     const mountRef = useRef(null);
