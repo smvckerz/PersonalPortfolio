@@ -1,10 +1,9 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 
 function GearShifter() {
     const mountRef = useRef(null);
-    const [currentGear, setCurrentGear] = useState(0); // Neutral
 
     useEffect(() => {
         // Scene setup
@@ -21,11 +20,23 @@ function GearShifter() {
         directionalLight.position.set(1, 1, 1).normalize();
         scene.add(directionalLight);
 
-        // Create a simple gear shifter
-        const geometry = new THREE.BoxGeometry(1, 4, 1);
-        const material = new THREE.MeshStandardMaterial({ color: 0x555555 });
-        const gearShifter = new THREE.Mesh(geometry, material);
-        scene.add(gearShifter);
+        // Load the texture
+        const textureLoader = new THREE.TextureLoader();
+        const knobTexture = textureLoader.load('/path-to-your-image.jpg'); // Ensure the path is correct
+
+        // Create a round gear knob (sphere) with the texture
+        const sphereGeometry = new THREE.SphereGeometry(1, 32, 32);
+        const sphereMaterial = new THREE.MeshStandardMaterial({ map: knobTexture });
+        const gearKnob = new THREE.Mesh(sphereGeometry, sphereMaterial);
+        gearKnob.position.y = 2;
+        scene.add(gearKnob);
+
+        // Create the stick for the gear knob
+        const stickGeometry = new THREE.CylinderGeometry(0.2, 0.2, 4, 32);
+        const stickMaterial = new THREE.MeshStandardMaterial({ color: 0x555555 });
+        const gearStick = new THREE.Mesh(stickGeometry, stickMaterial);
+        gearStick.position.y = 0;
+        scene.add(gearStick);
 
         camera.position.z = 10;
 
@@ -52,19 +63,16 @@ function GearShifter() {
                 default:
                     rotationAngle = 0;
             }
-            gsap.to(gearShifter.rotation, { duration: 0.5, x: rotationAngle });
+            gsap.to(gearKnob.rotation, { duration: 0.5, x: rotationAngle });
         };
 
         // Handle keyboard input
         const handleKeyDown = (event) => {
             if (event.key === '1') {
-                setCurrentGear(1);
                 shiftToGear(1); // Shift to 1st gear
             } else if (event.key === '2') {
-                setCurrentGear(2);
                 shiftToGear(2); // Shift to 2nd gear
             } else if (event.key === '0') {
-                setCurrentGear(0);
                 shiftToGear(0); // Shift to Neutral
             }
         };
