@@ -1,0 +1,26 @@
+name: Deploy to Raspberry Pi
+
+on:
+  push:
+    branches:
+      - main  # Replace with your branch name
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+      
+    - name: Deploy to Raspberry Pi
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.PI_HOST }}    # Raspberry Pi IP stored as a secret
+        username: ${{ secrets.PI_USER }}  # Username stored as a secret
+        key: ${{ secrets.PI_SSH_KEY }}   # SSH private key stored as a secret
+        passphrase: ${{ secrets.PI_PASSPHRASE }} # If needed
+        script: |
+          cd /path/to/your/project/directory
+          git fetch --all
+          git reset --hard origin/main
