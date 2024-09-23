@@ -25,7 +25,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import './App.css';
-import { ScrollSmoother } from 'gsap-trial/all';
+import { ScrollSmoother } from 'gsap-trial/ScrollSmoother';
 
 gsap.registerPlugin(ScrollSmoother);
 
