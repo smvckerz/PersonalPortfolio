@@ -1,4 +1,4 @@
-# Personal Portfolio <div style="display: flex; flex-direction: row; align-items: center; justify-content: center;">center</div>
+                                                                                                            # Personal Portfolio
 
 Welcome to the source code for my personal portfolio website! 🎉
 
