@@ -1,4 +1,4 @@
-<center># Personal Portfolio</center>#
+<center># Personal Portfolio</center>
 
 Welcome to the source code for my personal portfolio website! 🎉
 
