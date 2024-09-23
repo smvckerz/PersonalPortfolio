@@ -41,6 +41,7 @@
   },
   "devDependencies": {
     "@babel/plugin-transform-class-properties": "^7.25.4",
-    "@babel/plugin-transform-private-methods": "^7.25.4"
+    "@babel/plugin-transform-private-methods": "^7.25.4",
+    "@rollup/plugin-terser": "^0.4.4"
   }
 }
