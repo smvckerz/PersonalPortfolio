@@ -1,32 +1,3 @@
-# name: Deploy to Raspberry Pi
-
-# on:
-#   push:
-#     branches:
-#       - main
-
-# jobs:
-#   deploy:
-#     runs-on: ubuntu-latest
-    
-#     steps:
-#       - name: Checkout code
-#         uses: actions/checkout@v2
-
-#       - name: Deploy to Raspberry Pi
-#         uses: appleboy/ssh-action@master
-#         with:
-#           host: ${{ secrets.PI_HOST }}
-#           username: ${{ secrets.PI_USER }}
-#           key: ${{ secrets.PI_SSH_KEY }}
-#           port: 22
-#           script: |
-#             cd /var/www/PersonalPortfolio
-#             git fetch --all
-#             git reset --hard origin/main
-#             npm install
-#             npm run build
-
 name: Deploy to Raspberry Pi
 
 on:
@@ -50,9 +21,14 @@ jobs:
           key: ${{ secrets.PI_SSH_KEY }}
           script: |
             cd /var/www/PersonalPortfolio
-            git fetch --all
-            git reset --hard origin/main
-            rm -rf node_modules
+            # Kill any running Node.js processes
+            pkill node || true
+            # Ensure correct permissions
+            sudo chown -R $(whoami):$(whoami) .
+            # Clean up
+            rm -rf node_modules package-lock.json
+            npm cache clean --force
+            # Install dependencies
             npm install
+            # Build the project
             NODE_OPTIONS=--openssl-legacy-provider npm run build
-
