@@ -1,3 +1,32 @@
+# name: Deploy to Raspberry Pi
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
+    
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v2
+
+#       - name: Deploy to Raspberry Pi
+#         uses: appleboy/ssh-action@master
+#         with:
+#           host: ${{ secrets.PI_HOST }}
+#           username: ${{ secrets.PI_USER }}
+#           key: ${{ secrets.PI_SSH_KEY }}
+#           port: 22
+#           script: |
+#             cd /var/www/PersonalPortfolio
+#             git fetch --all
+#             git reset --hard origin/main
+#             npm install
+#             npm run build
+
 name: Deploy to Raspberry Pi
 
 on:
@@ -13,16 +42,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install dependencies
+        run: npm install  # Install gsap and other dependencies
+
       - name: Deploy to Raspberry Pi
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.PI_HOST }}
           username: ${{ secrets.PI_USER }}
           key: ${{ secrets.PI_SSH_KEY }}
-          port: 22
           script: |
             cd /var/www/PersonalPortfolio
             git fetch --all
             git reset --hard origin/main
-            npm install
-            npm run build
+            npm install  # Ensure GSAP and dependencies are installed
+            npm run build  # Build the React app
+
