@@ -42,7 +42,7 @@ function App() {
       
       {/* Example additional content */}
       <section className="content-section">
-        <p>Scroll down for more content</p>
+        <p>More sections for smoother scrolling...</p>
       </section>
       <section className="content-section">
         <p>More sections for smoother scrolling...</p>
@@ -57,6 +57,9 @@ function App() {
       {/* Duplicate sections for infinite scrolling */}
       <section className="content-section">
         <p>Duplicated section for infinite scroll effect.</p>
+      </section>
+      <section>
+        <p>lol</p>
       </section>
       <section className="content-section">
         <p>Duplicated section for infinite scroll effect.</p>
