@@ -76,3 +76,30 @@ html, body {
   position: relative;
   overflow: hidden;
 }
+
+html, body {
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+#smooth-wrapper {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+#smooth-content {
+  position: relative;
+  overflow: hidden;
+}
+
+section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background: #f3f3f3;
+  border-bottom: 1px solid #ddd;
+}
