@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+Personal Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to the source code for my personal portfolio website! 🎉
 
-## Available Scripts
+This website is built using React for the frontend and GSAP (GreenSock Animation Platform) for cool animations. It showcases my projects, experience, and other relevant details about me.
 
-In the project directory, you can run:
+Feel free to check out the live site here: eduardoemunoz.com
+🚀 Features
 
-### `npm start`
+    React: The website is developed using React for a dynamic and responsive user experience.
+    GSAP: Animations are powered by GSAP to create smooth, engaging transitions and effects.
+    Responsive Design: The website adapts to different screen sizes, making it accessible on both desktop and mobile devices.
+    Modular Code: Components are divided into smaller reusable parts for easier maintenance.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+🛠️ Installation
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+If you'd like to run this project locally, follow the steps below:
 
-### `npm test`
+    Clone the repository:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    bash
 
-### `npm run build`
+git clone https://github.com/smvckerz/PersonalPortfolio.git
+cd PersonalPortfolio
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Install dependencies: Make sure you have Node.js installed, then run the following command:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+bash
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+npm install
 
-### `npm run eject`
+Run the development server: To run the website on your local machine:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+bash
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+npm start
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Your site should now be running at http://localhost:3000.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Build for production: To create a production-ready build of the website:
 
-## Learn More
+bash
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+    npm run build
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+🌟 Technologies Used
 
-### Code Splitting
+    React: A JavaScript library for building user interfaces.
+    GSAP: A robust JavaScript library for animations.
+    Node.js: For managing the project's dependencies and running the build tools.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+📂 Project Structure
 
-### Analyzing the Bundle Size
+Here’s a brief overview of the file structure:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+bash
 
-### Making a Progressive Web App
+/src
+   /components    # Reusable React components
+   /pages         # Different pages for the website (Home, About, Projects)
+   /styles        # CSS and styling files
+/public
+   index.html     # The main HTML file
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+🎨 Animations
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+    The website uses GSAP to create fluid animations for page transitions and element movements.
+    If you're interested in tweaking or adding new animations, check out the GSAP documentation here: GSAP Documentation.
