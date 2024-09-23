@@ -83,6 +83,10 @@ function App() {
         <section className="content-section">
           <p>Keep scrolling!</p>
         </section>
+
+        <section className="content-section">
+          <p>Keep scrolling!</p>
+        </section>
         
         {/* Duplicate sections for infinite scrolling */}
         <section className="content-section">
