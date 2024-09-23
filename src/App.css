@@ -59,3 +59,20 @@ a:hover {
   font-size: calc(10px + 2vmin);
   color: white;
 }
+
+/* Make sure your content fills the entire screen */
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#smooth-wrapper {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+#smooth-content {
+  position: relative;
+  overflow: hidden;
+}
