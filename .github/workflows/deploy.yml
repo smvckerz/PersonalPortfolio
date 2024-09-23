@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -18,20 +19,10 @@ jobs:
           host: ${{ secrets.PI_HOST }}
           username: ${{ secrets.PI_USER }}
           key: ${{ secrets.PI_SSH_KEY }}
+          port: 22
           script: |
-            ssh -vvv -i /Users/familyaccount/.ssh/id_rsa smvckerz@${{ secrets.PI_HOST }}
             cd /var/www/PersonalPortfolio
             git fetch --all
             git reset --hard origin/main
-      # - name: Deploy to Raspberry Pi
-      #   uses: appleboy/ssh-action@v0.1.2
-      #   with:
-      #     host: ${{ secrets.PI_HOST }}
-      #     username: ${{ secrets.PI_USER }}
-      #     key: ${{ secrets.PI_SSH_KEY }}
-      #     script: |
-      #       cd /var/www/PersonalPortfolio
-      #       git fetch --all
-      #       git reset --hard origin/main
-      #       npm install
-      #       npm run build
+            npm install
+            npm run build
