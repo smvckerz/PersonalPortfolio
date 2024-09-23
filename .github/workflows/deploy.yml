@@ -37,13 +37,10 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Install dependencies
-        run: npm install  # Install gsap and other dependencies
 
       - name: Deploy to Raspberry Pi
         uses: appleboy/ssh-action@master
@@ -55,6 +52,7 @@ jobs:
             cd /var/www/PersonalPortfolio
             git fetch --all
             git reset --hard origin/main
-            npm install  # Ensure GSAP and dependencies are installed
-            npm run build  # Build the React app
+            rm -rf node_modules
+            npm install
+            NODE_OPTIONS=--openssl-legacy-provider npm run build
 
