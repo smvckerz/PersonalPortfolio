@@ -35,13 +35,9 @@ function App() {
 
   return (
     <div className="App">
-      {/* Main Content */}
       <Tabs>
         <About />
       </Tabs>
-      <header className="App-header">
-        <h1>HELLO!</h1>
-      </header>
     </div>
   );
 }
