@@ -21,7 +21,6 @@
 
 // export default App;
 
-// import { ScrollSmoother } from 'gsap/ScrollSmoother';
 import React, { useEffect } from 'react';
 import { gsap } from 'gsap';
 import './App.css';
