@@ -25,6 +25,7 @@
 import React, { useEffect } from 'react';
 import { gsap } from 'gsap';
 import './App.css';
+import About from './About';
 
 function App() {
   useEffect(() => {
@@ -35,35 +36,13 @@ function App() {
   return (
     <div className="App">
       {/* Main Content */}
+      <Tabs>
+        <About />
+      </Tabs>
       <header className="App-header">
         <h1>HELLO!</h1>
         <p>This site is animated with GSAP!</p>
       </header>
-      
-      {/* Example additional content */}
-      <section className="content-section">
-        <p>More sections for smoother scrolling...</p>
-      </section>
-      <section className="content-section">
-        <p>More sections for smoother scrolling...</p>
-      </section>
-      <section className="content-section">
-        <p>Keep scrolling!</p>
-      </section>
-      <section className="content-section">
-        <p>Keep scrolling!</p>
-      </section>
-      
-      {/* Duplicate sections for infinite scrolling */}
-      <section className="content-section">
-        <p>Duplicated section for infinite scroll effect.</p>
-      </section>
-      <section>
-        <p>lol</p>
-      </section>
-      <section className="content-section">
-        <p>Duplicated section for infinite scroll effect.</p>
-      </section>
     </div>
   );
 }
