@@ -25,6 +25,7 @@ import React, { useEffect } from 'react';
 import { gsap } from 'gsap';
 import './App.css';
 import About from './About';
+import Tabs from './Tabs';
 
 function App() {
   useEffect(() => {
