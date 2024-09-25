@@ -41,7 +41,6 @@ function App() {
       </Tabs>
       <header className="App-header">
         <h1>HELLO!</h1>
-        <p>This site is animated with GSAP!</p>
       </header>
     </div>
   );
