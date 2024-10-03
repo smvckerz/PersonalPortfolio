@@ -6,29 +6,42 @@ on:
       - main
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Cache node_modules
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build Project
+        run: npm run build
+
       - name: Deploy to Raspberry Pi
-        uses: appleboy/ssh-action@master
+        uses: appleboy/scp-action@v0.1.1
+        with:
+          host: ${{ secrets.PI_HOST }}
+          username: ${{ secrets.PI_USER }}
+          key: ${{ secrets.PI_SSH_KEY }}
+          source: "build/*"
+          target: "/var/www/PersonalPortfolio"
+
+      - name: Restart Server
+        uses: appleboy/ssh-action@v0.1.7
         with:
           host: ${{ secrets.PI_HOST }}
           username: ${{ secrets.PI_USER }}
           key: ${{ secrets.PI_SSH_KEY }}
           script: |
-            cd /var/www/PersonalPortfolio
-            # Kill any running Node.js processes
-            pkill node || true
-            # Ensure correct permissions
-            sudo chown -R $(whoami):$(whoami) .
-            # Clean up
-            rm -rf node_modules package-lock.json
-            npm cache clean --force
-            # Install dependencies
-            npm install
-            # Build the project
-            NODE_OPTIONS=--openssl-legacy-provider npm run build
+            # Commands to restart your web server if necessary
+            sudo systemctl restart nginx
