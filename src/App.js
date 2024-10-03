@@ -60,7 +60,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <p>Hello!</p>
+        <p>Hell!</p>
       </header>
       <Tabs>
         <Home label="Home" />
