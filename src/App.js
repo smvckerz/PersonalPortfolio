@@ -59,7 +59,9 @@ function App() {
 
   return (
     <div className="App">
-      <p>Hello!</p>
+      <header className="App-header">
+        <p>Hell!</p>
+      </header>
       <Tabs>
         <Home label="Home" />
         <About label="About" />
