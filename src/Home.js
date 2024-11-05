@@ -7,11 +7,11 @@ function Home() {
 
     const loadData = () => {
         // Simulate data loading
-        const newItems = [/* new data here */];
+        const newItems =  Array.from({ length: 10 }, (_, i) => `Item ${items.length + i + 1}`);
         setItems([...items, ...newItems]);
 
         // Set `hasMore` to false if all data is loaded
-        if (/* all data loaded */) {
+        if (items.length + newItems.length >= 50) {
             setHasMore(false);
         }
     };
