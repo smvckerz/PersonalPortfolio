@@ -17,16 +17,18 @@ function Projects() {
 
     return (
         <section id="projects" className="section-projects">
-            <h2>My Projects</h2>
-            <ul>
-                {projects.map((project, index) => (
-                    <li key={index}>
-                        <h3>{project.name}</h3>
-                        <p>{project.description}</p>
-                        <a href={project.link} target="_blank" rel="noopener noreferrer">View on GitHub</a>
-                    </li>
-                ))}
-            </ul>
+            <center>
+                <h2>My Projects</h2>
+                <ul>
+                    {projects.map((project, index) => (
+                        <li key={index}>
+                            <h3>{project.name}</h3>
+                            <p>{project.description}</p>
+                            <a href={project.link} target="_blank" rel="noopener noreferrer">View on GitHub</a>
+                        </li>
+                    ))}
+                </ul>
+            </center>
         </section>
     );
 }
