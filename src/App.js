@@ -16,7 +16,7 @@ function App() {
       <header className="App-header">
         <p>Hello!</p>
       </header>
-      <Tabs>
+      <Tabs className="App-header">
         <Home label="Home" />
         <About label="About" />
         <Projects label="Projects" />
