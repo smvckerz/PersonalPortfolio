@@ -60,14 +60,30 @@
 
 // export default Home;
 
+import React, {useState} from 'react'
+import { param } from "framer-motion/client";
+import testUnlimScroll from './testUnlimScroll';
+
+function handleSearch(e){
+    setQuery(e.target.value)
+    setPageNumber(1)
+}
+
+
 function Home() {
+    const [query, setQuery] = useState('')
+    const [pageNumber, setPageNumber] = useState('')
+    testUnlimScroll(query, pageNumber)
     return (
+        <><input type='text' onChange={handleSearch}>
+
+        </input>
         <section id="home" className="section-home">
             <center>
-            <h1>Welcome to My Portfolio</h1>
-            <p>I'm Eduardo Munoz, a Software Engineer.</p>
+                <h1>Welcome to My Portfolio</h1>
+                <p>I'm Eduardo Munoz, a Software Engineer.</p>
             </center>
-        </section>
+        </section></>
     );
 }
 
