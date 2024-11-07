@@ -101,8 +101,8 @@
 import React, { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import axios from "axios";
-import ProductCard from "./ProductCard";
-import Loader from "./Loader";
+// import ProductCard from "./ProductCard";
+// import Loader from "./Loader";
 
 const InfiniteScrollExample1 = () => {
   const [items, setItems] = useState([]);
