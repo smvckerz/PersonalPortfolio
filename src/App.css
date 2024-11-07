@@ -129,9 +129,10 @@ body{
   width: 100vw;
   height: 100vh;
   background-color: #282c34;
-  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9999;
+  color: white;
+  font-size: 2rem; /* Optional, to make it more visible */
+  z-index: 9999; /* Ensures it’s on top of everything else */
 }
