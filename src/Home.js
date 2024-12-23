@@ -15,7 +15,7 @@
 
 import React from "react";
 import React, { useState, useRef, useEffect } from "react";
-import "./Console.css";
+import "src/Home.css";
 
 function Console() {
   const [lines, setLines] = useState([
