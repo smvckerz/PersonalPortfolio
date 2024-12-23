@@ -14,7 +14,7 @@
 // export default Home;
 
 import React, { useState, useRef, useEffect } from "react";
-import "src/Home.css";
+import "./Home.css";
 
 function Home() {
   const [lines, setLines] = useState([
