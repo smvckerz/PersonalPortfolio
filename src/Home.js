@@ -13,11 +13,10 @@
 
 // export default Home;
 
-import React from "react";
 import React, { useState, useRef, useEffect } from "react";
 import "src/Home.css";
 
-function Console() {
+function Home() {
   const [lines, setLines] = useState([
     "Welcome to my C++ Console Portfolio!",
     "Type 'help' to see available commands.",
@@ -107,4 +106,4 @@ function Console() {
   );
 }
 
-export default Console;
+export default Home;
