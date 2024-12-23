@@ -1,141 +1,110 @@
-// import React, { useState } from 'react';
-// import InfiniteScroll from 'react-infinite-scroller';
+// import React from 'react';
 
 // function Home() {
-//     const [items, setItems] = useState([]); // Placeholder for loaded items
-//     const [hasMore, setHasMore] = useState(true);
-
-//     const loadData = () => {
-//         // Simulate data loading
-//         const newItems =  Array.from({ length: 10 }, (_, i) => `Item ${items.length + i + 1}`);
-//         setItems([...items, ...newItems]);
-
-//         // Set `hasMore` to false if all data is loaded
-//         if (items.length + newItems.length >= 50) {
-//             setHasMore(false);
-//         }
-//     };
-
 //     return (
-//         <InfiniteScroll
-//             pageStart={0}
-//             loadMore={loadData}
-//             hasMore={hasMore}
-//             loader={<div className='loader' key={0}>Loading...</div>}
-//         >
-//             <div style={{ height: '200px', overflow: 'scroll' }}>
-//                 {items.map((item, index) => (
-//                     <div key={index}>{item}</div>
-//                 ))}
-//             </div>
-//         </InfiniteScroll>
+//         <section id="home" className="section-home">
+//             <center>
+//                 <h1>Welcome to My Portfolio</h1>
+//                 <p>I'm Eduardo Munoz, a Software Engineer.</p>
+//             </center>
+//         </section>
 //     );
 // }
 
 // export default Home;
 
-// import React from 'react';
-// import InfiniteScroll from 'react-infinite-scroller';
+import React from "react";
+import React, { useState, useRef, useEffect } from "react";
+import "./Console.css";
 
-// function Home()
-// {
-//     return(
-//         <InfiniteScroll
-//             pageStart={0}
-//             loadMore={loadData}
-//             hasMore={true||false}
-//             loader={<div className='loader' key={0}> Loading...</div>}
-//         >
-//             <div style={{height: '200px', overflow: 'scroll'}}>
-//                 <section id="home" className="section-home">
-//                     <center>
-//                         <h1>Welcome to My Portfolio</h1>
-//                         <p>I'm Eduardo Munoz, a Software Engineer.</p>
-//                     </center>
-//                 </section>
-//             </div>
-//         </InfiniteScroll>
-//     )
-// }
+function Console() {
+  const [lines, setLines] = useState([
+    "Welcome to my C++ Console Portfolio!",
+    "Type 'help' to see available commands.",
+  ]);
 
-// export default Home;
+  const [inputValue, setInputValue] = useState("");
+  const outputRef = useRef(null);
 
-// import React, {useState} from 'react'
-// import useTestUnlimScroll from './testUnlimScroll';
+  // Scroll to bottom whenever lines change
+  useEffect(() => {
+    if (outputRef.current) {
+      outputRef.current.scrollTop = outputRef.current.scrollHeight;
+    }
+  }, [lines]);
 
-// function handleSearch(e){
-//     setQuery(e.target.value)
-//     setPageNumber(1)
-// }
+  const handleCommand = (cmd) => {
+    switch (cmd) {
+      case "help":
+        return [
+          "Available commands:",
+          "  about   -> Show info about me",
+          "  projects -> List my projects",
+          "  clear   -> Clear the console",
+          "  help    -> This message",
+        ];
+      case "about":
+        return ["I'm Jane Doe, a passionate C++ developer!"];
+      case "projects":
+        return [
+          "1. Real-Time 3D Renderer",
+          "2. Neural Net Playground",
+          "3. Custom Game Engine",
+        ];
+      case "clear":
+        // Instead of returning lines, we’ll handle clearing in the main function
+        return null;
+      default:
+        if (cmd.trim() === "") {
+          return []; // no output for empty commands
+        } else {
+          return [`'${cmd}' is not recognized as a valid command.`];
+        }
+    }
+  };
 
-// const {
-//     books,
-//     hasMore,
-//     loading,
-//     error
-// } = useBookSearch(query, pageNumber)
+  const onSubmitCommand = (e) => {
+    e.preventDefault();
+    const command = inputValue.trim();
 
-import React from 'react';
+    // Append the command line the user typed
+    setLines((prev) => [...prev, `C:\\Users\\Guest> ${command}`]);
 
-function Home() {
-    return (
-        <section id="home" className="section-home">
-            <center>
-                <h1>Welcome to My Portfolio</h1>
-                <p>I'm Eduardo Munoz, a Software Engineer.</p>
-            </center>
-        </section>
-    );
+    // Get result from handleCommand
+    const output = handleCommand(command);
+
+    // If the command was 'clear', we can clear the console
+    if (command === "clear") {
+      setLines([]);
+    } else if (output && output.length > 0) {
+      // Append any resulting lines
+      setLines((prev) => [...prev, ...output]);
+    }
+
+    // Reset input
+    setInputValue("");
+  };
+
+  return (
+    <div className="console-container">
+      <div className="output-lines" ref={outputRef}>
+        {lines.map((line, index) => (
+          <div key={index} className="line">{line}</div>
+        ))}
+      </div>
+
+      <form onSubmit={onSubmitCommand} className="prompt">
+        <span className="prompt-label">C:\Users\Guest&gt;</span>
+        <input
+          className="prompt-input"
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          autoFocus
+        />
+      </form>
+    </div>
+  );
 }
 
-export default Home;
-
-// import React, { useState, useEffect } from "react";
-// import InfiniteScroll from "react-infinite-scroll-component";
-// import axios from "axios";
-// // import ProductCard from "./ProductCard";
-// // import Loader from "./Loader";
-
-// const InfiniteScrollExample1 = () => {
-//   const [items, setItems] = useState([]);
-//   const [hasMore, setHasMore] = useState(true);
-//   const [index, setIndex] = useState(2);
-
-//   useEffect(() => {
-//     axios
-//       .get("https://api.escuelajs.co/api/v1/products?offset=10&limit=12")
-//       .then((res) => setItems(res.data))
-//       .catch((err) => console.log(err));
-//   }, []);
-
-//   const fetchMoreData = () => {
-//     axios
-//       .get(`https://api.escuelajs.co/api/v1/products?offset=${index}0&limit=12`)
-//       .then((res) => {
-//         setItems((prevItems) => [...prevItems, ...res.data]);
-
-//         res.data.length > 0 ? setHasMore(true) : setHasMore(false);
-//       })
-//       .catch((err) => console.log(err));
-
-//     setIndex((prevIndex) => prevIndex + 1);
-//   };
-
-//   return (
-//     <InfiniteScroll
-//       dataLength={items.length}
-//       next={fetchMoreData}
-//       hasMore={hasMore}
-//       loader={<Loader />}
-//     >
-//       <div className='container'>
-//         <div className='row'>
-//           {items &&
-//             items.map((item) => <ProductCard data={item} key={item.id} />)}
-//         </div>
-//       </div>
-//     </InfiniteScroll>
-//   );
-// };
-
-// export default InfiniteScrollExample1;
+export default Console;

@@ -1,4 +1,4 @@
-*,*::before,*::after{
+/* *,*::before,*::after{
   margin:0;
   padding:0;
   box-sizing: border-box;
@@ -14,4 +14,43 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
+} */
+
+
+.console-container {
+  background-color: #1e1e1e; /* Dark background */
+  color: #c8c8c8;
+  font-family: "Consolas", monospace;
+  height: 100vh;
+  padding: 1rem;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.output-lines {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.line {
+  margin: 4px 0;
+}
+
+.prompt {
+  display: flex;
+  align-items: center;
+}
+
+.prompt-label {
+  margin-right: 0.5rem;
+}
+
+.prompt-input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #c8c8c8;
+  font-family: inherit;
+  width: 100%;
 }
