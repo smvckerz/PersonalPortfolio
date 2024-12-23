@@ -47,7 +47,7 @@
 
 
 import React, { useState, useEffect } from "react";
-import PreLoader from "./PreLoader";
+// import PreLoader from "./PreLoader";
 import Home from "./Home"; // or your main console component
 
 function App() {
