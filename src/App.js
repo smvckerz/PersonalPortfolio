@@ -32,14 +32,41 @@
 
 // export default App;
 
-import React from "react";
-import Home from './Home';
+// import React from "react";
+// import Home from './Home';
+
+// function App() {
+//   return (
+//     <div>
+//       <Home />
+//     </div>
+//   );
+// }
+
+// export default App;
+
+
+import React, { useState, useEffect } from "react";
+import PreLoader from "./PreLoader";
+import Home from "./Home"; // or your main console component
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate a 2-second "loading time"
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    // Cleanup if the component unmounts
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div>
-      <Home />
-    </div>
+    <>
+      {loading ? <PreLoader /> : <Home />}
+    </>
   );
 }
 
