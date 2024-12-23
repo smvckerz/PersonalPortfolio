@@ -19,7 +19,7 @@ import "./Home.css";
 function Home() {
   const [lines, setLines] = useState([
     "Welcome to my C++ Console Portfolio!",
-    "Type 'help' to see available commands.",
+    "Type 'help' or 'Help' to see available commands.",
   ]);
 
   const [inputValue, setInputValue] = useState("");
@@ -36,11 +36,13 @@ function Home() {
     switch (cmd) {
       case "help":
         return [
+          "-------------------------------",
           "Available commands:",
           "  about   -> Show info about me",
           "  projects -> List my projects",
           "  clear   -> Clear the console",
           "  help    -> This message",
+          "--------------------------------"
         ];
       case "about":
         return ["I'm Jane Doe, a passionate C++ developer!"];
