@@ -46,19 +46,6 @@ function Home() {
                     "--------------------------------",
                     "                                "
                 ];
-            case "Help":
-                return [
-                    "                               ",
-                    "-------------------------------",
-                    "Available commands:",
-                    "  about    -> Show info about me",
-                    "  projects -> List my projects",
-                    "  clear    -> Clear the console",
-                    "  help     -> This message",
-                    "  ShowAll -> Shows all of my information", 
-                    "--------------------------------",
-                    "                                "
-                ];
             case "about":
                 return ["I'm Eduardo Munoz, an up and coming Software Developer"];
             case "projects":
