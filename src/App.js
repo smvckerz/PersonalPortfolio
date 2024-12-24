@@ -63,11 +63,11 @@ function App() {
     return () => clearTimeout(timer);
   }, []);
 
-  // return (
-  //   <>
-  //     {loading ? <PreLoader /> : <Home />}
-  //   </>
-  // );
+  return (
+    <>
+      {loading ? <PreLoader /> : <Home />}
+    </>
+  );
 }
 
 export default App;
