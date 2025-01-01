@@ -17,6 +17,8 @@
   flex: 1;
   overflow-y: auto;
   margin-bottom: 0.5rem;
+  flex-direction: column;
+  display: flex;
 }
 
 /* The prompt area at the bottom */
