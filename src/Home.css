@@ -49,3 +49,16 @@
   color: #c8c8c8;
   animation: blink 1s infinite;
 }
+
+.blink-cursor {
+  display: inline-block;
+  width: 8px;
+  background: #c8c8c8;
+  margin-left: 2px;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}

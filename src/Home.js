@@ -1,90 +1,95 @@
 // Home.js
 import React, { useState, useEffect, useRef } from "react";
-import "./Home.css"; // We'll define the CSS next
+import "./Home.css";
+import TypedLine from "./TypedLine"; // Our new typed component
 
 function Home() {
-  // Lines that appear in the console
   const [lines, setLines] = useState([
-    "Welcome to my React Console!",
-    "Type 'help' to see available commands.",
+    { content: "Welcome to my React Console!", typed: true },
+    { content: "Type 'help' to see available commands.", typed: true }
   ]);
-
-  // Current input value
+  
   const [inputValue, setInputValue] = useState("");
-
-  // Ref for auto-scrolling to bottom
   const outputRef = useRef(null);
 
-  // Auto-scroll whenever lines update
+  // Scroll to bottom on new lines
   useEffect(() => {
     if (outputRef.current) {
       outputRef.current.scrollTop = outputRef.current.scrollHeight;
     }
   }, [lines]);
 
-  // Command handler
   const handleCommand = (cmd) => {
     switch (cmd.toLowerCase()) {
       case "help":
         return [
-          "",
-          "Available commands:",
-          "  help    -> Show this message",
-          "  about   -> Info about me",
-          "  clear   -> Clear the console",
-          "",
+          { content: "", typed: false },
+          { content: "Available commands:", typed: true },
+          { content: "  help    -> Show this message", typed: true },
+          { content: "  about   -> Info about me", typed: true },
+          { content: "  clear   -> Clear the console", typed: true },
+          { content: "", typed: false }
         ];
       case "about":
-        return ["I'm a software developer building cool stuff!"];
+        return [{ content: "I'm a software developer building cool stuff!", typed: true }];
       case "clear":
-        // We'll handle clearing in the main function
         return null;
       default:
         if (cmd.trim() === "") {
-          return []; // no output for empty commands
+          return [];
         } else {
-          return [`'${cmd}' is not recognized as a valid command.`];
+          return [{ content: `'${cmd}' is not recognized as a valid command.`, typed: true }];
         }
     }
   };
 
-  // Form submission
   const onSubmitCommand = (e) => {
     e.preventDefault();
     const command = inputValue.trim();
 
-    // Display the user's typed command
-    setLines((prev) => [...prev, `C:\\Users\\Guest> ${command}`]);
+    // The user’s typed command shows up immediately (typed = false),
+    // because we want it to appear at once.
+    setLines((prev) => [
+      ...prev,
+      { content: `C:\\Users\\Recruiter> ${command}`, typed: false }
+    ]);
 
-    // Get the response from our command handler
     const output = handleCommand(command);
-
     if (command.toLowerCase() === "clear") {
-      // Clear the console entirely
       setLines([]);
     } else if (output && output.length > 0) {
-      // Append command output
+      // Append the typed or non-typed lines
       setLines((prev) => [...prev, ...output]);
     }
 
-    // Clear the input
     setInputValue("");
   };
 
   return (
     <div className="console-container">
-      {/* Output area */}
       <div className="output-lines" ref={outputRef}>
-        {lines.map((line, index) => (
-          <div key={index} className="line">
-            {line}
-          </div>
-        ))}
+        {lines.map((lineObj, index) => {
+          // if typed is true, use the TypedLine component
+          if (lineObj.typed) {
+            return (
+              <TypedLine
+                key={index}
+                text={lineObj.content}
+                // optional onComplete if you want to do something after each line finishes
+              />
+            );
+          }
+          // otherwise, just show it as plain text
+          return (
+            <div key={index} className="line">
+              {lineObj.content}
+            </div>
+          );
+        })}
       </div>
 
-      {/* Command prompt input */}
       <form onSubmit={onSubmitCommand} className="prompt">
-        <span className="prompt-label">C:\Users\Guest&gt;</span>
+        <span className="prompt-label">C:\Users\Recruiter&gt;</span>
         <input
           className="prompt-input"
           type="text"
