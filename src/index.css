@@ -20,9 +20,9 @@ html, body {
 }
 
 /* The root element (React DOM mount point) */
-#root {
+/* #root {
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; */
   /* No forced overflow: hidden; unless you want no scrollbar. */
 }
