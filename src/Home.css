@@ -1,21 +1,3 @@
-/* *,*::before,*::after{
-  margin:0;
-  padding:0;
-  box-sizing: border-box;
-}
-
-body{
- background-color:#1b1b1b;
-}
-
-.App{
-  width:100vw;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-} */
-
 .console-container {
   background-color: #1e1e1e;
   color: #c8c8c8;

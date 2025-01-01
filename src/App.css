@@ -100,7 +100,7 @@ section {
   align-items: center;
   justify-content: center;
   font-size: 2rem;
-  background: #f3f3f3;
+  /* background: #f3f3f3; */
   border-bottom: 1px solid #ddd;
 }
 

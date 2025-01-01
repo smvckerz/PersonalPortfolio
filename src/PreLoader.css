@@ -1,0 +1,35 @@
+.preloader-container {
+    /* Fill the entire viewport */
+    width: 100vw;
+    height: 100vh;
+  
+    /* Dark background, centered content */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  
+    background-color: #1e1e1e;
+    color: #c8c8c8;
+  
+    /* Monospaced font to match a console style (optional) */
+    font-family: "Consolas", "Courier New", monospace;
+  }
+  
+  /* The spinner element */
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #999;
+    border-top: 4px solid #fff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 1rem; /* space before the text */
+  }
+  
+  /* Keyframes for rotating the spinner */
+  @keyframes spin {
+    0%   { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
