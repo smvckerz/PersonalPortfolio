@@ -1,12 +1,13 @@
-/* CreepyLoading.css */
-
-.creepy-canvas {
-  display: block;
-  position: fixed;  /* So it sits on top, full screen */
+/* SwirlyLoading.css */
+.swirly-canvas {
+  position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;     /* Let the canvas fill horizontally */
-  height: 100vh;    /* Let the canvas fill vertically */
-  background: #000; /* The CodePen used black; you can use #1e1e1e if you want */
-  cursor: default;  /* No special cursor */
+  display: block;
+
+  width: 100vw;
+  height: 100vh;
+
+  /* background is drawn by the script, but you can set a fallback: */
+  background: #000;
 }
