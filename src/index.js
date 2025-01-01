@@ -1,8 +1,8 @@
-// ===== index.js =====
+// index.js
 import React from "react";
 import ReactDOM from "react-dom";
-import "./index.css";    // Our global reset & body styles
-import App from "./App"; // The root component
+import "./index.css"; // Global styles
+import App from "./App";
 
 ReactDOM.render(
   <React.StrictMode>

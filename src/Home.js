@@ -1,43 +1,41 @@
-// ===== Home.js =====
-import React, { useState, useRef, useEffect } from "react";
-import "./Home.css";
+// Home.js
+import React, { useState, useEffect, useRef } from "react";
+import "./Home.css"; // We'll define the CSS next
 
 function Home() {
+  // Lines that appear in the console
   const [lines, setLines] = useState([
-    "Welcome to my C++ Console Portfolio!",
-    "Type 'help' or 'Help' to see available commands.",
+    "Welcome to my React Console!",
+    "Type 'help' to see available commands.",
   ]);
+
+  // Current input value
   const [inputValue, setInputValue] = useState("");
+
+  // Ref for auto-scrolling to bottom
   const outputRef = useRef(null);
 
+  // Auto-scroll whenever lines update
   useEffect(() => {
     if (outputRef.current) {
       outputRef.current.scrollTop = outputRef.current.scrollHeight;
     }
   }, [lines]);
 
+  // Command handler
   const handleCommand = (cmd) => {
     switch (cmd.toLowerCase()) {
       case "help":
         return [
-          " ",
-          "-------------------------------",
+          "",
           "Available commands:",
-          "  about    -> Show info about me",
-          "  projects -> List my projects",
-          "  clear    -> Clear the console",
-          "  help     -> This message",
-          "-------------------------------",
-          " "
+          "  help    -> Show this message",
+          "  about   -> Info about me",
+          "  clear   -> Clear the console",
+          "",
         ];
       case "about":
-        return ["I'm Eduardo Munoz, an up and coming Software Developer."];
-      case "projects":
-        return [
-          "1. Real-Time 3D Renderer",
-          "2. Neural Net Playground",
-          "3. Custom Game Engine"
-        ];
+        return ["I'm a software developer building cool stuff!"];
       case "clear":
         // We'll handle clearing in the main function
         return null;
@@ -50,35 +48,41 @@ function Home() {
     }
   };
 
+  // Form submission
   const onSubmitCommand = (e) => {
     e.preventDefault();
     const command = inputValue.trim();
 
-    // Show the user’s input as a new line
+    // Display the user's typed command
     setLines((prev) => [...prev, `C:\\Users\\Guest> ${command}`]);
 
+    // Get the response from our command handler
     const output = handleCommand(command);
 
-    // If the command was 'clear', we remove all lines
     if (command.toLowerCase() === "clear") {
+      // Clear the console entirely
       setLines([]);
     } else if (output && output.length > 0) {
-      // Append output lines
+      // Append command output
       setLines((prev) => [...prev, ...output]);
     }
 
-    // Reset the input
+    // Clear the input
     setInputValue("");
   };
 
   return (
     <div className="console-container">
+      {/* Output area */}
       <div className="output-lines" ref={outputRef}>
         {lines.map((line, index) => (
-          <div key={index} className="line">{line}</div>
+          <div key={index} className="line">
+            {line}
+          </div>
         ))}
       </div>
 
+      {/* Command prompt input */}
       <form onSubmit={onSubmitCommand} className="prompt">
         <span className="prompt-label">C:\Users\Guest&gt;</span>
         <input
