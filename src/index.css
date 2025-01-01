@@ -25,4 +25,4 @@ html, body {
   display: flex;
   flex-direction: column; */
   /* No forced overflow: hidden; unless you want no scrollbar. */
-}
+/* } */
