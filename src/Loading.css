@@ -1,34 +1,12 @@
-/* Loading.css */
+/* CreepyLoading.css */
 
-/* Full-screen container */
-.loading-container {
-  width: 100vw;
-  height: 100vh;
-
-  /* Dark background + centered content */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  background-color: #1e1e1e; /* match your dark theme */
-  color: #c8c8c8;
-  font-family: "Consolas", "Courier New", monospace;
-}
-
-/* A simple spinner animation */
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 4px solid #999;   /* "light" portion of the ring */
-  border-top: 4px solid #fff; /* "highlight" portion */
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 1rem;      /* space above the "Loading..." text */
-}
-
-/* Keyframes for rotating the spinner */
-@keyframes spin {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+.creepy-canvas {
+  display: block;
+  position: fixed;  /* So it sits on top, full screen */
+  top: 0;
+  left: 0;
+  width: 100vw;     /* Let the canvas fill horizontally */
+  height: 100vh;    /* Let the canvas fill vertically */
+  background: #000; /* The CodePen used black; you can use #1e1e1e if you want */
+  cursor: default;  /* No special cursor */
 }
