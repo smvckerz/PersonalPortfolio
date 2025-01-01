@@ -15,7 +15,7 @@
 
 // CreepyLoading.js
 import React, { useRef, useEffect } from "react";
-import "./CreepyLoading.css";
+import "./Loading.css";
 
 function CreepyLoading() {
   const canvasRef = useRef(null);

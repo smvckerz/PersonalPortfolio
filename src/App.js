@@ -30,7 +30,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Home from "./Home";
-import CreepyLoading from "./CreepyLoading";
+import CreepyLoading from "./Loading";
 
 function App() {
   const [loading, setLoading] = useState(true);
