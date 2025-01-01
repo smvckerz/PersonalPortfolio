@@ -1,60 +1,14 @@
-// // App.js
-// import React, { useState, useEffect } from 'react';
-// import './App.css';
-// import Home from './Home';
-// import About from './About';
-// import Projects from './Projects';
-// import Tabs from './Tabs';
-// import PreLoader1 from './PreLoader1';
-
-// function App() {
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     const timer = setTimeout(() => setLoading(false), 2000); // Example: 2 seconds
-//     return () => clearTimeout(timer);
-//   }, []);
-
-//   return (
-//     <div>
-//       {loading ? (
-//         <PreLoader1 />
-//       ) : (
-//         <Tabs className="App-header">
-//           <Home label="Home" />
-//           <About label="About" />
-//           <Projects label="Projects" />
-//         </Tabs>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default App;
-
-// import React from "react";
-// import Home from './Home';
-
-// function App() {
-//   return (
-//     <div>
-//       <Home />
-//     </div>
-//   );
-// }
-
-// export default App;
-
-
+// ===== App.js =====
 import React, { useState, useEffect } from "react";
+import "./App.css";        // Global-ish styles for the App container
 import PreLoader from "./PreLoader";
-import Home from "./Home"; // or your main console component
+import Home from "./Home"; // The console component
 
 function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Simulate a 2-second "loading time"
+    // Simulate a loading time of 2 seconds
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2000);
@@ -64,9 +18,9 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div className="App">
       {loading ? <PreLoader /> : <Home />}
-    </>
+    </div>
   );
 }
 
