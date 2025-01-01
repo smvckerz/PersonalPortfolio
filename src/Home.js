@@ -3,91 +3,105 @@ import React, { useState, useEffect, useRef } from "react";
 import "./Home.css";
 import TypedLine from "./TypedLine"; // Our new typed component
 
+// Home.js
+import React, { useState, useEffect, useRef } from "react";
+import "./Home.css";
+
+// OPTIONAL: If you made a typed line component, import it here
+// import TypedLine from "./TypedLine";
+
 function Home() {
   const [lines, setLines] = useState([
-    { content: "Welcome to my React Console!", typed: true },
-    { content: "Type 'help' to see available commands.", typed: true }
+    "Welcome to my React Console!",
+    "Type 'help' to see available commands.",
   ]);
-  
   const [inputValue, setInputValue] = useState("");
+
+  // For auto-scrolling to the bottom
   const outputRef = useRef(null);
 
-  // Scroll to bottom on new lines
+  // Scroll to the bottom whenever `lines` changes
   useEffect(() => {
     if (outputRef.current) {
       outputRef.current.scrollTop = outputRef.current.scrollHeight;
     }
   }, [lines]);
 
+  // An optional array of valid commands for tab-completion
+  const validCommands = ["help", "about", "clear"];
+
+  // The command interpreter
   const handleCommand = (cmd) => {
     switch (cmd.toLowerCase()) {
       case "help":
         return [
-          { content: "", typed: false },
-          { content: "Available commands:", typed: true },
-          { content: "  help    -> Show this message", typed: true },
-          { content: "  about   -> Info about me", typed: true },
-          { content: "  clear   -> Clear the console", typed: true },
-          { content: "", typed: false }
+          "Available commands:",
+          "  help  -> Show this message",
+          "  about -> Info about me",
+          "  clear -> Clear the console",
         ];
       case "about":
-        return [{ content: "I'm a software developer building cool stuff!", typed: true }];
+        return ["I'm a software developer building cool stuff!"];
       case "clear":
+        // We'll handle clearing in the onSubmitCommand
         return null;
       default:
         if (cmd.trim() === "") {
           return [];
         } else {
-          return [{ content: `'${cmd}' is not recognized as a valid command.`, typed: true }];
+          return [`'${cmd}' is not recognized as a valid command.`];
         }
     }
   };
 
+  // Handle tab-completion
+  const handleKeyDown = (e) => {
+    if (e.key === "Tab") {
+      e.preventDefault();
+      const partial = inputValue.toLowerCase();
+      const match = validCommands.find((cmd) => cmd.startsWith(partial));
+      if (match) {
+        setInputValue(match);
+      }
+    }
+  };
+
+  // When the user presses Enter (form submission)
   const onSubmitCommand = (e) => {
     e.preventDefault();
     const command = inputValue.trim();
 
-    // The user’s typed command shows up immediately (typed = false),
-    // because we want it to appear at once.
-    setLines((prev) => [
-      ...prev,
-      { content: `C:\\Users\\Recruiter> ${command}`, typed: false }
-    ]);
+    // 1. Show the typed command in the console (new line at the bottom)
+    setLines((prev) => [...prev, `C:\\Users\\Recruiter> ${command}`]);
 
+    // 2. Get response lines
     const output = handleCommand(command);
+
+    // 3. If 'clear', reset the console
     if (command.toLowerCase() === "clear") {
       setLines([]);
     } else if (output && output.length > 0) {
-      // Append the typed or non-typed lines
+      // 4. Append all returned lines
       setLines((prev) => [...prev, ...output]);
     }
 
+    // 5. Clear the input
     setInputValue("");
   };
 
   return (
     <div className="console-container">
+      {/* Scrollable console output */}
       <div className="output-lines" ref={outputRef}>
-        {lines.map((lineObj, index) => {
-          // if typed is true, use the TypedLine component
-          if (lineObj.typed) {
-            return (
-              <TypedLine
-                key={index}
-                text={lineObj.content}
-                // optional onComplete if you want to do something after each line finishes
-              />
-            );
-          }
-          // otherwise, just show it as plain text
-          return (
-            <div key={index} className="line">
-              {lineObj.content}
-            </div>
-          );
-        })}
+        {lines.map((line, index) => (
+          // If you want typed effect, replace with <TypedLine text={line} /> or similar
+          <div key={index} className="line">
+            {line}
+          </div>
+        ))}
       </div>
 
+      {/* Command input prompt */}
       <form onSubmit={onSubmitCommand} className="prompt">
         <span className="prompt-label">C:\Users\Recruiter&gt;</span>
         <input
@@ -95,6 +109,7 @@ function Home() {
           type="text"
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
+          onKeyDown={handleKeyDown}
           autoFocus
         />
       </form>
