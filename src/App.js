@@ -34,19 +34,34 @@ import SwirlyLoading from "./Loading";
 
 function App() {
   const [loading, setLoading] = useState(true);
+  const [fadeOut, setFadeOut] = useState(false);
 
   useEffect(() => {
-    // Show the swirl for 2 seconds (adjust as desired)
+    // 1) Show loading screen for 5 seconds
     const timer = setTimeout(() => {
-      setLoading(false);
-    }, 2000);
+      // 2) Trigger fade-out
+      setFadeOut(true);
+
+      // 3) After 1 second (the duration of our fade transition), unmount loader
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000); // Match the transition duration in CSS
+    }, 5000);
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <div className="App">
-      {loading ? <SwirlyLoading /> : <Home />}
+      {loading ? (
+        // Wrap the loader in a div that can fade out via CSS
+        <div className={`fade-wrapper ${fadeOut ? "fade-out" : ""}`}>
+          <SwirlyLoading />
+        </div>
+      ) : (
+        // Once loading is false, show the console
+        <Home />
+      )}
     </div>
   );
 }

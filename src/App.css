@@ -25,3 +25,26 @@ html, body {
   display: flex;
   flex-direction: column;
 }
+
+/* App.css */
+
+.App {
+  /* whatever layout you want */
+  width: 100%;
+  height: 100%;
+}
+
+/* 
+Wrap the loader in a fade-wrapper that starts fully opaque 
+*/
+.fade-wrapper {
+  opacity: 1;
+  transition: opacity 1s ease-in-out; /* 1-second fade */
+}
+
+/* 
+When fade-out is triggered, we set opacity to 0 
+*/
+.fade-wrapper.fade-out {
+  opacity: 0;
+}
