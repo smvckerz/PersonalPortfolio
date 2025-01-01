@@ -1,30 +1,31 @@
+/* ===== App.css ===== */
+
+/* The main wrapper for your React app */
 .App {
+  /* Example layout; feel free to customize */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  font-family: Arial, sans-serif;
+  /* If you want it to fill the full screen: */
+  width: 100vw;
+  height: 100vh;
 }
 
-section {
-  padding: 50px 20px;
-  margin: 20px 0;
+/* The App header (if used) */
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
-h1, h2 {
-  color: #333;
-}
-
-p {
-  color: #555;
-}
-
-a {
-  color: #0066cc;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
+/* Example tab styling (if you’re using Tabs) */
 .tabs {
   display: flex;
   justify-content: center;
@@ -49,81 +50,10 @@ a:hover {
   text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-/* Make sure your content fills the entire screen */
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-#smooth-wrapper {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-}
-
-#smooth-content {
-  position: relative;
-  overflow: hidden;
-}
-
-html, body {
-  height: 100%;
-  margin: 0;
-  overflow: hidden;
-}
-
-#smooth-wrapper {
-  position: fixed;
-  inset: 0;
-  overflow: hidden;
-}
-
-#smooth-content {
-  position: relative;
-  overflow: hidden;
-}
-
-section {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  /* background: #f3f3f3; */
-  border-bottom: 1px solid #ddd;
-}
-
-*,*::before,*::after{
-  margin:0;
-  padding:0;
-  box-sizing: border-box;
-}
-
-body{
- background-color:#1b1b1b;
-}
-
-.App{
-  width:100vw;
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
+/* Example ID for a full-screen preloader overlay */
 #PreLoader1 {
-  top: 0;
+  position: fixed;
+  top: 0; 
   left: 0;
   width: 100vw;
   height: 100vh;
@@ -135,3 +65,31 @@ body{
   font-size: 2rem; /* Optional, to make it more visible */
   z-index: 9999; /* Ensures it’s on top of everything else */
 }
+
+/* 
+If you had something like #smooth-wrapper / #smooth-content for smooth scrolling,
+keep them only if you actually use them:
+
+#smooth-wrapper {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+#smooth-content {
+  position: relative;
+  overflow: hidden;
+}
+*/
+
+/* 
+section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  border-bottom: 1px solid #ddd;
+  // background: #f3f3f3; <-- removed to avoid forcing gray
+}
+*/

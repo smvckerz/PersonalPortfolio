@@ -1,25 +1,28 @@
-/* index.css */
+/* ===== index.css ===== */
 
-/* A simple CSS reset for margins, paddings, and box-sizing */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  /* Apply a default font to the entire app */
-  body {
-    font-family: 'Consolas', 'Courier New', monospace;
-    background-color: #1e1e1e;
-    color: #c8c8c8;
-  }
-  
-  /* Ensure the app container takes full height */
-  #root {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: stretch;
-  }
-  
+/* Global reset */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* html and body styling */
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  background-color: #1e1e1e;
+  color: #c8c8c8;
+  font-family: 'Consolas', 'Courier New', monospace;
+}
+
+/* The root element (React DOM mount point) */
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  /* No forced overflow: hidden; unless you want no scrollbar. */
+}
