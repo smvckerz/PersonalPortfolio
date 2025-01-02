@@ -25,7 +25,6 @@
 .prompt {
   display: flex;
   align-items: center;
-  font-size: large;
 }
 
 .prompt-label {
@@ -40,6 +39,7 @@
   color: inherit;     /* same text color as parent */
   font-family: inherit;
   outline: none;
+  font-size: large;
   /* Optional: handle placeholder, caret color, etc. */
 }
 
