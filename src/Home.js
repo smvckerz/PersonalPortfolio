@@ -34,6 +34,14 @@ function Home() {
                     "  about -> Info about me",
                     "  clear -> Clear the console",
                 ];
+
+            case "ls":
+                const fileSystem = {
+                    '': ['about.txt', 'contacts.txt', 'resume.pdf', 'projects'],
+                    'projects': ['project1', 'project2'],
+                  };
+                  
+                
             case "about":
                 return ["I'm a software developer wanting to expand my connections and showcasing my skills!"];
             case "clear":
@@ -61,7 +69,7 @@ function Home() {
     };
 
     // When the user presses Enter (form submission)
-    const onSubmitCommand = (e) => {
+    function onSubmitCommand(e) {
         e.preventDefault();
         const command = inputValue.trim();
 
@@ -70,8 +78,8 @@ function Home() {
             const newLines = [...prev, `C:\\Users\\Recruiter> ${command}`];
             console.log("New lines:", newLines);
             return newLines;
-          });
-          
+        });
+
 
         // 2. Get response lines
         const output = handleCommand(command);
@@ -86,7 +94,7 @@ function Home() {
 
         // 5. Clear the input
         setInputValue("");
-    };
+    }
 
     return (
         <div className="console-container">
