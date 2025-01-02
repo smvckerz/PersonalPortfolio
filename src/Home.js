@@ -23,6 +23,11 @@ function Home() {
     // An optional array of valid commands for tab-completion
     const validCommands = ["help", "about", "clear"];
 
+    const fileSystem = {
+        '': ['about.txt', 'contacts.txt', 'resume.pdf', 'projects'],
+        'projects': ['project1', 'project2'],
+      };
+
     // The command interpreter
     const handleCommand = (cmd) => {
         switch (cmd.toLowerCase()) {
@@ -35,12 +40,11 @@ function Home() {
                     "  clear -> Clear the console",
                 ];
 
-            case "ls":
-                const fileSystem = {
-                    '': ['about.txt', 'contacts.txt', 'resume.pdf', 'projects'],
-                    'projects': ['project1', 'project2'],
-                  };
-                  
+            case "ls": {
+                const items = fileSystem[""]; 
+                // Return a single string with items separated by spaces
+                return [items.join("  ")]; 
+                }
                 
             case "about":
                 return ["I'm a software developer wanting to expand my connections and showcasing my skills!"];
@@ -79,7 +83,6 @@ function Home() {
             console.log("New lines:", newLines);
             return newLines;
         });
-
 
         // 2. Get response lines
         const output = handleCommand(command);
