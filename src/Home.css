@@ -25,6 +25,7 @@
 .prompt {
   display: flex;
   align-items: center;
+  font-size: large;
 }
 
 .prompt-label {

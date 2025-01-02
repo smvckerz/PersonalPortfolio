@@ -30,6 +30,7 @@ function Home() {
         switch (cmd.toLowerCase()) {
             case "help":
                 return [
+                    "                   ",
                     "Available commands:",
                     "  help  -> Show this message",
                     "  about -> Info about me",
