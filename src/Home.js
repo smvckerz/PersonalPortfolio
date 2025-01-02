@@ -1,13 +1,11 @@
 // Home.js
 import React, { useState, useEffect, useRef } from "react";
 import "./Home.css";
-
-// OPTIONAL: If you made a typed line component, import it here
 import TypedLine from "./TypedLine";
 
 function Home() {
     const [lines, setLines] = useState([
-        "Welcome to my React Console!",
+        "Welcome to my Console!",
         "Type 'help' to see available commands.",
     ]);
     const [inputValue, setInputValue] = useState("");
@@ -37,7 +35,7 @@ function Home() {
                     "  clear -> Clear the console",
                 ];
             case "about":
-                return ["I'm a software developer building cool stuff!"];
+                return ["I'm a software developer wanting to expand my connections and showcasing my skills!"];
             case "clear":
                 // We'll handle clearing in the onSubmitCommand
                 return null;

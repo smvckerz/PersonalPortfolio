@@ -12,6 +12,10 @@
   flex-direction: column;
 }
 
+.line {
+  margin-bottom: 1rem;  /* Adjust as you like */
+}
+
 /* The area where command output appears */
 .output-lines {
   flex: 1;
