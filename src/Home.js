@@ -47,7 +47,7 @@ function Home() {
                 }
                 
             case "about":
-                return ["I'm a software developer wanting to expand my connections and showcasing my skills!"];
+                return ["I'm a software developer wanting to expand my connections and showcasing my skills! To see projects, please use projects command to list a few of my projects."];
             case "clear":
                 // We'll handle clearing in the onSubmitCommand
                 return null;
