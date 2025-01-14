@@ -21,7 +21,7 @@ function Home() {
     }, [lines]);
 
     // An optional array of valid commands for tab-completion
-    const validCommands = ["help", "about", "clear"];
+    const validCommands = ["help", "about", "clear", "mkdir"];
 
     const [fileSystem, setFileSystem] = useState({
         "": {
@@ -43,6 +43,10 @@ function Home() {
 
     // The command interpreter
     const handleCommand = (cmd) => {
+
+        const arg = parts[1] || "";
+        const parts = input.trim().split(" ");
+        
         switch (cmd.toLowerCase()) {
             case "help":
                 return [
