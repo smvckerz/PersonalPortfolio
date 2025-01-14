@@ -1,19 +1,3 @@
-// // Loading.js
-// import React from "react";
-// import "./Loading.css";
-
-// function Loading() {
-//   return (
-//     <div className="loading-container">
-//       <div className="spinner"></div>
-//       <p>Loading...</p>
-//     </div>
-//   );
-// }
-
-// export default Loading;
-
-// SwirlyLoading.js
 import React, { useRef, useEffect } from "react";
 import "./Loading.css";
 
@@ -393,8 +377,8 @@ function SwirlyLoading() {
     ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = "#ccc";
     ctx.font = "50px Verdana";
-    const txt = "Calculating Nodes";
-    ctx.fillText(txt, w / 2 - ctx.measureText(txt).width / 2, h / 2 - 15);
+    // const txt = "Calculating Nodes";
+    // ctx.fillText(txt, w / 2 - ctx.measureText(txt).width / 2, h / 2 - 15);
 
     // small timeout to show “Calculating Nodes” for a frame
     setTimeout(init, 50);
