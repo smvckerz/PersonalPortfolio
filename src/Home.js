@@ -23,10 +23,23 @@ function Home() {
     // An optional array of valid commands for tab-completion
     const validCommands = ["help", "about", "clear"];
 
-    const fileSystem = {
-        '': ['about.txt', 'contacts.txt', 'resume.pdf', 'projects'],
-        'projects': ['project1', 'project2'],
-      };
+    const [fileSystem, setFileSystem] = useState({
+        "": {
+            directories: ["projects"],
+            files: ["about.txt", "contacts.txt", "resume.pdf"]
+        },
+        "projects": {
+            directories: [],
+            files: ["project1.txt", "project2.txt"]
+        }
+    });
+
+    const [currentDir, setCurrentDir] = useState("");
+
+    // const fileSystem = {
+    //     '': ['about.txt', 'contacts.txt', 'resume.pdf', 'projects'],
+    //     'projects': ['project1', 'project2'],
+    //   };
 
     // The command interpreter
     const handleCommand = (cmd) => {
@@ -43,11 +56,32 @@ function Home() {
             case "ls": {
                 const items = fileSystem[""]; 
                 // Return a single string with items separated by spaces
-                return [items.join("  ")]; 
+                return [items.join(" ")]; 
                 }
+
+            case "mkdir": {
+                if(!arg) {
+                    return ["Usage: mkdir [dirname]"];
+                }
+
+                if (fileSystem[arg])
+                {
+                    return ['Director `${arg}` already exists!'];
+                }
+
+                setFileSystem((prev) => {
+                    const copy = {...prev};
+                    copy[arg] = {directories: [], files: []};
+                    copy[currentDir].directories.push(arg);
+
+                    return copy;
+                });
+
+                return ['Created directory `${arg}` in `${currentDir || "root"}` directory'];
+            }
                 
             case "about":
-                return ["I'm a software developer wanting to expand my connections and showcasing my skills! To see projects, please use projects command to list a few of my projects."];
+                return ["I'm a software developer wanting to expand my connections and showcasing my skills! To see projects, please use 'projects' command to list a few of my projects."];
             case "clear":
                 // We'll handle clearing in the onSubmitCommand
                 return null;
