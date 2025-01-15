@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Home.css";
 import TypedLine from "./TypedLine";
-import EditorModal from "./EditorModal"; // Import the EditorModal component
+import EditorModal from "./EditorModel"; // Import the EditorModal component
 
 function Home() {
   const [lines, setLines] = useState([
