@@ -10,6 +10,7 @@ function Home() {
     "Well, to answer that shortly, to stand out. I was working in the terminal one day and realized I have",
     "never seen anyone do something like this as their portfolio, and figured why not be the first? I am assuming this would be the first one you would come across.",
     "Hope you enjoy my console!",
+    "P.S. If you would prefer to look at a normal page, please just type: normal",
     "Type 'help' to see available commands.",
   ]);
   const [inputValue, setInputValue] = useState("");
@@ -19,7 +20,11 @@ function Home() {
   const [fileSystem, setFileSystem] = useState({
     "": {
       directories: ["projects"],
-      files: ["about.txt", "contacts.txt", "resume.pdf"]
+      files: [
+        {name: "about.txt", content: "I am a "},
+        {},
+        {},
+        "about.txt", "contacts.txt", "resume.pdf"]
     },
     projects: {
       directories: [],
@@ -112,7 +117,7 @@ function Home() {
         }
         setFileSystem((prev) => {
           const copy = { ...prev };
-          copy[currentDir].files.push(arg);
+          copy[currentDir].files.push({name: arg, content: ""});
           return copy;
         });
         return [`Created file '${arg}' in ${currentDir || "root"}.`];
@@ -121,6 +126,56 @@ function Home() {
           return []; // no output for empty command
         } else {
           return [`'${cmd}' is not recognized as a valid command.`];
+        }
+
+      case "mv": 
+        const fileName = parts[1];
+        const targetDir = parts[2];
+
+        const fileIndex = fileSystem[currentDir].files.fileIndex(f => f.name === fileName);
+
+        if(fileIndex === -1)
+        {
+          return ['File `${targetDir` does not exist.'];
+        }
+
+        const [movingFile] = fileSystem[currentDir].files.splice(fileIndex, 1);
+
+        fileSystem[targetDir].files.push(movingFile);
+
+        setFileSystem({...fileSystem});
+
+        return ('Moved `${fileName}` from `${currentDir` to `${targetDir}`.');
+
+        case "python": {
+          // user typed: python myScript.py
+          const fileName = parts[1];
+          // find that file in your fake file system:
+          const file = fileSystem[currentDir].items.find(item => item.name === fileName);
+          if (!file) {
+            return [`File '${fileName}' not found.`];
+          }
+          // send 'file.content' to your Pi's API
+          fetch("http://192.168.1.175:4000/run-python", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code: file.content })
+          })
+            .then(res => res.json())
+            .then(data => {
+              if (data.error) {
+                // display error
+                setLines(prev => [...prev, data.error]);
+              } else {
+                // display output
+                setLines(prev => [...prev, data.output]);
+              }
+            })
+            .catch(err => {
+              setLines(prev => [...prev, String(err)]);
+            });
+        
+          return [`Executing Python code in '${fileName}'...`];
         }
     }
   };
