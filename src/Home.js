@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Home.css";
 import TypedLine from "./TypedLine";
+import EditorModal from "./EditorModal"; // Import the EditorModal component
 
 function Home() {
   const [lines, setLines] = useState([
@@ -32,6 +33,8 @@ function Home() {
     }
   });
 
+  const [editingFile, setEditingFile] = useState(null);
+
   const outputRef = useRef(null);
   useEffect(() => {
     if (outputRef.current) {
@@ -56,9 +59,11 @@ function Home() {
           "  about      -> Info about me",
           "  clear      -> Clear the console",
           "  ls         -> List files/dirs in current directory",
+          "  ls -l      -> List files/dirs with detailed info",
           "  cd [dir]   -> Change directory",
           "  mkdir [d]  -> Create new directory",
           "  touch [f]  -> Create new file",
+          "  edit [f]   -> Edit a file",
           ""
         ];
       case "about":
@@ -176,6 +181,47 @@ function Home() {
             });
         
           return [`Executing Python code in '${fileName}'...`];
+        }
+
+        case "edit": {
+          if (!arg) {
+            return ["Usage: edit [filename]"];
+          }
+    
+          // Find the file in the current directory
+          const fileIndex = fileSystem[currentDir].items.findIndex(
+            (item) => item.name === arg && !item.isDirectory
+          );
+    
+          if (fileIndex === -1) {
+            return [`File '${arg}' not found in ${currentDir || "root"}.`];
+          }
+    
+          // Set the file to be edited
+          setEditingFile({
+            ...fileSystem[currentDir].items[fileIndex],
+            path: currentDir, // Optional: track the directory path
+            index: fileIndex, // Track the file's index for updates
+          });
+    
+          return [`Editing file '${arg}'.`];
+        }
+
+        case "cat": {
+          if (!arg) {
+            return ["Usage: cat [filename]"];
+          }
+        
+          // Find the file
+          const fileObj = fileSystem[currentDir].items.find(
+            (item) => item.name === arg && !item.isDirectory
+          );
+        
+          if (!fileObj) {
+            return [`File '${arg}' not found in ${currentDir || "root"}.`];
+          }
+        
+          return [fileObj.content || ""]; // Display file content
         }
     }
   };
