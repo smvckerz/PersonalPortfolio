@@ -5,6 +5,11 @@ import TypedLine from "./TypedLine";
 function Home() {
   const [lines, setLines] = useState([
     "Welcome to my Console!",
+    "This website is my personal portfolio show casing my skills and also providing you information about myself.",
+    "You may be wondering why out of all things I could have created, why a console?",
+    "Well, to answer that shortly, to stand out. I was working in the terminal one day and realized I have",
+    "never seen anyone do something like this as their portfolio, and figured why not be the first? I am assuming this would be the first one you would come across.",
+    "Hope you enjoy my console!",
     "Type 'help' to see available commands.",
   ]);
   const [inputValue, setInputValue] = useState("");
@@ -53,7 +58,7 @@ function Home() {
         ];
       case "about":
         return [
-          "I'm a software developer wanting to expand my connections and showcase my skills!"
+          "I'm an up and coming software developer wanting to expand my connections and showcase my skills!"
         ];
       case "clear":
         // We'll handle clearing in onSubmitCommand
