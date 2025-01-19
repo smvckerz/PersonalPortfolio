@@ -9,7 +9,6 @@ Feel free to check out the live site here: eduardoemunoz.com
 🚀 Features
 
 React: The website is developed using React for a dynamic and responsive user experience.
-GSAP: Animations are powered by GSAP to create smooth, engaging transitions and effects.
 Responsive Design: The website adapts to different screen sizes, making it accessible on both desktop and mobile devices.
 Modular Code: Components are divided into smaller reusable parts for easier maintenance.
 
