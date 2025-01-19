@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Home.css";
 import TypedLine from "./TypedLine";
-import EditorModal from "./EditorModel"; // Import the EditorModal component
+import EditorModal from "./EditorModel";
 
 function Home() {
   const [lines, setLines] = useState([
@@ -17,7 +17,6 @@ function Home() {
   const [inputValue, setInputValue] = useState("");
   const [currentDir, setCurrentDir] = useState("");
 
-  // Our "fake" file system:
   const [fileSystem, setFileSystem] = useState({
     "": {
       directories: ["projects"],
@@ -42,13 +41,12 @@ function Home() {
     }
   }, [lines]);
 
-  // Tab completion (optional):
   const validCommands = ["help", "about", "clear", "ls", "cd", "mkdir", "touch"];
 
   const handleCommand = (cmd) => {
     const parts = cmd.trim().split(" ");
     const baseCmd = parts[0].toLowerCase();
-    const arg = parts[1] || ""; // e.g. for "cd projects", arg = "projects"
+    const arg = parts[1] || "";
 
     switch (baseCmd) {
       case "help":
@@ -71,10 +69,9 @@ function Home() {
           "I'm an up and coming software developer wanting to expand my connections and showcase my skills!"
         ];
       case "clear":
-        // We'll handle clearing in onSubmitCommand
+
         return null;
       case "ls":
-        // list files & directories in currentDir
         if (fileSystem[currentDir]) {
           const { directories, files } = fileSystem[currentDir];
           const listing = [...directories, ...files];
@@ -83,17 +80,13 @@ function Home() {
           return [`Error: current directory '${currentDir}' not found!`];
         }
       case "cd":
-        // Switch directories if it exists in the currentDir's 'directories'
         if (!arg) {
           return ["Usage: cd [dirname]"];
         }
         if (arg === "..") {
-          // If you want parent dir logic, you'd need to store a 'parent' link or something
-          // For now, let's just go back to root if arg is ".."
           setCurrentDir("");
           return [`Now in root directory.`];
         } else {
-          // Check if 'arg' is one of the directories in the currentDir
           if (fileSystem[currentDir]?.directories.includes(arg)) {
             setCurrentDir(arg);
             return [`Switched directory to '${arg}'`];
@@ -102,21 +95,17 @@ function Home() {
           }
         }
       case "mkdir":
-        // Create a new directory inside the currentDir
         if (!arg) {
           return ["Usage: mkdir [dirname]"];
         }
-        // 1) create an entry in fileSystem for the new dir
         setFileSystem((prev) => {
           const copy = { ...prev };
-          copy[arg] = { directories: [], files: [] }; // blank
-          // 2) push it into the currentDir's directories
+          copy[arg] = { directories: [], files: [] }; 
           copy[currentDir].directories.push(arg);
           return copy;
         });
         return [`Created directory '${arg}' in ${currentDir || "root"}.`];
       case "touch":
-        // Create a new file inside the currentDir
         if (!arg) {
           return ["Usage: touch [filename]"];
         }
@@ -128,7 +117,7 @@ function Home() {
         return [`Created file '${arg}' in ${currentDir || "root"}.`];
       default:
         if (cmd.trim() === "") {
-          return []; // no output for empty command
+          return [];
         } else {
           return [`'${cmd}' is not recognized as a valid command.`];
         }
@@ -153,14 +142,11 @@ function Home() {
         return ('Moved `${fileName}` from `${currentDir` to `${targetDir}`.');
 
         case "python": {
-          // user typed: python myScript.py
           const fileName = parts[1];
-          // find that file in your fake file system:
           const file = fileSystem[currentDir].items.find(item => item.name === fileName);
           if (!file) {
             return [`File '${fileName}' not found.`];
           }
-          // send 'file.content' to your Pi's API
           fetch("http://192.168.1.175:4000/run-python", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -169,10 +155,8 @@ function Home() {
             .then(res => res.json())
             .then(data => {
               if (data.error) {
-                // display error
                 setLines(prev => [...prev, data.error]);
               } else {
-                // display output
                 setLines(prev => [...prev, data.output]);
               }
             })
@@ -188,7 +172,6 @@ function Home() {
             return ["Usage: edit [filename]"];
           }
     
-          // Find the file in the current directory
           const fileIndex = fileSystem[currentDir].items.findIndex(
             (item) => item.name === arg && !item.isDirectory
           );
@@ -197,11 +180,10 @@ function Home() {
             return [`File '${arg}' not found in ${currentDir || "root"}.`];
           }
     
-          // Set the file to be edited
           setEditingFile({
             ...fileSystem[currentDir].items[fileIndex],
-            path: currentDir, // Optional: track the directory path
-            index: fileIndex, // Track the file's index for updates
+            path: currentDir,
+            index: fileIndex,
           });
     
           return [`Editing file '${arg}'.`];
@@ -212,7 +194,6 @@ function Home() {
             return ["Usage: cat [filename]"];
           }
         
-          // Find the file
           const fileObj = fileSystem[currentDir].items.find(
             (item) => item.name === arg && !item.isDirectory
           );
@@ -221,12 +202,11 @@ function Home() {
             return [`File '${arg}' not found in ${currentDir || "root"}.`];
           }
         
-          return [fileObj.content || ""]; // Display file content
+          return [fileObj.content || ""];
         }
     }
   };
 
-  // KeyDown for Tab completion
   const handleKeyDown = (e) => {
     if (e.key === "Tab") {
       e.preventDefault();
@@ -238,12 +218,10 @@ function Home() {
     }
   };
 
-  // onSubmitCommand
   const onSubmitCommand = (e) => {
     e.preventDefault();
     const command = inputValue.trim();
 
-    // Display the user’s command
     setLines((prev) => [...prev, `C:\\Users\\${currentDir}> ${command}`]);
 
     const output = handleCommand(command);

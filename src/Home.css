@@ -1,22 +1,18 @@
-/* Home.css */
-
-/* The main container for our console window */
 .console-container {
-  background-color: #1e1e1e; /* Dark console background */
-  color: #c8c8c8;            /* Light text */
+  background-color: #1e1e1e;
+  color: #c8c8c8;
   font-family: "Consolas", monospace;
   padding: 1rem;
-  height: 100vh;            /* Fill the viewport */
+  height: 100vh;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
 }
 
 .line {
-  margin-bottom: 1rem;  /* Adjust as you like */
+  margin-bottom: 1rem;
 }
 
-/* The area where command output appears */
 .output-lines {
   flex: 1;
   overflow-y: auto;
@@ -25,7 +21,6 @@
   display: flex;
 }
 
-/* The prompt area at the bottom */
 .prompt {
   display: flex;
   align-items: center;
@@ -33,18 +28,17 @@
 
 .prompt-label {
   margin-right: 0.5rem;
-  white-space: pre; /* preserves spacing for "C:\Users\Guest> " */
+  white-space: pre;
 }
 
 .prompt-input {
   flex: 1;
   background: transparent;
   border: none;
-  color: inherit;     /* same text color as parent */
+  color: inherit;
   font-family: inherit;
   outline: none;
   font-size: large;
-  /* Optional: handle placeholder, caret color, etc. */
 }
 
 @keyframes blink {

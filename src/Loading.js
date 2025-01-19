@@ -5,16 +5,12 @@ function SwirlyLoading() {
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    // --------------------------------------------------------------------------------
-    // 1) Grab the canvas + getContext + set initial width/height
-    // --------------------------------------------------------------------------------
     const c = canvasRef.current;
     const ctx = c.getContext("2d");
 
     let w = (c.width = window.innerWidth);
     let h = (c.height = window.innerHeight);
 
-    // We'll store a bunch of variables in an object to avoid polluting scope
     const opts = {
       range: 180,
       baseConnections: 3,
@@ -58,25 +54,18 @@ function SwirlyLoading() {
     const squareAllowed = opts.allowedDist * opts.allowedDist;
     const mostDistant = opts.depth + opts.range;
 
-    // We'll define some needed vars to track rotation
     let sinX = 0;
     let sinY = 0;
     let cosX = 0;
     let cosY = 0;
     let tick = 0;
 
-    // We’ll store all “Connection” + “Data” objects in arrays
     const connections = [];
     const toDevelop = [];
     const data = [];
     const all = [];
 
     let animating = false;
-
-    // --------------------------------------------------------------------------------
-    // 2) Define the constructor functions from the CodePen
-    //    We'll keep them inside useEffect so they can access "ctx" etc.
-    // --------------------------------------------------------------------------------
 
     function Connection(x, y, z, size) {
       this.x = x;
@@ -117,7 +106,6 @@ function SwirlyLoading() {
         pos.y = this.y + len * sinA * sinB;
         pos.z = this.z + len * cosB;
 
-        // Check if inside "range" (the sphere boundary)
         if (pos.x * pos.x + pos.y * pos.y + pos.z * pos.z < squareRange) {
           let passedExisting = true;
           let passedBuffered = true;
@@ -203,7 +191,7 @@ function SwirlyLoading() {
     }
     Data.prototype.reset = function () {
       this.setConnection(connections[0]);
-      this.ended = 2; // it will skip drawing for 2 frames
+      this.ended = 2; 
     };
     Data.prototype.step = function () {
       this.proportion += this.speed;
@@ -264,7 +252,6 @@ function SwirlyLoading() {
       setScreenPosition(this);
     };
 
-    // Helper to compute distance squared
     function squareDist(a, b) {
       const dx = b.x - a.x;
       const dy = b.y - a.y;
@@ -272,47 +259,38 @@ function SwirlyLoading() {
       return dx * dx + dy * dy + dz * dz;
     }
 
-    // Helper to set the .screen.x, .screen.y, .screen.z, etc.
     function setScreenPosition(item) {
       let x = item.x;
       let y = item.y;
       let z = item.z;
 
-      // rotate on X axis
       const Y = y;
       y = Y * cosX - z * sinX;
       z = z * cosX + Y * sinX;
 
-      // rotate on Y axis
       const Z = z;
       z = Z * cosY - x * sinY;
       x = x * cosY + Z * sinY;
 
-      item.screen.z = z + opts.depth; // push back by depth
-      z += opts.depth; // for scale calculations
+      item.screen.z = z + opts.depth;
+      z += opts.depth;
 
       const scale = opts.focalLength / z;
       item.screen.scale = scale;
       item.screen.x = opts.vanishPoint.x + x * scale;
       item.screen.y = opts.vanishPoint.y + y * scale;
     }
-
-    // --------------------------------------------------------------------------------
-    // 3) Initialization function (like `init()` in CodePen)
-    // --------------------------------------------------------------------------------
     function init() {
       connections.length = 0;
       data.length = 0;
       all.length = 0;
       toDevelop.length = 0;
 
-      // create the root connection
       const root = new Connection(0, 0, 0, opts.baseSize);
-      root.step = Connection.rootStep; // special step function
+      root.step = Connection.rootStep;
       connections.push(root);
       all.push(root);
 
-      // generate children
       root.link();
 
       while (toDevelop.length > 0) {
@@ -326,20 +304,15 @@ function SwirlyLoading() {
       }
     }
 
-    // --------------------------------------------------------------------------------
-    // 4) The main animation loop (`anim()`)
-    // --------------------------------------------------------------------------------
     function anim() {
       const rafId = requestAnimationFrame(anim);
 
-      // clear with a dark color each frame
       ctx.globalCompositeOperation = "source-over";
       ctx.fillStyle = opts.repaintColor;
       ctx.fillRect(0, 0, w, h);
 
       tick++;
 
-      // update rotation
       const rotX = tick * opts.rotVelX;
       const rotY = tick * opts.rotVelY;
       cosX = Math.cos(rotX);
@@ -347,43 +320,32 @@ function SwirlyLoading() {
       cosY = Math.cos(rotY);
       sinY = Math.sin(rotY);
 
-      // add more data lines if needed
       if (data.length < connections.length * opts.dataToConnections) {
         const datum = new Data(connections[0]);
         data.push(datum);
         all.push(datum);
       }
 
-      // draw wires
       ctx.globalCompositeOperation = "lighter";
       ctx.beginPath();
       ctx.lineWidth = opts.wireframeWidth;
       ctx.strokeStyle = opts.wireframeColor;
 
-      // step everything
       all.forEach((item) => item.step());
       ctx.stroke();
 
-      // draw everything
       ctx.globalCompositeOperation = "source-over";
       all.sort((a, b) => b.screen.z - a.screen.z);
       all.forEach((item) => item.draw());
     }
 
-    // --------------------------------------------------------------------------------
-    // 5) Initial Screen + start
-    // --------------------------------------------------------------------------------
     ctx.fillStyle = "#222";
     ctx.fillRect(0, 0, w, h);
     ctx.fillStyle = "#ccc";
     ctx.font = "50px Verdana";
-    // const txt = "Calculating Nodes";
-    // ctx.fillText(txt, w / 2 - ctx.measureText(txt).width / 2, h / 2 - 15);
 
-    // small timeout to show “Calculating Nodes” for a frame
     setTimeout(init, 50);
 
-    // Handle window resize
     const handleResize = () => {
       w = c.width = window.innerWidth;
       h = c.height = window.innerHeight;
@@ -393,11 +355,10 @@ function SwirlyLoading() {
     };
     window.addEventListener("resize", handleResize);
 
-    // Cleanup on unmount
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []); // end useEffect
+  }, []);
 
   return <canvas ref={canvasRef} className="swirly-canvas" />;
 }

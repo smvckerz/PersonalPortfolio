@@ -1,6 +1,5 @@
-// EditorModal.js
 import React, { useState } from "react";
-import "./EditorModel.css"; // Style as needed
+import "./EditorModel.css";
 
 function EditorModal({ file, onSave, onCancel }) {
   const [content, setContent] = useState(file.content);
