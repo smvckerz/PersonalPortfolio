@@ -64,24 +64,11 @@ The optimized files will be in the build/ directory.
 
 Here's an overview of the key directories and files:
 
-PersonalPortfolio-main/
-├── public/                 # Static files and main HTML template
-│   ├── index.html          # Entry point for the app
-│   └── favicon.ico         # Website favicon
-├── src/                    # Source code for the project
-│   ├── components/         # Reusable React components
-│   │   ├── About.js        # About section
-│   │   ├── Home.js         # Home section
-│   │   ├── Loading.js      # Loading screen
-│   │   └── TypedLine.js    # Simulates typing in the console
-│   ├── App.js              # Main application component
-│   ├── index.js            # Entry point for React
-│   ├── App.css             # Global styles
-│   ├── Home.css            # Styles for Home section
-│   ├── Loading.css         # Styles for Loading screen
-│   └── index.css           # Base styles
-├── package.json            # Project metadata and dependencies
-├── README.md               # Project documentation
+## 📂 Project Structure
+
+Here's an overview of the key directories and files:
+
+PersonalPortfolio-main/ ├── public/ # Static files and main HTML template │ ├── index.html # Entry point for the app │ └── favicon.ico # Website favicon ├── src/ # Source code for the project │ ├── components/ # Reusable React components │ │ ├── About.js # About section │ │ ├── Home.js # Home section │ │ ├── Loading.js # Loading screen │ │ └── TypedLine.js # Simulates typing in the console │ ├── App.js # Main application component │ ├── index.js # Entry point for React │ ├── App.css # Global styles │ ├── Home.css # Styles for Home section │ ├── Loading.css # Styles for Loading screen │ └── index.css # Base styles ├── package.json # Project metadata and dependencies ├── README.md # Project documentation
 
 🎨 Styling
 
