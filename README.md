@@ -28,20 +28,25 @@ If you'd like to run this project locally, follow these steps:
 
 1. Clone the Repository
 
+```
 git clone https://github.com/smvckerz/PersonalPortfolio.git
 cd PersonalPortfolio
+```
 
 2. Install Dependencies
 
 Ensure you have Node.js installed, then run:
-
+```
 npm install
+```
 
 3. Run the Development Server
 
 To start the website on your local machine:
 
+```
 npm start
+```
 
 Your site should now be running at http://localhost:3000.
 
@@ -49,7 +54,9 @@ Your site should now be running at http://localhost:3000.
 
 To create a production-ready build of the website:
 
+```
 npm run build
+```
 
 The optimized files will be in the build/ directory.
 
