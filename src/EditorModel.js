@@ -1,19 +1,18 @@
-import React, { useState, useEffect } from "react";
-import "./EditorModel.css";
+import React, { useState, useRef, useEffect } from "react";
+import "./EditorModal.css";
 
-function EditorModel({ file, onSave, onCancel }) {
+function EditorModal({ file, onSave, onCancel }) {
   const [content, setContent] = useState(file.content);
   const [isModified, setIsModified] = useState(false);
   const textareaRef = useRef(null);
 
-  // Auto-focus and set initial content
   useEffect(() => {
     textareaRef.current.focus();
     setContent(file.content);
   }, [file]);
 
   const handleKeyDown = (e) => {
-    if (e.ctrlKey && e.key === 'Enter') {
+    if ((e.ctrlKey && e.key === 'Enter') || e.key === ':') {
       handleSave();
     }
     if (e.key === 'Escape') {
@@ -23,7 +22,7 @@ function EditorModel({ file, onSave, onCancel }) {
 
   const handleSave = () => {
     if (content.length > 5000) {
-      alert("File size exceeds 5000 character limit!");
+      alert("File size limit exceeded (max 5000 characters)");
       return;
     }
     onSave(content);
@@ -36,13 +35,13 @@ function EditorModel({ file, onSave, onCancel }) {
   };
 
   return (
-    <div className="model-overlay" onClick={onCancel}>
-      <div className="model-content" onClick={(e) => e.stopPropagation()}>
-        <div className="model-header">
+    <div className="modal-overlay" onClick={onCancel}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <div className="modal-header">
           <h3>Editing: {file.name}</h3>
           <div className="file-info">
-            <span>Chars: {content.length}</span>
-            {isModified && <span className="modified-indicator">MODIFIED</span>}
+            <span>Characters: {content.length}</span>
+            {isModified && <span className="modified-indicator">* MODIFIED</span>}
           </div>
         </div>
         
@@ -56,7 +55,7 @@ function EditorModel({ file, onSave, onCancel }) {
           spellCheck="false"
         />
         
-        <div className="model-buttons">
+        <div className="modal-buttons">
           <button 
             onClick={handleSave}
             className="save-button"
@@ -76,4 +75,4 @@ function EditorModel({ file, onSave, onCancel }) {
   );
 }
 
-export default EditorModel;
+export default EditorModal;
