@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
-import "./EditorModal.css";
+import "./EditorModel.css";
 
-function EditorModal({ file, onSave, onCancel }) {
+function EditorModel({ file, onSave, onCancel }) {
   const [content, setContent] = useState(file.content);
   const [isModified, setIsModified] = useState(false);
   const textareaRef = useRef(null);
@@ -75,4 +75,4 @@ function EditorModal({ file, onSave, onCancel }) {
   );
 }
 
-export default EditorModal;
+export default EditorModel;
