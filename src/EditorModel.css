@@ -1,109 +1,55 @@
-.model-overlay {
+.editor-model {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.model-content {
   background: #1e1e1e;
-  border: 1px solid #333;
-  border-radius: 4px;
-  width: 80%;
-  max-width: 800px;
-  max-height: 90vh;
+  z-index: 1000;
   display: flex;
   flex-direction: column;
+  font-family: 'Consolas', monospace;
 }
 
-.model-header {
-  padding: 15px;
-  border-bottom: 1px solid #333;
+.editor-header {
+  background: #2d2d2d;
+  padding: 8px 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.model-header h3 {
-  margin: 0;
+  border-bottom: 1px solid #444;
   color: #c8c8c8;
-  font-size: 1.2rem;
+  font-size: 14px;
 }
 
-.file-info {
-  display: flex;
-  gap: 15px;
-  font-size: 0.9rem;
-  color: #666;
+.editor-commands {
+  color: #888;
 }
 
-.modified-indicator {
-  color: #d19a66;
-  font-weight: bold;
-}
-
-.editor-textarea {
+.editor-content {
   flex: 1;
-  background: #1e1e1e;
+  background: #000;
   color: #c8c8c8;
   border: none;
   padding: 15px;
   font-family: 'Consolas', monospace;
   font-size: 14px;
-  resize: vertical;
-  min-height: 300px;
   line-height: 1.5;
   tab-size: 4;
+  resize: none;
+  white-space: pre;
+  overflow-wrap: normal;
+  overflow-x: auto;
 }
 
-.editor-textarea:focus {
+.editor-content:focus {
   outline: none;
-  box-shadow: 0 0 0 1px #528bff;
 }
 
-.model-buttons {
-  padding: 15px;
-  border-top: 1px solid #333;
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-}
-
-.save-button, .cancel-button {
+.editor-footer {
+  background: #2d2d2d;
   padding: 8px 15px;
-  border: none;
-  border-radius: 3px;
-  cursor: pointer;
-  font-family: 'Consolas', monospace;
-  transition: all 0.2s;
-}
-
-.save-button {
-  background: #528bff;
-  color: white;
-}
-
-.save-button:disabled {
-  background: #333;
-  color: #666;
-  cursor: not-allowed;
-}
-
-.save-button:not(:disabled):hover {
-  background: #6fa3ff;
-}
-
-.cancel-button {
-  background: #333;
-  color: #c8c8c8;
-}
-
-.cancel-button:hover {
-  background: #444;
+  color: #888;
+  border-top: 1px solid #444;
+  font-size: 12px;
 }
