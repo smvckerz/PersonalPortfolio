@@ -335,7 +335,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Home.css";
 import TypedLine from "./TypedLine";
-import EditorModal from "./EditorModal";
+import EditorModel from "./EditorModel";
 
 function Home() {
   const [lines, setLines] = useState([
@@ -547,7 +547,7 @@ function Home() {
       </form>
 
       {editingFile && (
-        <EditorModal
+        <EditorModel
           file={editingFile}
           onSave={(content) => {
             setFileSystem(prev => ({
