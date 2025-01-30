@@ -12,7 +12,6 @@ function EditorModel({ file, onSave, onCancel }) {
     setContent(file.content);
   }, [file]);
 
-  // Handle keyboard shortcuts
   const handleKeyDown = (e) => {
     if (e.ctrlKey && e.key === 'Enter') {
       handleSave();
