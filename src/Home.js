@@ -335,7 +335,11 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./Home.css";
 import TypedLine from "./TypedLine";
+<<<<<<< HEAD
 import EditorModal from "./EditorModal";
+=======
+import EditorModal from "./EditorModel";
+>>>>>>> e6e142ea1ed63497be499f8bf2d2b0023b4f1b8b
 
 function Home() {
   const [lines, setLines] = useState([
@@ -372,13 +376,20 @@ function Home() {
     }
   }, [lines]);
 
+<<<<<<< HEAD
   const validCommands = ["help", "about", "clear", "ls", "cd", "mkdir", "touch", "mv", "python", "edit", "cat", "rm"];
+=======
+  const validCommands = ["help", "about", "clear", "ls", "cd", "mkdir", "touch"];
+>>>>>>> e6e142ea1ed63497be499f8bf2d2b0023b4f1b8b
 
   const handleCommand = (cmd) => {
     const parts = cmd.trim().split(" ");
     const baseCmd = parts[0].toLowerCase();
     const arg = parts[1] || "";
+<<<<<<< HEAD
     const arg2 = parts[2] || "";
+=======
+>>>>>>> e6e142ea1ed63497be499f8bf2d2b0023b4f1b8b
 
     switch (baseCmd) {
       case "help":
@@ -400,6 +411,10 @@ function Home() {
         ];
 
       case "clear":
+<<<<<<< HEAD
+=======
+
+>>>>>>> e6e142ea1ed63497be499f8bf2d2b0023b4f1b8b
         return null;
 
       case "ls":
@@ -411,12 +426,28 @@ function Home() {
         return [`Directory not found: ${currentDir}`];
 
       case "cd":
+<<<<<<< HEAD
         if (!arg) return ["Usage: cd [directory]"];
         if (arg === "..") {
           const pathParts = currentDir.split('/').filter(p => p);
           pathParts.pop();
           setCurrentDir(pathParts.join('/'));
           return [`Moved to parent directory`];
+=======
+        if (!arg) {
+          return ["Usage: cd [dirname]"];
+        }
+        if (arg === "..") {
+          setCurrentDir("");
+          return [`Now in root directory.`];
+        } else {
+          if (fileSystem[currentDir]?.directories.includes(arg)) {
+            setCurrentDir(arg);
+            return [`Switched directory to '${arg}'`];
+          } else {
+            return [`Directory not found: ${arg}`];
+          }
+>>>>>>> e6e142ea1ed63497be499f8bf2d2b0023b4f1b8b
         }
         if (fileSystem[currentDir]?.directories.includes(arg)) {
           setCurrentDir(prev => prev ? `${prev}/${arg}` : arg);
@@ -425,6 +456,7 @@ function Home() {
         return [`Directory not found: ${arg}`];
 
       case "mkdir":
+<<<<<<< HEAD
         if (!arg) return ["Usage: mkdir [name]"];
         if (!/^[\w\-]+$/.test(arg)) return ["Invalid directory name"];
         setFileSystem(prev => ({
@@ -458,6 +490,26 @@ function Home() {
           const [movedFile] = newFS[currentDir].files.splice(fileIndex, 1);
           newFS[arg2].files.push(movedFile);
           return newFS;
+=======
+        if (!arg) {
+          return ["Usage: mkdir [dirname]"];
+        }
+        setFileSystem((prev) => {
+          const copy = { ...prev };
+          copy[arg] = { directories: [], files: [] }; 
+          copy[currentDir].directories.push(arg);
+          return copy;
+        });
+        return [`Created directory '${arg}' in ${currentDir || "root"}.`];
+      case "touch":
+        if (!arg) {
+          return ["Usage: touch [filename]"];
+        }
+        setFileSystem((prev) => {
+          const copy = { ...prev };
+          copy[currentDir].files.push({name: arg, content: ""});
+          return copy;
+>>>>>>> e6e142ea1ed63497be499f8bf2d2b0023b4f1b8b
         });
 
       case "python": {
@@ -499,7 +551,98 @@ function Home() {
         return [`Deleted file: ${arg}`];
 
       default:
+<<<<<<< HEAD
         return cmd.trim() ? [`Command not found: ${cmd}`] : [];
+=======
+        if (cmd.trim() === "") {
+          return [];
+        } else {
+          return [`'${cmd}' is not recognized as a valid command.`];
+        }
+
+      case "mv": 
+        const fileName = parts[1];
+        const targetDir = parts[2];
+
+        const fileIndex = fileSystem[currentDir].files.fileIndex(f => f.name === fileName);
+
+        if(fileIndex === -1)
+        {
+          return ['File `${targetDir` does not exist.'];
+        }
+
+        const [movingFile] = fileSystem[currentDir].files.splice(fileIndex, 1);
+
+        fileSystem[targetDir].files.push(movingFile);
+
+        setFileSystem({...fileSystem});
+
+        return ('Moved `${fileName}` from `${currentDir` to `${targetDir}`.');
+
+        case "python": {
+          const fileName = parts[1];
+          const file = fileSystem[currentDir].items.find(item => item.name === fileName);
+          if (!file) {
+            return [`File '${fileName}' not found.`];
+          }
+          fetch("http://192.168.1.175:4000/run-python", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ code: file.content })
+          })
+            .then(res => res.json())
+            .then(data => {
+              if (data.error) {
+                setLines(prev => [...prev, data.error]);
+              } else {
+                setLines(prev => [...prev, data.output]);
+              }
+            })
+            .catch(err => {
+              setLines(prev => [...prev, String(err)]);
+            });
+        
+          return [`Executing Python code in '${fileName}'...`];
+        }
+
+        case "edit": {
+          if (!arg) {
+            return ["Usage: edit [filename]"];
+          }
+    
+          const fileIndex = fileSystem[currentDir].items.findIndex(
+            (item) => item.name === arg && !item.isDirectory
+          );
+    
+          if (fileIndex === -1) {
+            return [`File '${arg}' not found in ${currentDir || "root"}.`];
+          }
+    
+          setEditingFile({
+            ...fileSystem[currentDir].items[fileIndex],
+            path: currentDir,
+            index: fileIndex,
+          });
+    
+          return [`Editing file '${arg}'.`];
+        }
+
+        case "cat": {
+          if (!arg) {
+            return ["Usage: cat [filename]"];
+          }
+        
+          const fileObj = fileSystem[currentDir].items.find(
+            (item) => item.name === arg && !item.isDirectory
+          );
+        
+          if (!fileObj) {
+            return [`File '${arg}' not found in ${currentDir || "root"}.`];
+          }
+        
+          return [fileObj.content || ""];
+        }
+>>>>>>> e6e142ea1ed63497be499f8bf2d2b0023b4f1b8b
     }
   };
 
@@ -514,8 +657,16 @@ function Home() {
   const onSubmitCommand = (e) => {
     e.preventDefault();
     const command = inputValue.trim();
+<<<<<<< HEAD
     setLines(prev => [...prev, `C:\\${currentDir || "root"}> ${command}`]);
     
+=======
+
+    setLines((prev) => [...prev, `C:\\Users\\${currentDir}> ${command}`]);
+
+    const output = handleCommand(command);
+
+>>>>>>> e6e142ea1ed63497be499f8bf2d2b0023b4f1b8b
     if (command.toLowerCase() === "clear") {
       setLines([]);
     } else {

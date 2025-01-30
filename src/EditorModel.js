@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
+=======
+import React, { useState } from "react";
+>>>>>>> e6e142ea1ed63497be499f8bf2d2b0023b4f1b8b
 import "./EditorModel.css";
 
 function EditorModel({ file, onSave, onCancel }) {

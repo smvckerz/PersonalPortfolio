@@ -1,6 +1,3 @@
-/* index.css */
-
-/* A basic reset */
 *,
 *::before,
 *::after {
@@ -9,42 +6,31 @@
   box-sizing: border-box;
 }
 
-/* Ensure body is full height and a fallback color is set */
 html, body {
   width: 100%;
   height: 100%;
   margin: 0;
-  background-color: #1e1e1e; /* Dark background globally */
-  color: #c8c8c8;            /* Light text color */
+  background-color: #1e1e1e;
+  color: #c8c8c8;
   font-family: "Consolas", "Courier New", monospace;
 }
 
-/* #root is where React mounts */
 #root {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* App.css */
-
 .App {
-  /* whatever layout you want */
   width: 100%;
   height: 100%;
 }
 
-/* 
-Wrap the loader in a fade-wrapper that starts fully opaque 
-*/
 .fade-wrapper {
   opacity: 1;
-  transition: opacity 1s ease-in-out; /* 1-second fade */
+  transition: opacity 1s ease-in-out;
 }
 
-/* 
-When fade-out is triggered, we set opacity to 0 
-*/
 .fade-wrapper.fade-out {
   opacity: 0;
 }
