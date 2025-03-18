@@ -201,7 +201,9 @@ function Home() {
       </div>
 
       <form onSubmit={onSubmitCommand} className="prompt">
-        <span className="prompt-label">C:\{currentDir || "root"}&gt;</span>
+        <span className="prompt-label"> 
+          C:\{(currentDir || "root").replace(/\//g, "\\")}&gt; 
+        </span>
         <input
           className="prompt-input"
           type="text"
