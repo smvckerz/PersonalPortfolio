@@ -3,6 +3,15 @@ import "./Home.css";
 import TypedLine from "./TypedLine";
 import EditorModel from "./EditorModel";
 
+function getDisplayPath(dir) {
+  // If currentDir is empty, just show "root"
+  if (!dir) {
+    return "root";
+  }
+  // Otherwise, prepend "root/" and replace forward slashes with backslashes
+  return `root/${dir}`.replace(/\//g, "\\");
+}
+
 function Home() {
   const [lines, setLines] = useState([
     "Welcome to my Console!",
@@ -202,7 +211,8 @@ function Home() {
 
       <form onSubmit={onSubmitCommand} className="prompt">
         <span className="prompt-label"> 
-          C:\{(currentDir || "root").replace(/\//g, "\\")}&gt; 
+          {/* C:\{(currentDir || "root").replace(/\//g, "\\")}&gt;  */}
+          C:\{getDisplayPath(currentDir)}&gt;
         </span>
         <input
           className="prompt-input"
