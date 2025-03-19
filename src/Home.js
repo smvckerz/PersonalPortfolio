@@ -104,19 +104,15 @@ function Home() {
         if (!/^[\w\-]+$/.test(arg)) return ["Invalid directory name"];
 
         return setFileSystem(prev => {
-          // Copy the existing file system
           const newFS = { ...prev };
 
-          // 1. Add the new directory name to the current directory's `directories` array
           newFS[currentDir] = {
             ...newFS[currentDir],
             directories: [...newFS[currentDir].directories, arg]
           };
 
-          // 2. Construct the new directory's path, e.g. "test/sub" if currentDir="test" and arg="sub"
           const newDirPath = currentDir ? `${currentDir}/${arg}` : arg;
 
-          // 3. Create an empty entry for this new directory
           newFS[newDirPath] = {
             directories: [],
             files: []
@@ -124,19 +120,6 @@ function Home() {
 
           return newFS;
         });
-
-      // case "mkdir":
-      //   if (!arg) return ["Usage: mkdir [name]"];
-      //   if (!/^[\w\-]+$/.test(arg)) return ["Invalid directory name"];
-
-      //   setFileSystem(prev => ({
-      //     ...prev,
-      //     [currentDir]: {
-      //       ...prev[currentDir],
-      //       directories: [...prev[currentDir].directories, arg]
-      //     }
-      //   }));
-      //   return [`Created directory: ${arg}`];
 
       case "touch":
         if (!arg) return ["Usage: touch [filename]"];

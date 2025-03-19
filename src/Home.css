@@ -3,32 +3,33 @@
   color: #c8c8c8;
   font-family: "Consolas", monospace;
   padding: 1rem;
-  height: 100vh;
+  height: 100vh;       /* Fill the entire viewport height */
   box-sizing: border-box;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* So .output-lines is on top, .prompt at bottom */
 }
 
 .line {
-  margin-bottom: 1rem;
+  margin-bottom: 0.25rem;
 }
 
 .output-lines {
-  flex: 1;
-  overflow-y: auto;
-  margin-bottom: 0.5rem;
-  flex-direction: column;
+  flex: 1;            /* Let this area grow to fill space */
+  overflow-y: auto;   /* Scroll if there’s too many lines */
   display: flex;
+  flex-direction: column; /* Ensure lines flow from top to bottom */
+  margin-bottom: 0.5rem;  /* Space above the prompt (optional) */
 }
 
 .prompt {
   display: flex;
-  align-items: center;
+  align-items: center;     /* Vertically center the input + label */
+  /* No special margin needed; it naturally appears below .output-lines */
 }
 
 .prompt-label {
   margin-right: 0.5rem;
-  white-space: pre;
+  white-space: pre;        /* So multiple spaces, etc. are shown as typed */
 }
 
 .prompt-input {
@@ -62,4 +63,14 @@
 @keyframes blink {
   0%, 50% { opacity: 1; }
   51%, 100% { opacity: 0; }
+}
+
+.prompt-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  outline: none;
+  font-size: large;
 }
