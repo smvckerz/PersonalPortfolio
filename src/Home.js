@@ -102,14 +102,41 @@ function Home() {
       case "mkdir":
         if (!arg) return ["Usage: mkdir [name]"];
         if (!/^[\w\-]+$/.test(arg)) return ["Invalid directory name"];
-        setFileSystem(prev => ({
-          ...prev,
-          [currentDir]: {
-            ...prev[currentDir],
-            directories: [...prev[currentDir].directories, arg]
-          }
-        }));
-        return [`Created directory: ${arg}`];
+
+        return setFileSystem(prev => {
+          // Copy the existing file system
+          const newFS = { ...prev };
+
+          // 1. Add the new directory name to the current directory's `directories` array
+          newFS[currentDir] = {
+            ...newFS[currentDir],
+            directories: [...newFS[currentDir].directories, arg]
+          };
+
+          // 2. Construct the new directory's path, e.g. "test/sub" if currentDir="test" and arg="sub"
+          const newDirPath = currentDir ? `${currentDir}/${arg}` : arg;
+
+          // 3. Create an empty entry for this new directory
+          newFS[newDirPath] = {
+            directories: [],
+            files: []
+          };
+
+          return newFS;
+        });
+
+      // case "mkdir":
+      //   if (!arg) return ["Usage: mkdir [name]"];
+      //   if (!/^[\w\-]+$/.test(arg)) return ["Invalid directory name"];
+
+      //   setFileSystem(prev => ({
+      //     ...prev,
+      //     [currentDir]: {
+      //       ...prev[currentDir],
+      //       directories: [...prev[currentDir].directories, arg]
+      //     }
+      //   }));
+      //   return [`Created directory: ${arg}`];
 
       case "touch":
         if (!arg) return ["Usage: touch [filename]"];
@@ -190,14 +217,14 @@ function Home() {
     e.preventDefault();
     const command = inputValue.trim();
     setLines(prev => [...prev, `C:\\${currentDir || "root"}> ${command}`]);
-    
+
     if (command.toLowerCase() === "clear") {
       setLines([]);
     } else {
       const output = handleCommand(command);
       if (output) setLines(prev => [...prev, ...output]);
     }
-    
+
     setInputValue("");
   };
 
@@ -210,7 +237,7 @@ function Home() {
       </div>
 
       <form onSubmit={onSubmitCommand} className="prompt">
-        <span className="prompt-label"> 
+        <span className="prompt-label">
           {/* C:\{(currentDir || "root").replace(/\//g, "\\")}&gt;  */}
           C:\{getDisplayPath(currentDir)}&gt;
         </span>
@@ -232,8 +259,8 @@ function Home() {
               ...prev,
               [editingFile.path]: {
                 ...prev[editingFile.path],
-                files: prev[editingFile.path].files.map(f => 
-                  f.name === editingFile.name ? {...f, content} : f
+                files: prev[editingFile.path].files.map(f =>
+                  f.name === editingFile.name ? { ...f, content } : f
                 )
               }
             }));
