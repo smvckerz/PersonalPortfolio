@@ -81,18 +81,18 @@ import React, { useState } from "react";
 import { useCodeMirror } from "@uiw/react-codemirror";
 import { dracula } from "@uiw/codemirror-theme-dracula";
 import { javascript } from "@codemirror/lang-javascript";
+import "./EditorModel.css"; // Make sure to import the matching CSS
 
 function EditorModel({ file, onSave, onCancel }) {
   const [content, setContent] = useState(file.content);
 
+  // Setup CodeMirror
   const editor = useCodeMirror({
     value: content,
     height: "300px",
     theme: dracula,
     extensions: [javascript()],
-    onChange: (value) => {
-      setContent(value);
-    },
+    onChange: (value) => setContent(value),
   });
 
   const handleSave = () => {
@@ -102,8 +102,14 @@ function EditorModel({ file, onSave, onCancel }) {
   return (
     <div className="editor-modal-overlay">
       <div className="editor-modal">
-        <h2>Editing {file.name}</h2>
+        <div className="editor-header">
+          <h3>Editing {file.name}</h3>
+          {/* Optional extra commands or close icon */}
+        </div>
+
+        {/* CodeMirror attaches to this container */}
         <div ref={editor} className="editor-codemirror-container" />
+
         <div className="editor-buttons">
           <button onClick={handleSave}>Save</button>
           <button onClick={onCancel}>Cancel</button>
