@@ -260,7 +260,7 @@
 import React, { useReducer, useState, useEffect, useRef } from 'react';
 import EditorModel from './EditorModel';
 import './Home.css';
-import { fsReducer, initialState } from 'src\commands.js';
+import { fsReducer, initialState } from 'src/commands.js';
 
 export default function Home() {
 
