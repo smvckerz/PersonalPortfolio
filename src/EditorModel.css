@@ -1,55 +1,70 @@
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(30, 30, 30, 0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal-content {
-    background-color: #2d2d2d;
-    padding: 20px;
-    border-radius: 8px;
-    color: #ffffff;
-    width: 80%;
-    max-width: 800px;
-  }
-  
-  .modal-content h3 {
-    margin-top: 0;
-  }
-  
-  .modal-content textarea {
-    width: 100%;
-    height: 400px;
-    background-color: #1e1e1e;
-    color: #ffffff;
-    border: none;
-    padding: 10px;
-    font-family: monospace;
-    resize: vertical;
-  }
-  
-  .modal-buttons {
-    margin-top: 10px;
-    text-align: right;
-  }
-  
-  .modal-buttons button {
-    margin-left: 10px;
-    padding: 8px 16px;
-    background-color: #3c3c3c;
-    border: none;
-    color: #ffffff;
-    cursor: pointer;
-    border-radius: 4px;
-  }
-  
-  .modal-buttons button:hover {
-    background-color: #555555;
-  }
-  
+/* Fullscreen overlay that dims the background */
+.editor-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Consolas', monospace;
+}
+
+/* Centered modal container */
+.editor-modal {
+  background: #1e1e1e;
+  border: 1px solid #444;
+  border-radius: 4px;
+  width: 80%;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  color: #c8c8c8;
+}
+
+/* Header area (optional) */
+.editor-header {
+  background: #2d2d2d;
+  padding: 8px 15px;
+  border-bottom: 1px solid #444;
+  color: #c8c8c8;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* The CodeMirror container inside the modal */
+.editor-codemirror-container {
+  flex: 1;
+  padding: 15px;
+  border-bottom: 1px solid #444;
+  /* CodeMirror will fill this area once attached */
+}
+
+/* Footer or buttons row */
+.editor-buttons {
+  background: #2d2d2d;
+  padding: 8px 15px;
+  border-top: 1px solid #444;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.editor-buttons button {
+  background: #444;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-family: inherit;
+  border-radius: 4px;
+}
+
+.editor-buttons button:hover {
+  background: #666;
+}
