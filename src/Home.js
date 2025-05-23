@@ -261,7 +261,6 @@ import React, { useReducer, useState, useEffect, useRef } from 'react';
 import { fsReducer, initialState, handleCommand } from './commands';
 import EditorModel from './EditorModel';
 import './Home.css';
-import React, { useReducer, useState, useEffect, useRef } from 'react';
 import { fsReducer, initialState } from 'src\commands.js';
 
 export default function Home() {
