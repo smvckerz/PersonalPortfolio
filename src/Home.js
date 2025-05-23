@@ -47,11 +47,13 @@ export default function Home() {
   return (
     <div className="console-container">
       <div className="output-lines" ref={outputRef} role="log">
-        {lines.map((l,i) => <div key={i} className="line">{l}</div>)}
+        {lines.map((l, i) => <div key={i} className="line">{l}</div>)}
       </div>
 
       <form onSubmit={onSubmit} className="prompt">
-        <span className="prompt-label">C:\{(currentDir||'root').replace(/\//g,'\\')}&gt;</span>
+        <span className="prompt-label">
+          {`C:\\${(currentDir || 'root').replace(/\//g, '\\')} > `}
+        </span>
         <input
           className="prompt-input"
           value={inputValue}
