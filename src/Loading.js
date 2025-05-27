@@ -1,12 +1,12 @@
-import React, { useRef, useEffect } from "react";
-import "./Loading.css";
+import React, { useRef, useEffect } from 'react';
+import './Loading.css';
 
 function SwirlyLoading() {
   const canvasRef = useRef(null);
 
   useEffect(() => {
     const c = canvasRef.current;
-    const ctx = c.getContext("2d");
+    const ctx = c.getContext('2d');
 
     let w = (c.width = window.innerWidth);
     let h = (c.height = window.innerHeight);
@@ -33,14 +33,14 @@ function SwirlyLoading() {
       rotVelX: 0.003,
       rotVelY: 0.002,
 
-      repaintColor: "#111",
-      connectionColor: "hsla(200,60%,light%,alp)",
-      rootColor: "hsla(0,60%,light%,alp)",
-      endColor: "hsla(160,20%,light%,alp)",
-      dataColor: "hsla(40,80%,light%,alp)",
+      repaintColor: '#111',
+      connectionColor: 'hsla(200,60%,light%,alp)',
+      rootColor: 'hsla(0,60%,light%,alp)',
+      endColor: 'hsla(160,20%,light%,alp)',
+      dataColor: 'hsla(40,80%,light%,alp)',
 
       wireframeWidth: 0.1,
-      wireframeColor: "#88f",
+      wireframeColor: '#88f',
 
       depth: 250,
       focalLength: 250,
@@ -87,7 +87,7 @@ function SwirlyLoading() {
 
       const links = [];
       const connectionsNum =
-        opts.baseConnections + Math.random() * opts.addedConnections | 0;
+        (opts.baseConnections + Math.random() * opts.addedConnections) | 0;
       let attempt = opts.connectionAttempts;
 
       const pos = {};
@@ -154,8 +154,8 @@ function SwirlyLoading() {
     Connection.prototype.step = function () {
       this.setScreen();
       this.screen.color = (this.isEnd ? opts.endColor : opts.connectionColor)
-        .replace("light", 30 + ((tick * this.glowSpeed) % 30))
-        .replace("alp", 0.2 + (1 - this.screen.z / mostDistant) * 0.8);
+        .replace('light', 30 + ((tick * this.glowSpeed) % 30))
+        .replace('alp', 0.2 + (1 - this.screen.z / mostDistant) * 0.8);
 
       for (let i = 0; i < this.links.length; i++) {
         ctx.moveTo(this.screen.x, this.screen.y);
@@ -165,8 +165,8 @@ function SwirlyLoading() {
     Connection.rootStep = function () {
       this.setScreen();
       this.screen.color = opts.rootColor
-        .replace("light", 30 + ((tick * this.glowSpeed) % 30))
-        .replace("alp", (1 - this.screen.z / mostDistant) * 0.8);
+        .replace('light', 30 + ((tick * this.glowSpeed) % 30))
+        .replace('alp', (1 - this.screen.z / mostDistant) * 0.8);
 
       for (let i = 0; i < this.links.length; i++) {
         ctx.moveTo(this.screen.x, this.screen.y);
@@ -176,7 +176,13 @@ function SwirlyLoading() {
     Connection.prototype.draw = function () {
       ctx.fillStyle = this.screen.color;
       ctx.beginPath();
-      ctx.arc(this.screen.x, this.screen.y, this.screen.scale * this.size, 0, 2 * Math.PI);
+      ctx.arc(
+        this.screen.x,
+        this.screen.y,
+        this.screen.scale * this.size,
+        0,
+        2 * Math.PI
+      );
       ctx.fill();
     };
     Connection.prototype.setScreen = function () {
@@ -191,7 +197,7 @@ function SwirlyLoading() {
     }
     Data.prototype.reset = function () {
       this.setConnection(connections[0]);
-      this.ended = 2; 
+      this.ended = 2;
     };
     Data.prototype.step = function () {
       this.proportion += this.speed;
@@ -200,7 +206,8 @@ function SwirlyLoading() {
         this.x = this.ox + this.dx * this.proportion;
         this.y = this.oy + this.dy * this.proportion;
         this.z = this.oz + this.dz * this.proportion;
-        this.size = (this.os + this.ds * this.proportion) * opts.dataToConnectionSize;
+        this.size =
+          (this.os + this.ds * this.proportion) * opts.dataToConnectionSize;
       } else {
         this.setConnection(this.nextConnection);
       }
@@ -209,8 +216,8 @@ function SwirlyLoading() {
       this.screen.lastY = this.screen.y;
       this.setScreen();
       this.screen.color = opts.dataColor
-        .replace("light", 40 + ((tick * this.glowSpeed) % 50))
-        .replace("alp", 0.2 + (1 - this.screen.z / mostDistant) * 0.6);
+        .replace('light', 40 + ((tick * this.glowSpeed) % 50))
+        .replace('alp', 0.2 + (1 - this.screen.z / mostDistant) * 0.6);
     };
     Data.prototype.draw = function () {
       if (this.ended) {
@@ -228,7 +235,8 @@ function SwirlyLoading() {
         this.reset();
       } else {
         this.connection = connection;
-        this.nextConnection = connection.links[(connection.links.length * Math.random()) | 0];
+        this.nextConnection =
+          connection.links[(connection.links.length * Math.random()) | 0];
 
         this.ox = connection.x;
         this.oy = connection.y;
@@ -307,7 +315,7 @@ function SwirlyLoading() {
     function anim() {
       const rafId = requestAnimationFrame(anim);
 
-      ctx.globalCompositeOperation = "source-over";
+      ctx.globalCompositeOperation = 'source-over';
       ctx.fillStyle = opts.repaintColor;
       ctx.fillRect(0, 0, w, h);
 
@@ -326,7 +334,7 @@ function SwirlyLoading() {
         all.push(datum);
       }
 
-      ctx.globalCompositeOperation = "lighter";
+      ctx.globalCompositeOperation = 'lighter';
       ctx.beginPath();
       ctx.lineWidth = opts.wireframeWidth;
       ctx.strokeStyle = opts.wireframeColor;
@@ -334,15 +342,15 @@ function SwirlyLoading() {
       all.forEach((item) => item.step());
       ctx.stroke();
 
-      ctx.globalCompositeOperation = "source-over";
+      ctx.globalCompositeOperation = 'source-over';
       all.sort((a, b) => b.screen.z - a.screen.z);
       all.forEach((item) => item.draw());
     }
 
-    ctx.fillStyle = "#222";
+    ctx.fillStyle = '#222';
     ctx.fillRect(0, 0, w, h);
-    ctx.fillStyle = "#ccc";
-    ctx.font = "50px Verdana";
+    ctx.fillStyle = '#ccc';
+    ctx.font = '50px Verdana';
 
     setTimeout(init, 50);
 
@@ -353,14 +361,14 @@ function SwirlyLoading() {
       opts.vanishPoint.y = h / 2;
       ctx.fillRect(0, 0, w, h);
     };
-    window.addEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
 
     return () => {
-      window.removeEventListener("resize", handleResize);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="swirly-canvas" />;
+  return <canvas ref={canvasRef} className='swirly-canvas' />;
 }
 
 export default SwirlyLoading;

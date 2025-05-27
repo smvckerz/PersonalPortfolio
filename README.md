@@ -36,6 +36,7 @@ cd PersonalPortfolio
 2. Install Dependencies
 
 Ensure you have Node.js installed, then run:
+
 ```
 npm install
 ```
@@ -110,4 +111,3 @@ Enhancing animations and transitions.
 Introducing more interactive console commands.
 
 Feel free to explore the codebase and customize it for your needs!
-

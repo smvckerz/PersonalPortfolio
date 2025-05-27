@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import Home from "./Home";
-import SwirlyLoading from "./Loading";
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import Home from './Home';
+import SwirlyLoading from './Loading';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -20,9 +20,9 @@ function App() {
   }, []);
 
   return (
-    <div className="App">
+    <div className='App'>
       {loading ? (
-        <div className={`fade-wrapper ${fadeOut ? "fade-out" : ""}`}>
+        <div className={`fade-wrapper ${fadeOut ? 'fade-out' : ''}`}>
           <SwirlyLoading />
         </div>
       ) : (

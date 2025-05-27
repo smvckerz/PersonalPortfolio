@@ -44,7 +44,7 @@
 //             {isModified && <span className="modified-indicator">* MODIFIED</span>}
 //           </div>
 //         </div>
-        
+
 //         <textarea
 //           ref={textareaRef}
 //           value={content}
@@ -54,16 +54,16 @@
 //           placeholder="Start typing..."
 //           spellCheck="false"
 //         />
-        
+
 //         <div className="modal-buttons">
-//           <button 
+//           <button
 //             onClick={handleSave}
 //             className="save-button"
 //             disabled={!isModified}
 //           >
 //             Save (:wq)
 //           </button>
-//           <button 
+//           <button
 //             onClick={onCancel}
 //             className="cancel-button"
 //           >
@@ -78,11 +78,11 @@
 // export default EditorModel;
 
 // EditorModel.js
-import React, { useState } from "react";
-import CodeMirror from "@uiw/react-codemirror";
-import { dracula } from "@uiw/codemirror-theme-dracula";
-import { javascript } from "@codemirror/lang-javascript";
-import "./EditorModel.css"; // your modal CSS
+import React, { useState } from 'react';
+import CodeMirror from '@uiw/react-codemirror';
+import { dracula } from '@uiw/codemirror-theme-dracula';
+import { javascript } from '@codemirror/lang-javascript';
+import './EditorModel.css'; // your modal CSS
 
 function EditorModel({ file, onSave, onCancel }) {
   const [content, setContent] = useState(file.content);
@@ -92,19 +92,19 @@ function EditorModel({ file, onSave, onCancel }) {
   };
 
   return (
-    <div className="editor-modal-overlay">
-      <div className="editor-modal">
+    <div className='editor-modal-overlay'>
+      <div className='editor-modal'>
         <h2>Editing {file.name}</h2>
-        
+
         <CodeMirror
           value={content}
-          height="300px"
+          height='300px'
           theme={dracula}
           extensions={[javascript()]}
           onChange={(value) => setContent(value)}
         />
 
-        <div className="editor-buttons">
+        <div className='editor-buttons'>
           <button onClick={handleSave}>Save</button>
           <button onClick={onCancel}>Cancel</button>
         </div>
