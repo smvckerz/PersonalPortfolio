@@ -46,7 +46,6 @@ export default function Home() {
   };
 
   return (
-<<<<<<< HEAD
     <div className='console-container'>
       <div className='output-lines' ref={outputRef} role='log'>
         {lines.map((l, i) => (
@@ -59,7 +58,6 @@ export default function Home() {
       <form onSubmit={onSubmit} className='prompt'>
         <span className='prompt-label'>
           C:\{(currentDir || 'root').replace(/\//g, '\\')}&gt;
-=======
     <div className="console-container">
       <div className="output-lines" ref={outputRef} role="log">
         {lines.map((l, i) => <div key={i} className="line">{l}</div>)}
@@ -68,7 +66,6 @@ export default function Home() {
       <form onSubmit={onSubmit} className="prompt">
         <span className="prompt-label">
           {`C:\\${(currentDir || 'root').replace(/\//g, '\\')} > `}
->>>>>>> 7931b648cdc09e4a2e2ed32379aef5b04fc68928
         </span>
         <input
           className='prompt-input'
