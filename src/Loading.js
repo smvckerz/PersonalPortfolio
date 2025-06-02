@@ -1,3 +1,5 @@
+// SwirlyLoading.js
+
 import React, { useRef, useEffect } from 'react';
 import './Loading.css';
 
@@ -66,6 +68,7 @@ function SwirlyLoading() {
     const all = [];
 
     let animating = false;
+    let rafId;
 
     function Connection(x, y, z, size) {
       this.x = x;
@@ -79,6 +82,7 @@ function SwirlyLoading() {
 
       this.glowSpeed = opts.baseGlowSpeed + opts.addedGlowSpeed * Math.random();
     }
+
     Connection.prototype.link = function () {
       if (this.size < opts.minSize) {
         this.isEnd = true;
@@ -134,11 +138,11 @@ function SwirlyLoading() {
         this.isEnd = true;
       } else {
         for (let i = 0; i < links.length; i++) {
-          const pos = links[i];
+          const posItem = links[i];
           const connection = new Connection(
-            pos.x,
-            pos.y,
-            pos.z,
+            posItem.x,
+            posItem.y,
+            posItem.z,
             this.size * opts.sizeMultiplier
           );
 
@@ -151,6 +155,7 @@ function SwirlyLoading() {
         }
       }
     };
+
     Connection.prototype.step = function () {
       this.setScreen();
       this.screen.color = (this.isEnd ? opts.endColor : opts.connectionColor)
@@ -162,6 +167,7 @@ function SwirlyLoading() {
         ctx.lineTo(this.links[i].screen.x, this.links[i].screen.y);
       }
     };
+
     Connection.rootStep = function () {
       this.setScreen();
       this.screen.color = opts.rootColor
@@ -173,6 +179,7 @@ function SwirlyLoading() {
         ctx.lineTo(this.links[i].screen.x, this.links[i].screen.y);
       }
     };
+
     Connection.prototype.draw = function () {
       ctx.fillStyle = this.screen.color;
       ctx.beginPath();
@@ -185,6 +192,7 @@ function SwirlyLoading() {
       );
       ctx.fill();
     };
+
     Connection.prototype.setScreen = function () {
       setScreenPosition(this);
     };
@@ -195,10 +203,12 @@ function SwirlyLoading() {
       this.screen = {};
       this.setConnection(connection);
     }
+
     Data.prototype.reset = function () {
       this.setConnection(connections[0]);
       this.ended = 2;
     };
+
     Data.prototype.step = function () {
       this.proportion += this.speed;
 
@@ -219,6 +229,7 @@ function SwirlyLoading() {
         .replace('light', 40 + ((tick * this.glowSpeed) % 50))
         .replace('alp', 0.2 + (1 - this.screen.z / mostDistant) * 0.6);
     };
+
     Data.prototype.draw = function () {
       if (this.ended) {
         return --this.ended;
@@ -230,6 +241,7 @@ function SwirlyLoading() {
       ctx.lineTo(this.screen.x, this.screen.y);
       ctx.stroke();
     };
+
     Data.prototype.setConnection = function (connection) {
       if (connection.isEnd) {
         this.reset();
@@ -256,6 +268,7 @@ function SwirlyLoading() {
         this.proportion = 0;
       }
     };
+
     Data.prototype.setScreen = function () {
       setScreenPosition(this);
     };
@@ -272,14 +285,17 @@ function SwirlyLoading() {
       let y = item.y;
       let z = item.z;
 
+      // Rotate around X axis
       const Y = y;
       y = Y * cosX - z * sinX;
       z = z * cosX + Y * sinX;
 
+      // Rotate around Y axis
       const Z = z;
       z = Z * cosY - x * sinY;
       x = x * cosY + Z * sinY;
 
+      // Perspective projection
       item.screen.z = z + opts.depth;
       z += opts.depth;
 
@@ -288,6 +304,7 @@ function SwirlyLoading() {
       item.screen.x = opts.vanishPoint.x + x * scale;
       item.screen.y = opts.vanishPoint.y + y * scale;
     }
+
     function init() {
       connections.length = 0;
       data.length = 0;
@@ -308,12 +325,12 @@ function SwirlyLoading() {
 
       if (!animating) {
         animating = true;
-        anim();
+        rafId = requestAnimationFrame(anim);
       }
     }
 
     function anim() {
-      const rafId = requestAnimationFrame(animLoop);
+      rafId = requestAnimationFrame(anim);
 
       ctx.globalCompositeOperation = 'source-over';
       ctx.fillStyle = opts.repaintColor;
@@ -364,11 +381,13 @@ function SwirlyLoading() {
     window.addEventListener('resize', handleResize);
 
     return () => {
+      // Cancel animation on unmount
+      if (rafId) cancelAnimationFrame(rafId);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
-  return <canvas ref={canvasRef} className='swirly-canvas' />;
+  return <canvas ref={canvasRef} className="swirly-canvas" />;
 }
 
 export default SwirlyLoading;
