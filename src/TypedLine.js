@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
 function TypedLine({ text, onComplete, typingSpeed = 50 }) {
-
-  const [displayed, setDisplayed] = useState("");
+  const [displayed, setDisplayed] = useState('');
 
   useEffect(() => {
     let index = 0;
@@ -20,7 +19,7 @@ function TypedLine({ text, onComplete, typingSpeed = 50 }) {
     return () => clearInterval(interval);
   }, [text, typingSpeed, onComplete]);
 
-  return <div className="line">{displayed}</div>;
+  return <div className='line'>{displayed}</div>;
 }
 
 export default TypedLine;
