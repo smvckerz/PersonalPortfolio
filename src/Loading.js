@@ -305,7 +305,7 @@ function SwirlyLoading() {
     }
 
     function anim() {
-      const rafId = requestAnimationFrame(anim);
+      const rafId = requestAnimationFrame(animLoop);
 
       ctx.globalCompositeOperation = "source-over";
       ctx.fillStyle = opts.repaintColor;
