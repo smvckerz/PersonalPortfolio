@@ -212,6 +212,7 @@ export function handleCommand(command, state, dispatch, executePython) {
           navigate('/website');
           return { lines: [] };
         }
+        window.open(`${window.location.origin}/website`, '_blank', 'noopener,noreferrer');
         break;
       }
 

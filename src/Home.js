@@ -39,7 +39,7 @@ export default function Home() {
   };
 
   const onSubmit = (e) => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     e.preventDefault();
     const cmd = inputValue.trim();
     setLines(prev => [...prev, `C:\\${getDisplayPath(currentDir)} > ${cmd}`]);
