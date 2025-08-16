@@ -1,10 +1,8 @@
-// Home.js
 import React, { useReducer, useState, useEffect, useRef } from 'react';
 import EditorModel from './EditorModel';
 import './Home.css';
 import { fsReducer, initialState, handleCommand } from './commands';
 import { useNavigate } from 'react-router-dom';
-
 
 function getDisplayPath(dir) {
   const parts = dir.split('/').filter(p => p);
@@ -12,9 +10,10 @@ function getDisplayPath(dir) {
 }
 
 export default function Home() {
-  const navigate = useNavigate();
+  const navigate = useNavigate();  // <- keep only this one (top-level)
   const [state, dispatch] = useReducer(fsReducer, initialState);
   const { currentDir, editingFile, running } = state;
+
   const [lines, setLines] = useState([
     'Welcome to my Console!',
     "Type 'help' to see available commands."
@@ -29,7 +28,8 @@ export default function Home() {
   const executePython = (code) => {
     dispatch({ type: 'SET_RUNNING', payload: true });
     fetch(`${process.env.REACT_APP_API_URL}/execute`, {
-      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code })
     })
       .then(res => res.json())
@@ -39,10 +39,11 @@ export default function Home() {
   };
 
   const onSubmit = (e) => {
-    // const navigate = useNavigate();
     e.preventDefault();
     const cmd = inputValue.trim();
     setLines(prev => [...prev, `C:\\${getDisplayPath(currentDir)} > ${cmd}`]);
+
+    // pass navigate into the command handler
     const { lines: out } = handleCommand(cmd, state, dispatch, executePython, navigate);
     if (out !== null) setLines(prev => [...prev, ...out]);
     setInputValue('');

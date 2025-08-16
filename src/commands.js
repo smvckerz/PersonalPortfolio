@@ -106,9 +106,9 @@ export function fsReducer(state, action) {
 }
 
 // Command handler
-export function handleCommand(command, state, dispatch, executePython) {
+export function handleCommand(command, state, dispatch, executePython, navigate) {
   const parts = command.trim().split(/\s+/);
-  const base = parts[0].toLowerCase();
+  const base = (parts[0] || '').toLowerCase();
   const arg = parts[1] || '';
   const arg2 = parts[2] || '';
   const { fileSystem, currentDir } = state;
@@ -119,7 +119,8 @@ export function handleCommand(command, state, dispatch, executePython) {
       lines = [
         '',
         'Available commands:',
-        '  help, clear, ls, cd, mkdir, touch, mv, edit, cat, rm, python',
+        '  help, clear, ls, cd, mkdir, touch, mv, edit, cat, rm, python, open',
+        '  open website   - open the non-terminal portfolio view',
         '',
       ];
       break;
@@ -130,8 +131,8 @@ export function handleCommand(command, state, dispatch, executePython) {
     case 'ls':
       if (fileSystem[currentDir]) {
         lines = [
-          ...fileSystem[currentDir].directories.map((d) => d + '/'),
-          ...fileSystem[currentDir].files.map((f) => f.name),
+          ...fileSystem[currentDir].directories.map(d => d + '/'),
+          ...fileSystem[currentDir].files.map(f => f.name),
         ];
       } else {
         lines = [`Directory not found: ${currentDir}`];
@@ -142,9 +143,9 @@ export function handleCommand(command, state, dispatch, executePython) {
       if (!arg) {
         lines = ['Usage: cd [directory]'];
       } else if (arg === '..') {
-        const parts = currentDir.split('/').filter((p) => p);
-        parts.pop();
-        dispatch({ type: 'CD', payload: parts.join('/') });
+        const segs = currentDir.split('/').filter(Boolean);
+        segs.pop();
+        dispatch({ type: 'CD', payload: segs.join('/') });
         lines = ['Moved to parent directory'];
       } else if (fileSystem[currentDir]?.directories.includes(arg)) {
         const newDir = currentDir ? `${currentDir}/${arg}` : arg;
@@ -176,7 +177,7 @@ export function handleCommand(command, state, dispatch, executePython) {
       break;
 
     case 'cat': {
-      const file = fileSystem[currentDir]?.files.find((f) => f.name === arg);
+      const file = fileSystem[currentDir]?.files.find(f => f.name === arg);
       lines = file ? [file.content] : [`File not found: ${arg}`];
       break;
     }
@@ -187,7 +188,7 @@ export function handleCommand(command, state, dispatch, executePython) {
       break;
 
     case 'python': {
-      const file = fileSystem[currentDir]?.files.find((f) => f.name === arg);
+      const file = fileSystem[currentDir]?.files.find(f => f.name === arg);
       if (!file) {
         lines = [`File not found: ${arg}`];
       } else {
@@ -198,32 +199,26 @@ export function handleCommand(command, state, dispatch, executePython) {
     }
 
     case 'open': {
+      if (!arg) { lines = ['Usage: open [website|URL]']; break; }
 
-      if(!arg)
-      {
-        lines = ['Usage: open [website]'];
-        break;
-      }
-
-      if(arg.toLowerCase() === 'website') {
-        lines = [`Opening website...`];
-        if(typeof navigate === 'function')
-        {
-          navigate('/website');
+      if (arg.toLowerCase() === 'website') {
+        lines = ['Opening website...'];
+        if (typeof navigate === 'function') {
+          navigate('/website');            // same tab
           return { lines: [] };
         }
+        // Fallback: open new tab if navigate not provided
         window.open(`${window.location.origin}/website`, '_blank', 'noopener,noreferrer');
         break;
       }
 
-      if(/^https?:\/\//i.test(arg))
-      {
+      if (/^https?:\/\//i.test(arg)) {
         lines = [`Opening ${arg}...`];
-        window.open(arg, '_blank');
+        window.open(arg, '_blank', 'noopener,noreferrer');
         break;
       }
 
-      lines = [`Invalid website URL: ${arg}`];
+      lines = [`Unknown target: ${arg}`];
       break;
     }
 
