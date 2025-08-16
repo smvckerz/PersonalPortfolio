@@ -3,6 +3,8 @@ import React, { useReducer, useState, useEffect, useRef } from 'react';
 import EditorModel from './EditorModel';
 import './Home.css';
 import { fsReducer, initialState, handleCommand } from './commands';
+import { useNavigate } from 'react-router-dom';
+
 
 function getDisplayPath(dir) {
   const parts = dir.split('/').filter(p => p);
@@ -37,6 +39,7 @@ export default function Home() {
   };
 
   const onSubmit = (e) => {
+    const navigate = useNavigate();
     e.preventDefault();
     const cmd = inputValue.trim();
     setLines(prev => [...prev, `C:\\${getDisplayPath(currentDir)} > ${cmd}`]);

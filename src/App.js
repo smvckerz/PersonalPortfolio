@@ -3,6 +3,8 @@ import './App.css';
 import Home from './Home';
 import Website from './Website';
 import SwirlyLoading from './Loading';
+import { BrowserRouter, Routes, Route, Navigate, HashRouter } from 'react-router-dom';
+
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -27,13 +29,13 @@ function App() {
           <SwirlyLoading />
         </div>
       ) : (
-        <BrowserRouter>
+        <HashRouter>
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/website' element={<Website />} />
             <Route path='*' element={<Navigate to='/' replace />} />
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
         // <Home />
       )}
     </div>

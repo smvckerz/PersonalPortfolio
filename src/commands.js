@@ -207,8 +207,11 @@ export function handleCommand(command, state, dispatch, executePython) {
 
       if(arg.toLowerCase() === 'website') {
         lines = [`Opening website...`];
-        const base = window.location.origin;
-        window.open(`${window.location.origin}/website`, '_blank', 'noopener,noreferrer');
+        if(typeof navigate === 'function')
+        {
+          navigate('/website');
+          return { lines: [] };
+        }
         break;
       }
 
