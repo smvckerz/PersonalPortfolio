@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Home from './Home';
+import Website from './Website';
 import SwirlyLoading from './Loading';
 
 function App() {
@@ -26,7 +27,14 @@ function App() {
           <SwirlyLoading />
         </div>
       ) : (
-        <Home />
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/website' element={<Website />} />
+            <Route path='*' element={<Navigate to='/' replace />} />
+          </Routes>
+        </BrowserRouter>
+        // <Home />
       )}
     </div>
   );

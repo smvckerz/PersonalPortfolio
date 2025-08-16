@@ -197,6 +197,32 @@ export function handleCommand(command, state, dispatch, executePython) {
       break;
     }
 
+    case 'open': {
+
+      if(!arg)
+      {
+        lines = ['Usage: open [website]'];
+        break;
+      }
+
+      if(arg.toLowerCase() === 'website') {
+        lines = [`Opening website...`];
+        const base = window.location.origin;
+        window.open(`${window.location.origin}/website`, '_blank', 'noopener,noreferrer');
+        break;
+      }
+
+      if(/^https?:\/\//i.test(arg))
+      {
+        lines = [`Opening ${arg}...`];
+        window.open(arg, '_blank');
+        break;
+      }
+
+      lines = [`Invalid website URL: ${arg}`];
+      break;
+    }
+
     default:
       lines = command ? [`Command not found: ${command}`] : [];
   }
