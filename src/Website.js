@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Website.css';
+import { Link } from 'react-router-dom';
 
 const PROJECTS = [
   {
@@ -41,7 +42,7 @@ export default function Website() {
         <a
           className="logo"
           href="/"
-          onClick={(e) => { e.preventDefault(); navigate('/Home'); }}
+          onClick={(e) => { e.preventDefault(); navigate('/console'); }}
           aria-label="Back to Console"
         >
           ▌EM
@@ -51,6 +52,9 @@ export default function Website() {
           <a href="#projects">Projects</a>
           <a href="#skills">Skills</a>
           <a href="#contact">Contact</a>
+         <Link to="/console" className="btn small" style={{ marginLeft: 12 }}>
+            Open Console
+         </Link>
         </nav>
       </header>
 
@@ -72,8 +76,8 @@ export default function Website() {
             </div>
 
             <div className="cta-row">
-              <button className="btn primary" onClick={() => navigate('/')}>
-                Back to Console
+              <button className="btn primary" onClick={() => navigate('/console')}>
+                Open Console
               </button>
               <a className="btn ghost" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
                 Download Resume
