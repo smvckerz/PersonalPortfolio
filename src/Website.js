@@ -4,23 +4,26 @@ import './Website.css';
 
 const PROJECTS = [
   {
-    title: 'Terminal Portfolio',
-    desc: 'Interactive console in React with a fake FS and Python execution via API on a Raspberry Pi.',
-    tech: ['React', 'Node.js', 'Express', 'Python', 'Raspberry Pi'],
-    link: 'https://eduardoemunoz.com',
+    title: 'Self-Hosted Portfolio on Raspberry Pi',
+    desc:
+      'Reverse-proxied React site with HTTPS (Let’s Encrypt), caching, gzip, and a Node API that safely runs Python code. Deployed on a Pi behind NAT with DNS & port-forwarding.',
+    tech: ['Linux', 'Apache', 'Node/Express', 'React', 'SSL/DNS', 'UFW'],
+    link: 'https://eduardoemunoz.com'
   },
   {
-    title: 'E-commerce POC',
-    desc: 'Mock storefront with product listing, cart, and checkout flow.',
-    tech: ['React', 'Node', 'MongoDB'],
-    link: '#',
+    title: 'CI/CD Pipeline + IaC',
+    desc:
+      'Repo with GitHub Actions building & pushing a Docker image, then Terraform applies infra and rolls out the service. Zero-touch deploys on push to main.',
+    tech: ['GitHub Actions', 'Docker', 'Terraform'],
+    link: '#'
   },
   {
-    title: 'ML Classifier',
-    desc: 'Simple classification pipeline and visualization.',
-    tech: ['Python', 'scikit-learn', 'Pandas'],
-    link: '#',
-  },
+    title: 'Serverless Contact Form',
+    desc:
+      'Static site posts to a lightweight serverless function with validation, spam protection, and email notifications.',
+    tech: ['AWS Lambda (or Azure Functions)', 'API Gateway', 'S3/CloudFront'],
+    link: '#'
+  }
 ];
 
 export default function Website() {
@@ -49,19 +52,27 @@ export default function Website() {
         {/* Hero */}
         <section className="hero">
           <div className="container">
-            <h1>Hi, I’m Eduardo.</h1>
+            <h1>IT, Software, and Cloud Engineer</h1>
             <p className="lead">
-              I build interactive UIs and backend services. This site is the
-              no-terminal view of my portfolio. The console version lives on the
-              home route.
+              I build and run reliable systems: Linux servers, small backend services,
+              secure networking, and cloud-native deployments. I enjoy automating toil,
+              tightening security, and turning ideas into maintainable services.
             </p>
+
+            <div className="role-tags">
+              <span className="tag">IT / SysAdmin</span>
+              <span className="tag">Software Engineering</span>
+              <span className="tag">Cloud / DevOps</span>
+            </div>
+
             <div className="cta-row">
               <button className="btn primary" onClick={() => navigate('/')}>
                 Back to Console
               </button>
               <a className="btn ghost" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
-                View Resume
+                Download Resume
               </a>
+              <a className="btn ghost" href="mailto:example@domain.com">Email Me</a>
             </div>
           </div>
         </section>
@@ -72,23 +83,22 @@ export default function Website() {
             <div>
               <h2>About</h2>
               <p>
-                I’m a developer focused on thoughtful UX and pragmatic
-                engineering. I enjoy building small systems end-to-end: React
-                frontends, Node/Express APIs, and scripts/services on Linux (I
-                host this site on a Raspberry Pi).
+                I’m hands-on with Linux, networking (DNS, SSL/TLS, routing), and building
+                small services in Node/Python. I like infrastructure you can reason about:
+                clear architecture, automated deployments, observability, and strong defaults.
               </p>
               <p>
-                Recently I’ve been playing with terminal-style UIs, code
-                execution sandboxes, and lightweight deployments on constrained
-                hardware.
+                Recently I’ve been focusing on self-hosting, edge deployments (Raspberry Pi),
+                HTTPS hardening, and turning home-lab lessons into production-style patterns
+                (reverse proxies, caching, health checks, and least-privilege access).
               </p>
             </div>
             <div className="card note">
-              <h3>Highlights</h3>
+              <h3>What I bring</h3>
               <ul>
-                <li>Terminal portfolio w/ in-browser “filesystem”</li>
-                <li>Python execution via API on Raspberry Pi</li>
-                <li>Fast static build (gzipped, cached)</li>
+                <li>Solid Linux & networking fundamentals</li>
+                <li>APIs & small services (Node/Express, Python)</li>
+                <li>Cloud & automation (Docker, CI/CD, Terraform)</li>
               </ul>
             </div>
           </div>
@@ -98,17 +108,14 @@ export default function Website() {
         <section id="projects" className="section alt">
           <div className="container">
             <h2>Projects</h2>
+            <p className="muted">Selected work that blends IT, software, and cloud.</p>
             <div className="cards">
               {PROJECTS.map((p) => (
                 <article key={p.title} className="card project">
-                  <header>
-                    <h3>{p.title}</h3>
-                  </header>
+                  <header><h3>{p.title}</h3></header>
                   <p>{p.desc}</p>
                   <div className="tags">
-                    {p.tech.map((t) => (
-                      <span key={t} className="tag">{t}</span>
-                    ))}
+                    {p.tech.map((t) => <span key={t} className="tag">{t}</span>)}
                   </div>
                   {p.link && (
                     <a className="btn small" href={p.link} target="_blank" rel="noopener noreferrer">
@@ -125,13 +132,26 @@ export default function Website() {
         <section id="skills" className="section">
           <div className="container">
             <h2>Skills</h2>
-            <ul className="skills">
-              <li>JavaScript / React</li>
-              <li>Node.js / Express</li>
-              <li>Python</li>
-              <li>Linux / Apache</li>
-              <li>Networking / DNS / SSL</li>
-            </ul>
+            <div className="grid-2">
+              <div className="card">
+                <h3>Cloud & Infra</h3>
+                <ul className="skills">
+                  <li>AWS/Azure basics (EC2/S3/CloudFront, Functions)</li>
+                  <li>Linux, Apache/Nginx, SSL/TLS, DNS</li>
+                  <li>Docker, GitHub Actions (CI/CD)</li>
+                  <li>Terraform (IaC fundamentals)</li>
+                </ul>
+              </div>
+              <div className="card">
+                <h3>Software</h3>
+                <ul className="skills">
+                  <li>JavaScript/React, Node.js/Express</li>
+                  <li>Python (scripts & services)</li>
+                  <li>REST APIs, JSON, auth basics</li>
+                  <li>Testing & troubleshooting</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </section>
 
@@ -141,12 +161,10 @@ export default function Website() {
             <div>
               <h2>Contact</h2>
               <p>
-                The fastest way to reach me is by email. I’m open to chat about
-                projects, collaboration, or interesting problems.
+                Open to IT, Software Engineering, and Cloud/DevOps roles. If you’d like a deeper
+                walkthrough (architecture diagrams or code), I’m happy to share.
               </p>
-              <a className="btn primary" href="mailto:example@domain.com">
-                Email Me
-              </a>
+              <a className="btn primary" href="mailto:example@domain.com">Email Me</a>
             </div>
             <form
               className="card form"
@@ -154,18 +172,9 @@ export default function Website() {
               aria-labelledby="contact-form"
             >
               <h3 id="contact-form">Quick Message (demo)</h3>
-              <label>
-                Name
-                <input type="text" placeholder="Your name" required />
-              </label>
-              <label>
-                Email
-                <input type="email" placeholder="you@example.com" required />
-              </label>
-              <label>
-                Message
-                <textarea rows="4" placeholder="What’s up?" required />
-              </label>
+              <label> Name <input type="text" placeholder="Your name" required /> </label>
+              <label> Email <input type="email" placeholder="you@example.com" required /> </label>
+              <label> Message <textarea rows="4" placeholder="What’s up?" required /> </label>
               <button className="btn small" type="submit">Send</button>
             </form>
           </div>

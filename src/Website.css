@@ -85,3 +85,9 @@ body { margin: 0; background: var(--bg); color: var(--text); font-family: system
 .site-footer .spacer{ flex:1; }
 .site-footer a{ color: var(--muted); text-decoration:none; }
 .site-footer a:hover{ color: var(--text); }
+
+.muted { color: var(--muted); }
+
+.role-tags { display:flex; gap:8px; margin: 12px 0 2px; }
+.role-tags .tag { background:#0e1322; border:1px solid var(--line); color:var(--text); }
+
