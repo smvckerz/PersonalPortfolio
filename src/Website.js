@@ -23,6 +23,12 @@ const PROJECTS = [
       'Static site posts to a lightweight serverless function with validation, spam protection, and email notifications.',
     tech: ['AWS Lambda (or Azure Functions)', 'API Gateway', 'S3/CloudFront'],
     link: '#'
+  },
+  {
+  title: 'Terminal Portfolio (Project)',
+  desc: 'A browser-based console with a faux filesystem and Python execution via a Pi-hosted API.',
+  tech: ['React', 'Node/Express', 'Python', 'Raspberry Pi'],
+  link: '/console'
   }
 ];
 
