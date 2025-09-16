@@ -41,7 +41,7 @@ export default function Website() {
         <a
           className="logo"
           href="/"
-          onClick={(e) => { e.preventDefault(); navigate('/'); }}
+          onClick={(e) => { e.preventDefault(); navigate('/Home'); }}
           aria-label="Back to Console"
         >
           ▌EM
