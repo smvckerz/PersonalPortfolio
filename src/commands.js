@@ -120,7 +120,6 @@ export function handleCommand(command, state, dispatch, executePython, navigate)
         '',
         'Available commands:',
         '  help, clear, ls, cd, mkdir, touch, mv, edit, cat, rm, python, open',
-        '  open website   - open the non-terminal portfolio view',
         '',
       ];
       break;

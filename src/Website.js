@@ -79,7 +79,7 @@ export default function Website() {
               <button className="btn primary" onClick={() => navigate('/console')}>
                 Open Console
               </button>
-              <a className="btn ghost" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+              <a className="btn ghost" href="public\Eduardo_Munoz_Resume.pdf" target="_blank" rel="noopener noreferrer">
                 Download Resume
               </a>
               <a className="btn ghost" href="mailto:example@domain.com">Email Me</a>

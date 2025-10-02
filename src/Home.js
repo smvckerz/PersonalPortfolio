@@ -17,7 +17,6 @@ export default function Home() {
   const [lines, setLines] = useState([
     'Welcome to my Console!',
     "Type 'help' to see available commands.",
-    "To use the normal website, type: open website",
   ]);
   const [inputValue, setInputValue] = useState('');
   const outputRef = useRef(null);
