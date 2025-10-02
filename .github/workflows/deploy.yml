@@ -1,0 +1,68 @@
+name: Deploy PersonalPortfolio
+
+on:
+  push:
+    branches: [ "main" ]   # change if you deploy from another branch
+  workflow_dispatch:        # allow manual runs
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      BUILD_DIR: build
+      RELEASES_DIR: /var/www/PersonalPortfolio/releases
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node (reads your .nvmrc)
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: '.nvmrc'
+          cache: 'npm'
+
+      - name: Install deps & build
+        run: |
+          npm ci --omit=dev
+          npm run build
+          test -d "$BUILD_DIR" || (echo "Build output '$BUILD_DIR' not found" && exit 1)
+
+      - name: Prepare SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Make release name
+        id: rel
+        run: |
+          ts="$(date +%Y%m%d-%H%M%S)"
+          sha="$(git rev-parse --short HEAD)"
+          echo "name=${ts}-${sha}" >> "$GITHUB_OUTPUT"
+
+      - name: Create release dir on server
+        run: |
+          ssh -i ~/.ssh/id_ed25519 ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} \
+            "mkdir -p $RELEASES_DIR/${{ steps.rel.outputs.name }}"
+
+      - name: Upload build via rsync
+        run: |
+          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519" "$BUILD_DIR"/ \
+            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:$RELEASES_DIR/${{ steps.rel.outputs.name }}/
+
+      # If your CI key in authorized_keys is locked with:
+      #   command="/usr/local/bin/pp-release-activate" ...
+      # then this will run the activator automatically:
+      - name: Activate release
+        run: |
+          ssh -T -i ~/.ssh/id_ed25519 \
+            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} \
+            "${{ steps.rel.outputs.name }}"
+
+      - name: Keep last 5 releases (cleanup)
+        run: |
+          ssh -i ~/.ssh/id_ed25519 ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} \
+            "ls -1dt $RELEASES_DIR/* | tail -n +6 | xargs -r rm -rf"
