@@ -58,8 +58,9 @@ jobs:
       # then this will run the activator automatically:
       - name: Activate release
         run: |
-          RELEASE_NAME=${{ steps.rel.outputs.name }} \
-          ssh -i ~/.ssh/id_ed25519 ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} true
+          ssh -T -i ~/.ssh/id_ed25519 \
+            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} \
+            "${{ steps.rel.outputs.name }}"
 
       - name: Keep last 5 releases (cleanup)
         run: |
