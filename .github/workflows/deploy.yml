@@ -2,13 +2,12 @@ name: Deploy PersonalPortfolio
 
 on:
   push:
-    branches: [ "main" ]   # change if you deploy from another branch
-  workflow_dispatch:        # allow manual runs
+    branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     env:
       BUILD_DIR: build
       RELEASES_DIR: /var/www/PersonalPortfolio/releases
@@ -17,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Use Node (reads your .nvmrc)
+      - name: Use Node (.nvmrc)
         uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
@@ -29,11 +28,11 @@ jobs:
           npm run build
           test -d "$BUILD_DIR" || (echo "Build output '$BUILD_DIR' not found" && exit 1)
 
-      - name: Prepare SSH
+      - name: Prepare SSH (UPLOAD key for mkdir/rsync)
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
+          echo "${{ secrets.UPLOAD_KEY }}" > ~/.ssh/id_upload
+          chmod 600 ~/.ssh/id_upload
           ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
 
       - name: Make release name
@@ -43,26 +42,28 @@ jobs:
           sha="$(git rev-parse --short HEAD)"
           echo "name=${ts}-${sha}" >> "$GITHUB_OUTPUT"
 
-      - name: Create release dir on server
+      - name: Create release dir on server (UPLOAD key)
         run: |
-          ssh -i ~/.ssh/id_ed25519 ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} \
+          ssh -i ~/.ssh/id_upload ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} \
             "mkdir -p $RELEASES_DIR/${{ steps.rel.outputs.name }}"
 
-      - name: Upload build via rsync
+      - name: Upload build via rsync (UPLOAD key)
         run: |
-          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519" "$BUILD_DIR"/ \
+          rsync -az --delete -e "ssh -i ~/.ssh/id_upload" "$BUILD_DIR"/ \
             ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:$RELEASES_DIR/${{ steps.rel.outputs.name }}/
 
-      # If your CI key in authorized_keys is locked with:
-      #   command="/usr/local/bin/pp-release-activate" ...
-      # then this will run the activator automatically:
-      - name: Activate release
+      - name: Prepare SSH (ACTIVATE key for forced-command)
         run: |
-          ssh -T -i ~/.ssh/id_ed25519 \
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/id_activate
+          chmod 600 ~/.ssh/id_activate
+
+      - name: Activate release (forced-command uses arg)
+        run: |
+          ssh -T -i ~/.ssh/id_activate \
             ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} \
             "${{ steps.rel.outputs.name }}"
 
-      - name: Keep last 5 releases (cleanup)
+      - name: Keep last 5 releases (UPLOAD key)
         run: |
-          ssh -i ~/.ssh/id_ed25519 ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} \
+          ssh -i ~/.ssh/id_upload ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} \
             "ls -1dt $RELEASES_DIR/* | tail -n +6 | xargs -r rm -rf"
