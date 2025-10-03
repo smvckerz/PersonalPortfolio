@@ -171,7 +171,7 @@ export default function Website() {
             <div>
               <h2>Contact</h2>
               <p>
-                Open to IT, Software Engineering, and Cloud/DevOps roles. If you’d like a deeper
+                Open to IT,Software Engineering, and Cloud/DevOps roles. If you’d like a deeper
                 walkthrough (architecture diagrams or code), I’m happy to share.
               </p>
               <a className="btn primary" href="mailto:example@domain.com">Email Me</a>
