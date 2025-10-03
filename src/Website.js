@@ -52,7 +52,7 @@ export default function Website() {
           <a href="#projects">Projects</a>
           <a href="#skills">Skills</a>
           <a href="#contact">Contact</a>
-          <a href="#tester"a>
+          <a href="#tester"a></a>
          <Link to="/console" className="btn small" style={{ marginLeft: 12 }}>
             Open Console
          </Link>
