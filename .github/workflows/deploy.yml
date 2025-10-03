@@ -28,10 +28,10 @@ jobs:
           npm run build
           test -d "$BUILD_DIR" || (echo "Build output '$BUILD_DIR' not found" && exit 1)
 
-      - name: Prepare SSH (UPLOAD key for mkdir/rsync)
+      - name: Prepare SSH (UPLOAD key)
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.UPLOAD_KEY }}" > ~/.ssh/id_upload
+          echo "${{ secrets.UPLOAD_KEY_B64 }}" | base64 -d > ~/.ssh/id_upload
           chmod 600 ~/.ssh/id_upload
           ssh-keyscan -H "${{ secrets.DEPLOY_HOST }}" >> ~/.ssh/known_hosts
 
