@@ -26,7 +26,7 @@ const PROJECTS = [
     link: 'https://github.com/smvckerz/Custom-File-System'
   },
   {
-    title: 'LiteLocal Chatbot (Python + Web)',
+    title: 'LiteLocal Chatbot (Python + Web IN PROGRESS)',
     desc:
       'A lightweight locally hosted AI assistant built with a FastAPI backend and web-based front-end. Handles contextual conversation, message logging, and persistent sessions without relying on cloud APIs — optimized for Raspberry Pi performance.',
     tech: ['Python', 'FastAPI', 'HTML/CSS/JS', 'Local AI Integration'],
@@ -87,7 +87,7 @@ export default function Website() {
               <button className="btn primary" onClick={() => navigate('/console')}>
                 Open Console
               </button>
-              <a className="btn ghost" href="public\Eduardo_Munoz_Resume.pdf" target="_blank" rel="noopener noreferrer">
+              <a className="btn ghost" href="/Eduardo_Munoz_Resume_.pdf" download="Eduardo_Munoz_2025.pdf" target="_blank" rel="noopener noreferrer">
                 Download Resume
               </a>
               <a className="btn ghost" href="mailto:example@domain.com">Email Me</a>
@@ -101,7 +101,7 @@ export default function Website() {
             <div>
               <h2>About</h2>
               <p>
-                I’m hands-on with Linux, networking (DNS, SSL/TLS, routing), and building
+                I’m hands-on with Linux, activelt exploring networking (DNS, SSL/TLS, routing), and building
                 small services in Node/Python. I like infrastructure you can reason about:
                 clear architecture, automated deployments, observability, and strong defaults.
               </p>
