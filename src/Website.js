@@ -9,24 +9,31 @@ const PROJECTS = [
     desc:
       'Reverse-proxied React site with HTTPS (Let’s Encrypt), caching, gzip, and a Node API that safely runs Python code. Deployed on a Pi behind NAT with DNS & port-forwarding.',
     tech: ['Linux', 'Apache', 'Node/Express', 'React', 'SSL/DNS', 'UFW'],
-    link: 'https://eduardoemunoz.com'
+    link: 'https://github.com/smvckerz/PersonalPortfolio'
   },
   {
-    title: 'CI/CD Pipeline + IaC',
+    title: 'Mini Shell (sh) with pipes',
     desc:
-      'Repo with GitHub Actions building & pushing a Docker image, then Terraform applies infra and rolls out the service. Zero-touch deploys on push to main.',
-    tech: ['GitHub Actions', 'Docker', 'Terraform'],
-    link: '#'
+      'Unix-style shell supporting job control, pipes, I/O redirection, environment vars, and builtin commands with robust parsing.',
+    tech: ['C', 'POSIX', 'Signals', 'Parser/lexer'],
+    link: 'https://github.com/smvckerz/Simple-Shell-with-Pipes'
   },
   {
-    title: 'Serverless Contact Form',
+    title: 'Custom File System (C)',
     desc:
-      'Static site posts to a lightweight serverless function with validation, spam protection, and email notifications.',
-    tech: ['AWS Lambda (or Azure Functions)', 'API Gateway', 'S3/CloudFront'],
-    link: '#'
+      'A fully functional file system implemented from scratch in C. Includes a Volume Control Block (VCB), bitmap-based free-space management, directory operations with “.” and “..” entries, and versioned file allocation. Designed for Linux using low-level block I/O and pthread synchronization.',
+    tech: ['C', 'POSIX', 'pthreads', 'Low-level I/O'],
+    link: 'https://github.com/smvckerz/Custom-File-System'
   },
   {
-  title: 'Terminal Portfolio (Project)',
+    title: 'LiteLocal Chatbot (Python + Web)',
+    desc:
+      'A lightweight locally hosted AI assistant built with a FastAPI backend and web-based front-end. Handles contextual conversation, message logging, and persistent sessions without relying on cloud APIs — optimized for Raspberry Pi performance.',
+    tech: ['Python', 'FastAPI', 'HTML/CSS/JS', 'Local AI Integration'],
+    link: 'https://github.com/smvckerz/litelocal-chatbot'
+  },
+  {
+  title: 'Terminal Portfolio (Interactive Project)',
   desc: 'A browser-based console with a faux filesystem and Python execution via a Pi-hosted API.',
   tech: ['React', 'Node/Express', 'Python', 'Raspberry Pi'],
   link: '/console'
