@@ -67,27 +67,22 @@ Here's an overview of the key directories and files:
 
 ## 📂 Project Structure
 
-Here's an overview of the key directories and files:
-
 ```plaintext
-PersonalPortfolio-main/
-├── public/                 # Static files and main HTML template
-│   ├── index.html          # Entry point for the app
-│   └── favicon.ico         # Website favicon
-├── src/                    # Source code for the project
-│   ├── components/         # Reusable React components
-│   │   ├── About.js        # About section
-│   │   ├── Home.js         # Home section
-│   │   ├── Loading.js      # Loading screen
-│   │   └── TypedLine.js    # Simulates typing in the console
-│   ├── App.js              # Main application component
-│   ├── index.js            # Entry point for React
-│   ├── App.css             # Global styles
-│   ├── Home.css            # Styles for Home section
-│   ├── Loading.css         # Styles for Loading screen
-│   └── index.css           # Base styles
-├── package.json            # Project metadata and dependencies
-├── README.md               # Project documentation
+PersonalPortfolio/
+├── public/                     # Static files and HTML template (incl. resume PDF)
+├── src/
+│   ├── index.js                # React entry point
+│   ├── App.js                  # Loading screen + routes (/ = site, /console = terminal)
+│   ├── Website.js / .css       # Standard portfolio site
+│   ├── Home.js / .css          # Console-style interface
+│   ├── commands.js             # Console filesystem + command handling
+│   ├── EditorModel.js / .css   # In-console code editor
+│   ├── Loading.js / .css       # Loading animation
+│   ├── App.css, index.css      # Global styles
+├── server.js                   # Express API that runs Python for the console (POST /execute, port 4000)
+├── matomo/                     # Self-hosted analytics (stats.eduardoemunoz.com)
+├── releases/, current          # Deployed builds; Apache serves the `current` symlink
+└── package.json
 ```
 
 🎨 Styling
@@ -111,3 +106,7 @@ Enhancing animations and transitions.
 Introducing more interactive console commands.
 
 Feel free to explore the codebase and customize it for your needs!
+
+## 🚀 CI/CD
+
+Pushing to `main` builds the site with GitHub Actions and deploys it to the Pi as a new release folder. See [DEPLOY.md](DEPLOY.md) for the full flow, manual deploys and rollback.

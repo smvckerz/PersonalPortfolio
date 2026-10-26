@@ -6,16 +6,16 @@ export const initialFileSystem = {
   '': {
     directories: ['projects'],
     files: [
-      { name: 'about.txt', content: "I'm a passionate developer..." },
-      { name: 'contacts.txt', content: 'Email: example@domain.com' },
-      { name: 'resume.pdf', content: 'PDF content placeholder' },
+      { name: 'about.txt', content: "Eduardo Munoz - AV Test Expert at NVIDIA. CS grad (SFSU) with a Linux/C systems background, telemetry and log diagnostics." },
+      { name: 'contacts.txt', content: 'Email: edmunoz1030@gmail.com | GitHub: github.com/smvckerz' },
+      { name: 'resume.pdf', content: 'Run: open https://eduardoemunoz.com/Eduardo_Munoz_Resume.pdf' },
     ],
   },
   projects: {
     directories: [],
     files: [
-      { name: 'project1.txt', content: 'E-commerce platform using React/Node' },
-      { name: 'project2.txt', content: 'ML classification system' },
+      { name: 'project1.txt', content: 'Raspberry Pi infrastructure: Docker, Bash backups, HTTPS rotation, UFW + Fail2Ban' },
+      { name: 'project2.txt', content: 'Unix shell in C, pthreads file processor, Linux device driver' },
     ],
   },
 };
@@ -120,6 +120,7 @@ export function handleCommand(command, state, dispatch, executePython, navigate)
         '',
         'Available commands:',
         '  help, clear, ls, cd, mkdir, touch, mv, edit, cat, rm, python, open',
+        '  open website   - open the non-terminal portfolio view',
         '',
       ];
       break;
@@ -203,11 +204,11 @@ export function handleCommand(command, state, dispatch, executePython, navigate)
       if (arg.toLowerCase() === 'website') {
         lines = ['Opening website...'];
         if (typeof navigate === 'function') {
-          navigate('/website');            // same tab
+          navigate('/');            // same tab
           return { lines: [] };
         }
         // Fallback: open new tab if navigate not provided
-        window.open(`${window.location.origin}/website`, '_blank', 'noopener,noreferrer');
+        window.open(`${window.location.origin}/`, '_blank', 'noopener,noreferrer');
         break;
       }
 

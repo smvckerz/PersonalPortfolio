@@ -1,43 +1,77 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Website.css';
-import { Link } from 'react-router-dom';
+
+const EMAIL = 'edmunoz1030@gmail.com';
+
+const EXPERIENCE = [
+  {
+    company: 'NVIDIA (via Insight Global)',
+    role: 'AV Test Expert – Autonomous Vehicle Road Testing',
+    place: 'California',
+    dates: 'Jul 2026 – Present',
+    points: [
+      'Operate autonomous test vehicles on public roads while monitoring system performance, serving as both driver and test operator.',
+      'Use Linux-based command-line tools daily to diagnose and troubleshoot issues on autonomous vehicle test systems.',
+      'Monitor vehicle behavior during test drives and annotate incidents when the vehicle performs unexpected or out-of-spec actions.',
+      'Review and execute structured test plans, and prepare and inspect test vehicles prior to deployment to ensure on-road readiness.',
+      'Communicate findings to engineering teams with direct feedback on vehicle build performance and behavior observed during testing.',
+    ],
+  },
+  {
+    company: 'Tesla',
+    role: 'AI Safety Operator – Full Self-Driving (FSD) Program',
+    place: 'San Francisco, CA',
+    dates: 'Oct 2025 – Jul 2026',
+    points: [
+      'Executed data-ingestion and validation routines for a distributed edge-compute platform, contributing to over 1,000 hours of safety-critical deployments and real-world edge-case capture.',
+      'Analyzed telemetry, camera data, and low-level Linux logs to isolate software anomalies and hardware-to-software integration faults, documenting each in structured logs for developers and autonomous systems engineers.',
+      'Performed system calibrations and ensured data integrity during high-volume post-route transfers.',
+      'Selected to lead onboarding for 4 incoming team members on data collection, system monitoring, and operational safety criteria.',
+    ],
+  },
+];
 
 const PROJECTS = [
   {
-    title: 'Self-Hosted Portfolio on Raspberry Pi',
+    title: 'Raspberry Pi Automated Infrastructure',
     desc:
-      'Reverse-proxied React site with HTTPS (Let’s Encrypt), caching, gzip, and a Node API that safely runs Python code. Deployed on a Pi behind NAT with DNS & port-forwarding.',
-    tech: ['Linux', 'Apache', 'Node/Express', 'React', 'SSL/DNS', 'UFW'],
-    link: 'https://github.com/smvckerz/PersonalPortfolio'
+      'Self-hosted containerized stack with automated Bash backups, cron jobs, and HTTPS certificate rotation, hardened with UFW firewalls and Fail2Ban intrusion prevention. This site runs on it.',
+    tech: ['Bash', 'Docker & Compose', 'Linux', 'Networking'],
+    dates: 'Sep 2024 – Present',
+    link: 'https://github.com/smvckerz/PersonalPortfolio',
   },
   {
-    title: 'Mini Shell (sh) with pipes',
+    title: 'Unix Shell & OS Systems Projects',
     desc:
-      'Unix-style shell supporting job control, pipes, I/O redirection, environment vars, and builtin commands with robust parsing.',
-    tech: ['C', 'POSIX', 'Signals', 'Parser/lexer'],
-    link: 'https://github.com/smvckerz/Simple-Shell-with-Pipes'
+      'A Unix-style command-line shell built from scratch in C (process creation, pipelines, I/O redirection), a multithreaded file processor using pthreads and mutexes, and a custom Linux device driver that interfaces directly with kernel space.',
+    tech: ['C', 'POSIX Threads', 'Linux Kernel Modules'],
+    dates: 'Aug 2022 – May 2025',
   },
   {
-    title: 'Custom File System (C)',
+    title: 'Terminal Portfolio',
     desc:
-      'A fully functional file system implemented from scratch in C. Includes a Volume Control Block (VCB), bitmap-based free-space management, directory operations with “.” and “..” entries, and versioned file allocation. Designed for Linux using low-level block I/O and pthread synchronization.',
-    tech: ['C', 'POSIX', 'pthreads', 'Low-level I/O'],
-    link: 'https://github.com/smvckerz/Custom-File-System'
+      'A browser-based console with a faux filesystem and Python execution through a Pi-hosted API. Try it out.',
+    tech: ['React', 'Node/Express', 'Python', 'Raspberry Pi'],
+    dates: '',
+    link: '/console',
+    internal: true,
+  },
+];
+
+const SKILLS = [
+  {
+    title: 'Languages & Systems',
+    items: ['C, C++, Python', 'Bash / Shell scripting', 'Linux (Debian/Ubuntu, Unix internals)', 'POSIX, pthreads'],
   },
   {
-    title: 'LiteLocal Chatbot (Python + Web IN PROGRESS)',
-    desc:
-      'A lightweight locally hosted AI assistant built with a FastAPI backend and web-based front-end. Handles contextual conversation, message logging, and persistent sessions without relying on cloud APIs — optimized for Raspberry Pi performance.',
-    tech: ['Python', 'FastAPI', 'HTML/CSS/JS', 'Local AI Integration'],
-    link: 'https://github.com/smvckerz/litelocal-chatbot'
+    title: 'Data & Distributed Systems',
+    items: ['High-throughput telemetry capture', 'Multimodal data integrity', 'Schema design', 'MySQL / MariaDB'],
   },
   {
-  title: 'Terminal Portfolio (Interactive Project)',
-  desc: 'A browser-based console with a faux filesystem and Python execution via a Pi-hosted API.',
-  tech: ['React', 'Node/Express', 'Python', 'Raspberry Pi'],
-  link: '/console'
-  }
+    title: 'Infrastructure & Networking',
+    items: ['Docker, Nginx, Git/GitHub', 'TCP/IP', 'System hardening (UFW, Fail2Ban)', 'Log diagnostics (grep, tail, cat)'],
+  },
 ];
 
 export default function Website() {
@@ -48,153 +82,150 @@ export default function Website() {
       <header className="site-header">
         <a
           className="logo"
-          href="/"
+          href="/console"
           onClick={(e) => { e.preventDefault(); navigate('/console'); }}
-          aria-label="Back to Console"
+          aria-label="Open Console"
         >
           ▌EM
         </a>
         <nav className="nav">
           <a href="#about">About</a>
+          <a href="#experience">Experience</a>
           <a href="#projects">Projects</a>
           <a href="#skills">Skills</a>
           <a href="#contact">Contact</a>
-          <a href="#tester"a>Tester</a>
-         <Link to="/console" className="btn small" style={{ marginLeft: 12 }}>
+          <Link to="/console" className="btn small" style={{ marginLeft: 12 }}>
             Open Console
-         </Link>
+          </Link>
         </nav>
       </header>
 
       <main>
-        {/* Hero */}
         <section className="hero">
           <div className="container">
-            <h1>IT, Software, and Cloud Engineer</h1>
+            <h1>Eduardo Muñoz</h1>
             <p className="lead">
-              I build and run reliable systems: Linux servers, small backend services,
-              secure networking, and cloud-native deployments. I enjoy automating toil,
-              tightening security, and turning ideas into maintainable services.
+              Computer Science graduate (B.S.) with hands-on autonomous vehicle road-testing
+              experience at NVIDIA and Tesla, pairing a systems-level Linux/C background with
+              telemetry and log diagnostics and clear, direct feedback to engineering teams.
             </p>
 
             <div className="role-tags">
-              <span className="tag">IT / SysAdmin</span>
-              <span className="tag">Software Engineering</span>
-              <span className="tag">Cloud / DevOps</span>
+              <span className="tag">AV Test Expert @ NVIDIA</span>
+              <span className="tag">Linux &amp; Systems</span>
+              <span className="tag">Telemetry &amp; Log Diagnostics</span>
             </div>
 
             <div className="cta-row">
-              <button className="btn primary" onClick={() => navigate('/console')}>
-                Open Console
-              </button>
-              <a className="btn ghost" href="/Eduardo_Munoz_Resume_.pdf" download="Eduardo_Munoz_2025.pdf" target="_blank" rel="noopener noreferrer">
+              <a className="btn primary" href="/Eduardo_Munoz_Resume.pdf" target="_blank" rel="noopener noreferrer">
                 Download Resume
               </a>
-              <a className="btn ghost" href="mailto:example@domain.com">Email Me</a>
+              <a className="btn ghost" href={`mailto:${EMAIL}`}>Email Me</a>
+              <button className="btn ghost" onClick={() => navigate('/console')}>
+                Open Console
+              </button>
             </div>
           </div>
         </section>
 
-        {/* About */}
         <section id="about" className="section">
           <div className="container grid-2">
             <div>
               <h2>About</h2>
               <p>
-                I’m hands-on with Linux, activelt exploring networking (DNS, SSL/TLS, routing), and building
-                small services in Node/Python. I like infrastructure you can reason about:
-                clear architecture, automated deployments, observability, and strong defaults.
+                I test autonomous vehicles on public roads, working as both driver and test operator
+                while monitoring system behavior, annotating out-of-spec events, and reporting
+                findings to the engineering teams building the software.
               </p>
               <p>
-                Recently I’ve been focusing on self-hosting, edge deployments (Raspberry Pi),
-                HTTPS hardening, and turning home-lab lessons into production-style patterns
-                (reverse proxies, caching, health checks, and least-privilege access).
+                Outside of work I run a self-hosted Raspberry Pi stack (Docker, cron backups,
+                HTTPS rotation, UFW, Fail2Ban) and build low-level projects in C: a Unix shell,
+                multithreaded programs, and a Linux device driver.
               </p>
             </div>
             <div className="card note">
-              <h3>What I bring</h3>
+              <h3>Education</h3>
+              <p><strong>San Francisco State University</strong><br />
+                B.S. Computer Science, Aug 2022 – June 2025</p>
               <ul>
-                <li>Solid Linux & networking fundamentals</li>
-                <li>APIs & small services (Node/Express, Python)</li>
-                <li>Cloud & automation (Docker, CI/CD, Terraform)</li>
+                <li>Senior Capstone Database Team Lead: led a cohort of 4 on relational schema design, query optimization, and Git workflows for a distributed web application.</li>
               </ul>
             </div>
           </div>
         </section>
 
-        {/* Projects */}
-        <section id="projects" className="section alt">
+        <section id="experience" className="section alt">
+          <div className="container">
+            <h2>Experience</h2>
+            {EXPERIENCE.map((job) => (
+              <article key={job.company} className="card job">
+                <header className="job-head">
+                  <div>
+                    <h3>{job.company}</h3>
+                    <p className="muted">{job.role}</p>
+                  </div>
+                  <div className="job-meta muted">
+                    <div>{job.dates}</div>
+                    <div>{job.place}</div>
+                  </div>
+                </header>
+                <ul>
+                  {job.points.map((pt) => <li key={pt}>{pt}</li>)}
+                </ul>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section id="projects" className="section">
           <div className="container">
             <h2>Projects</h2>
-            <p className="muted">Selected work that blends IT, software, and cloud.</p>
             <div className="cards">
               {PROJECTS.map((p) => (
                 <article key={p.title} className="card project">
-                  <header><h3>{p.title}</h3></header>
+                  <header>
+                    <h3>{p.title}</h3>
+                    {p.dates && <p className="muted">{p.dates}</p>}
+                  </header>
                   <p>{p.desc}</p>
                   <div className="tags">
                     {p.tech.map((t) => <span key={t} className="tag">{t}</span>)}
                   </div>
-                  {p.link && (
-                    <a className="btn small" href={p.link} target="_blank" rel="noopener noreferrer">
-                      View
-                    </a>
-                  )}
+                  {p.link && (p.internal
+                    ? <Link className="btn small" to={p.link}>Open</Link>
+                    : <a className="btn small" href={p.link} target="_blank" rel="noopener noreferrer">View</a>)}
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Skills */}
-        <section id="skills" className="section">
+        <section id="skills" className="section alt">
           <div className="container">
             <h2>Skills</h2>
-            <div className="grid-2">
-              <div className="card">
-                <h3>Cloud & Infra</h3>
-                <ul className="skills">
-                  <li>AWS/Azure basics (EC2/S3/CloudFront, Functions)</li>
-                  <li>Linux, Apache/Nginx, SSL/TLS, DNS</li>
-                  <li>Docker, GitHub Actions (CI/CD)</li>
-                  <li>Terraform (IaC fundamentals)</li>
-                </ul>
-              </div>
-              <div className="card">
-                <h3>Software</h3>
-                <ul className="skills">
-                  <li>JavaScript/React, Node.js/Express</li>
-                  <li>Python (scripts & services)</li>
-                  <li>REST APIs, JSON, auth basics</li>
-                  <li>Testing & troubleshooting</li>
-                </ul>
-              </div>
+            <div className="cards">
+              {SKILLS.map((group) => (
+                <div key={group.title} className="card">
+                  <h3>{group.title}</h3>
+                  <ul className="skill-list">
+                    {group.items.map((i) => <li key={i}>{i}</li>)}
+                  </ul>
+                </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Contact */}
-        <section id="contact" className="section alt">
-          <div className="container grid-2">
-            <div>
-              <h2>Contact</h2>
-              <p>
-                Open to IT,Software Engineering, and Cloud/DevOps roles. If you’d like a deeper
-                walkthrough (architecture diagrams or code), I’m happy to share.
-              </p>
-              <a className="btn primary" href="mailto:example@domain.com">Email Me</a>
+        <section id="contact" className="section">
+          <div className="container">
+            <h2>Contact</h2>
+            <p>
+              Interested in working together or want a deeper walkthrough of any project? Reach out.
+            </p>
+            <div className="cta-row">
+              <a className="btn primary" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+              <a className="btn ghost" href="https://github.com/smvckerz" target="_blank" rel="noopener noreferrer">GitHub</a>
             </div>
-            <form
-              className="card form"
-              onSubmit={(e) => { e.preventDefault(); alert('Demo form. Wire to a backend if needed.'); }}
-              aria-labelledby="contact-form"
-            >
-              <h3 id="contact-form">Quick Message (demo)</h3>
-              <label> Name <input type="text" placeholder="Your name" required /> </label>
-              <label> Email <input type="email" placeholder="you@example.com" required /> </label>
-              <label> Message <textarea rows="4" placeholder="What’s up?" required /> </label>
-              <button className="btn small" type="submit">Send</button>
-            </form>
           </div>
         </section>
       </main>

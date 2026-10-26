@@ -22,3 +22,15 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# deployment / server-only
+/releases
+/current
+/matomo
+/temp
+
+# secrets
+.env
+*.pem
+*.key
+*.crt
