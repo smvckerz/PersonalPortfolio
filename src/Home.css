@@ -11,6 +11,9 @@
 
 .line {
   margin-bottom: 0.25rem;
+  min-height: 1.2em; /* keep blank lines from collapsing */
+  white-space: pre-wrap; /* preserve column alignment and Python output */
+  overflow-wrap: anywhere;
 }
 
 .output-lines {

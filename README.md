@@ -80,7 +80,7 @@ PersonalPortfolio/
 │   ├── Loading.js / .css       # Loading animation
 │   ├── App.css, index.css      # Global styles
 ├── server.js                   # Express API that runs Python for the console (POST /execute, port 4000)
-├── matomo/                     # Self-hosted analytics (stats.eduardoemunoz.com)
+├── matomo/                     # Self-hosted analytics (stats subdomain retired)
 ├── releases/, current          # Deployed builds; Apache serves the `current` symlink
 └── package.json
 ```

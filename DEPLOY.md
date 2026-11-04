@@ -1,6 +1,6 @@
 # Publishing the site
 
-Live site: https://eduardoemunoz.com. Apache serves `/var/www/PersonalPortfolio/current`, a symlink to a folder in `releases/`.
+Live site: https://eduardomunoz.me. Apache serves `/var/www/PersonalPortfolio/current`, a symlink to a folder in `releases/`.
 
 ## Normal flow (automatic)
 Commit and push to `main` on `github.com/smvckerz/PersonalPortfolio`. The workflow `.github/workflows/deploy.yml` then:
@@ -30,3 +30,11 @@ sudo ln -sfn /var/www/PersonalPortfolio/releases/<older-release> /var/www/Person
 
 ## Updating the resume
 Replace `public/Eduardo_Munoz_Resume.pdf`, commit and push. The site links to `/Eduardo_Munoz_Resume.pdf`.
+
+## Python console backend
+The terminal at `/console` runs `python <file>` through `server.js` (listens on `127.0.0.1:4000`, started with `pm2 start server.js --name portfolio-exec` and `pm2 save`). Apache proxies `/api/` to it (`ProxyPass /api/ http://127.0.0.1:4000/`, with `RewriteCond %{REQUEST_URI} !^/api/` ahead of the SPA fallback rule).
+
+Each run happens in a throwaway `python:3.11-alpine` Docker container: no network, no capabilities, read-only filesystem, non-root user, and a 5 s limit. The Pi kernel has no memory cgroup, so memory, process, file-size and CPU limits are set with `resource.setrlimit` inside the container. Limits per visitor: 10 runs a minute; 2 runs at a time overall. The frontend calls `/api` (`REACT_APP_API_URL` overrides it).
+
+Restart after editing `server.js`: `pm2 restart portfolio-exec`. The user running pm2 must be in the `docker` group, and the image must be pulled (`docker pull python:3.11-alpine`).
+
