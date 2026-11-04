@@ -99,6 +99,7 @@ function EditorModel({ file, onSave, onCancel }) {
         <CodeMirror
           value={content}
           height='300px'
+          autoFocus
           theme={dracula}
           extensions={[javascript()]}
           onChange={(value) => setContent(value)}

@@ -97,7 +97,7 @@ export default function Home() {
   };
 
   return (
-    <div className='console-container' onClick={() => !window.getSelection().toString() && inputRef.current?.focus()}>
+    <div className='console-container' onClick={() => !editingFile && !window.getSelection().toString() && inputRef.current?.focus()}>
       <div className='output-lines' ref={outputRef} role='log'>
         {lines.map((l, i) => <div key={i} className='line'>{l}</div>)}
       </div>
